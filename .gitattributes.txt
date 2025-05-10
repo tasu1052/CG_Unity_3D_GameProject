@@ -1,0 +1,2 @@
+# 모든 C# 파일을 UTF-8 인코딩으로 처리
+*.cs text working-tree-encoding=UTF-8
