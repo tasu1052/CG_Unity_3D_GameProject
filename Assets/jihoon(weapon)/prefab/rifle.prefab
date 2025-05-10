@@ -249,7 +249,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &6139960303844213157
+--- !u!1 &5264592224530505836
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1514718618813472583}
+  - component: {fileID: 2184309528989729115}
   m_Layer: 0
   m_Name: riflefirepoint
   m_TagString: Untagged
@@ -265,16 +265,16 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1514718618813472583
+--- !u!4 &2184309528989729115
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6139960303844213157}
+  m_GameObject: {fileID: 5264592224530505836}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -316,7 +316,7 @@ Transform:
   - {fileID: 995140890691034444}
   - {fileID: 6528365977419115875}
   - {fileID: 4835151624379808336}
-  - {fileID: 1514718618813472583}
+  - {fileID: 2184309528989729115}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5390899393912350115
@@ -402,6 +402,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f19da150de5c4e04b8f286d56c6d1560, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 8657507163733184228, guid: 2d9a573128db4554487132022ac7fc31, type: 3}
-  firePoint: {fileID: 1514718618813472583}
+  bulletPrefab: {fileID: 8679634964173267413, guid: a16a37ceca538ec41aa6cfdaf1b1392a, type: 3}
+  firePoint: {fileID: 2184309528989729115}
   fireRate: 0.2
