@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
     public int Hp
     {
         get => _hp;
-        // Math.Clamp 함수를 사용해서 hp가 0보다 아래로 떨어지지 않게 합니다.
+        // Math.Clamp 함수를 사용해서 hp가 0보다 아래로 떨어지지 않도록 함.
         private set => _hp = Math.Clamp(value, 0, _hp);
     }
     void Start()
