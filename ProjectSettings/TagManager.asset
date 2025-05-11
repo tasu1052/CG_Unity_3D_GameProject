@@ -6,11 +6,12 @@ TagManager:
   tags:
   - enemy
   - weapon
+  - Ammo
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - enemy
   - Water
   - UI
   - 
