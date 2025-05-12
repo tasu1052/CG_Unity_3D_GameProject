@@ -4,44 +4,10 @@ using UnityEngine;
 
 public class Define
 {
-    /*
-    #region 아이템 데이터
-    public class ItemTable
+    public class SlotData
     {
-        public int itemIndex;
-        public int level;
-        public bool isDebuff;
-        public float effect;
-        public string itemName;
-        public string itemExplain;
+        public static int slotSize = 80; // 여기에서 슬롯 사이즈를 관리함. 자주 사용하므로 전역처리
     }
-    public struct ItemKey
-    {
-        public int itemIndex { get; set; }
-        public int level { get; set; }
-        public bool isDebuff { get; set; }
-        public ItemKey(int _itemIndex, int _level, bool _isDebuff)
-        {
-            this.itemIndex = _itemIndex;
-            this.level = _level;
-            this.isDebuff = _isDebuff;
-        }
-    }
-    public class ItemData
-    {
-        public float effect;
-        public string itemName;
-        public string itemExplain;
-        public ItemData(float _effect, string _itemName, string _itemExaplain)
-        {
-            this.effect = _effect;
-            this.itemName = _itemName;
-            this.itemExplain = _itemExaplain;
-        }
-    }
-    #endregion
-    */
-
     public class ScoreData
     {
         public string player_ID;
