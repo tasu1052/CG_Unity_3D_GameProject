@@ -33,7 +33,7 @@ public class grenadebullet : MonoBehaviour
 
         foreach (Collider hit in hitColliders)
         {
-            // Enemy에게 데미지를 주는 로직 (예: EnemyHealth 컴포넌트가 있다고 가정)
+            // Enemy에게 데미지를 주는 로직 
             EnemyHealth enemy = hit.GetComponent<EnemyHealth>();
             if (enemy != null)
             {
@@ -41,7 +41,7 @@ public class grenadebullet : MonoBehaviour
             }
         }
 
-        // (선택) 폭발 파티클 이펙트 생성
-        // Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        // 폭발 파티클 이펙트 생성
+        //Instantiate(explosionEffect, transform.position, Quaternion.identity);
     }
 }
