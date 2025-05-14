@@ -82,7 +82,7 @@ public class Inventory : MonoBehaviour
     #endregion
 
     #region Item
-    public void addItem(int x,int y,Item item)
+    public bool addItem(int x,int y,Item item)
     {
         if (tryAddItem(x, y, item))
         {
@@ -119,7 +119,9 @@ public class Inventory : MonoBehaviour
             inventory_slot_list[x, y].item = item; //슬롯에 아이템 저장
             Debug.Log(inventory_slot_list[x, y].item); //
 
+            return true; // 아이템 add성공
         }
+        else { Debug.Log("addItem 실패");  return false; } //아이템 add실패
     }
 
     public bool tryAddItem(int x, int y, Item item) // 넣을 수 있는지 체크

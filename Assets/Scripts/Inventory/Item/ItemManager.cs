@@ -28,7 +28,7 @@ public class ItemManager : MonoBehaviour
         T item = new T();
         item.index = id;
         load_item_prefab = Resources.Load<GameObject>(prefabPath);
-        item.itemPrefab = Instantiate(load_item_prefab, new Vector3(-1000, 0, 0), Quaternion.identity); //prefab인스턴스화
+        item.itemPrefab = load_item_prefab;
         item.width = 2;
         item.height = 2;
         Debug.Log(prefabPath);
