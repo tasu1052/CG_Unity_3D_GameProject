@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1380943885726591635}
   - component: {fileID: 1772644031604654634}
   - component: {fileID: 7127156497702724485}
+  - component: {fileID: 8183847311296076555}
   m_Layer: 0
   m_Name: Riffle
   m_TagString: Untagged
@@ -139,3 +140,15 @@ MonoBehaviour:
   ability: 
   storageSlotX: 0
   storageSlotY: 0
+--- !u!114 &8183847311296076555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3363457426708924199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d111c1f60508efe4db60144837bc153d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
