@@ -4,31 +4,56 @@ public class riflebullet : MonoBehaviour
 {
     public float speed = 20f;
     public float lifeTime = 2f;
-    public int damage = 10; // 데미지
+    public int damage = 10;
+    public float rotateSpeed = 5f;
 
     private Rigidbody rb;
+    private Transform target;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-
-        // 발사 방향으로 이동
-        rb.velocity = transform.forward * speed;
-
-        // 일정 시간 후 사라짐
+        rb.isKinematic = true;
         Destroy(gameObject, lifeTime);
+        FindClosestEnemy();
     }
 
-    private void OnTriggerEnter(Collider other)
+    void FixedUpdate()
     {
-        // EnemyHealth 스크립트를 가진 적이 있다면 데미지 적용
-        EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+        if (target == null) return;
+
+        // 유도 방향 계산
+        Vector3 direction = (target.position - transform.position).normalized;
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, direction, rotateSpeed * Time.fixedDeltaTime, 0.0f);
+
+        transform.position += newDir * speed * Time.fixedDeltaTime;
+        transform.rotation = Quaternion.LookRotation(newDir);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        EnemyHealth enemy = collision.gameObject.GetComponent<EnemyHealth>();
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
         }
 
-        // 총알 제거
         Destroy(gameObject);
+    }
+
+    void FindClosestEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("enemy");
+        float closestDist = Mathf.Infinity;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float dist = Vector3.Distance(transform.position, enemy.transform.position);
+            if (dist < closestDist)
+            {
+                closestDist = dist;
+                target = enemy.transform;
+            }
+        }
     }
 }
