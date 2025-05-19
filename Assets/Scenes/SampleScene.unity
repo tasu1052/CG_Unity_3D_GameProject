@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -493,7 +493,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 733272820}
-  - component: {fileID: 733272819}
+  - component: {fileID: 733272821}
   m_Layer: 0
   m_Name: weaponattachmanager
   m_TagString: Untagged
@@ -501,25 +501,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &733272819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 733272818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6a82fca48fad4543bf22538d074bfc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1813586848}
-  flamethrowerPrefab: {fileID: 1697069150440805076, guid: e06d98652ac0ccd488dcb8d662a77277, type: 3}
-  riflePrefab: {fileID: 7595383270745189795, guid: 97ae493afd04fce4ea2d9e089821e740, type: 3}
-  grenadeLauncherPrefab: {fileID: 2133262847772417465, guid: d9490737b7d014948a68bf0dde15ccdb, type: 3}
-  flamethrowerOffset: {x: 0, y: 0, z: 1}
-  rifleOffset: {x: 0.5, y: 0, z: 1}
-  grenadeLauncherOffset: {x: -0.5, y: 0, z: 1}
 --- !u!4 &733272820
 Transform:
   m_ObjectHideFlags: 0
@@ -535,6 +516,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &733272821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733272818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2516deedbc4e220498f230fd8fbdd622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1813586848}
+  flamethrowerPrefab: {fileID: 1697069150440805076, guid: e06d98652ac0ccd488dcb8d662a77277, type: 3}
+  riflePrefab: {fileID: 7595383270745189795, guid: 97ae493afd04fce4ea2d9e089821e740, type: 3}
+  grenadeLauncherPrefab: {fileID: 2133262847772417465, guid: d9490737b7d014948a68bf0dde15ccdb, type: 3}
+  flamethrowerOffset: {x: 0, y: 0, z: 1}
+  rifleOffset: {x: 0.5, y: 0, z: 1}
+  grenadeLauncherOffset: {x: -0.5, y: 0, z: 1}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
