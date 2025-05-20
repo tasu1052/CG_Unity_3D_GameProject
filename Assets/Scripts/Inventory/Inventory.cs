@@ -22,6 +22,7 @@ public class Inventory : MonoBehaviour
     [Header("Connected Objects")]
     [SerializeField] private Canvas canvas;
     [SerializeField] private RectTransform mousePointer;
+    [SerializeField] private RectTransform[] upgradeRects;
     // --------------Item----------- //
     List<Item> items = new List<Item>(); // 인벤토리에 있는 아이템 목록
 
@@ -43,6 +44,7 @@ public class Inventory : MonoBehaviour
     {
         Init();
         _inventory = this;
+        test();
     }
 
 
@@ -410,6 +412,39 @@ public class Inventory : MonoBehaviour
             }
             hilightSlotList.Clear();
         }
+    }
+
+
+    #endregion
+
+    #region Upgrade
+    private void test()
+    {
+        Item item = ItemManager.getItem(0);
+        GameObject savingItemObject = Instantiate(item.itemPrefab, upgradeRects[0].anchoredPosition, Quaternion.identity, GameObject.Find("UpgradeSelect").transform); // 캔버스에 구현, 이때 Find를 선택하는 것보다 그냥 캔버스에 바로 구현하는게 성능이 좋다. 시간나면 수정 요망. 
+        isItem savingItemisItem = savingItemObject.GetComponent<isItem>();
+
+        // 동기화
+        savingItemisItem.setSize(); // setSize먼저해야함.
+        savingItemisItem.heightSize = item.height;
+        savingItemisItem.widthSize = item.width;
+        savingItemisItem.quaternion = item.quaternion; // 회전값있으면 회전시키기
+
+        RectTransform savingItemObjectRectTransform = savingItemObject.GetComponent<RectTransform>(); // 위치조정할 RectTransform 불러오기
+                                                                                                      //위치설정
+        savingItemObjectRectTransform.anchoredPosition = upgradeRects[0].anchoredPosition;
+
+        if (draggingItemRectTransform)
+        {
+            savingItemObject.GetComponent<RectTransform>().rotation = item.quaternion;
+        }
+        // localPosition.z를 따로 설정해야 z가 제대로 적용됨
+        Vector3 fixedLocalPos = savingItemObjectRectTransform.localPosition;
+        fixedLocalPos.z = 0f; // 또는 원하는 값 (-10f로 해도 OK)
+        savingItemObjectRectTransform.localPosition = fixedLocalPos;
+
+        // 무언가 이상할떈 Pivot등을 확인
+        savingItemObject.SetActive(true); //구현
     }
 
 
