@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 public class Inventory : MonoBehaviour
 {
     public static Inventory _inventory { get; private set; }
 
-    public Slot[,] inventory_slot_list;
+    public Slot[,] inventorySlotList;
 
     [Header("Prefab Objects")]
     [SerializeField] private GameObject _slotUIPrefab; // 복사할 슬롯 하나
@@ -17,11 +18,23 @@ public class Inventory : MonoBehaviour
     [SerializeField] private int slotwidthSize;       // 가로 슬롯 개수
     [SerializeField] private int slotheightSize;      // 세로 슬롯 개수
 
+    [Header("Connected Objects")]
+    [SerializeField] private Canvas canvas;
     // --------------Item----------- //
     List<Item> items = new List<Item>();
 
     // --------------Temp------------ //
     private RectTransform draggingItemRectTransform;
+    private Slot tmpDraggingStartSlot;
+    private Item tmpDraggingItem;
+    private GameObject tmpDraggingObj;
+
+
+    // --------------RayCast---------- //
+    private List<RaycastResult> _rrList;
+    private GraphicRaycaster _gr;
+    private PointerEventData _ped;
+
     private void Start()
     {
         Init();
@@ -32,16 +45,23 @@ public class Inventory : MonoBehaviour
     public void testAddItem()
     {
         ItemManager._item.addItemIndex(0);
+
+
     }
     private void Init()
     {
         InitSlots(slotwidthSize, slotheightSize);
+
+        //Raycast관련 초기화
+        _rrList = new List<RaycastResult>();
+        _gr = canvas.GetComponent<GraphicRaycaster>();
+        _ped = new PointerEventData(null);
     }
 
     #region Slots
     private void InitSlots(int slotWidthSize, int slotHeightSize)
     {
-        inventory_slot_list = new Slot[slotWidthSize, slotHeightSize];
+        inventorySlotList = new Slot[slotWidthSize, slotHeightSize];
 
         // 슬롯 위치 기준점 추출
         RectTransform setXYrt = _slotUIPrefab.GetComponent<RectTransform>();
@@ -57,17 +77,18 @@ public class Inventory : MonoBehaviour
                 RectTransform clonert = cloneslot.GetComponent<RectTransform>();
                 clonert.anchoredPosition = new Vector3(
                     first_slot_x + slotwidthRect * x,
-                    first_slot_y - slotheightRect * y
+                    first_slot_y - slotheightRect * y,
+                    -10
                 );
 
                 cloneslot.SetActive(true);
 
-                inventory_slot_list[x, y] = cloneslot.GetComponent<Slot>();
-                inventory_slot_list[x, y].position = clonert;
+                inventorySlotList[x, y] = cloneslot.GetComponent<Slot>();
+                inventorySlotList[x, y].position = clonert;
 
                 cloneslot.name = $"Inventory Slot [{x}],[{y}]";
-                inventory_slot_list[x, y].slotPositionX = x;
-                inventory_slot_list[x, y].slotPositionY = y;
+                inventorySlotList[x, y].slotPositionX = x;
+                inventorySlotList[x, y].slotPositionY = y;
             }
         }
 
@@ -82,7 +103,7 @@ public class Inventory : MonoBehaviour
     #endregion
 
     #region Item
-    public bool addItem(int x,int y,Item item)
+    public bool addItem(int x, int y, Item item)
     {
         if (tryAddItem(x, y, item))
         {
@@ -93,35 +114,44 @@ public class Inventory : MonoBehaviour
             {
                 for (int sX = 0; sX < item.width; sX++)
                 {
-                    this.inventory_slot_list[sX + x, sY + y].occupied = true;
+                    this.inventorySlotList[sX + x, sY + y].occupied = true;
                 }
             }
 
-            GameObject saving_item_object = Instantiate(item.itemPrefab, this.inventory_slot_list[x, y].position.anchoredPosition, Quaternion.identity, GameObject.Find("InventorySlots").transform); // 캔버스에 구현, 이때 Find를 선택하는 것보다 그냥 캔버스에 바로 구현하는게 성능이 좋다. 시간나면 수정 요망. 
-            isItem saving_item_object_isitem = saving_item_object.GetComponent<isItem>(); // isItem에 정보저장
-     
+            GameObject savingItemObject = Instantiate(item.itemPrefab, this.inventorySlotList[x, y].position.anchoredPosition, Quaternion.identity, GameObject.Find("InventorySlots").transform); // 캔버스에 구현, 이때 Find를 선택하는 것보다 그냥 캔버스에 바로 구현하는게 성능이 좋다. 시간나면 수정 요망. 
 
-            RectTransform saving_item_object_RectTransform = saving_item_object.GetComponent<RectTransform>(); // 위치조정할 RectTransform 불러오기
-            saving_item_object_RectTransform.anchoredPosition = new Vector3(this.inventory_slot_list[x, y].position.anchoredPosition.x + slotwidthRect * 0.5f * (item.width - 1), this.inventory_slot_list[x, y].position.anchoredPosition.y - slotheightRect * 0.5f * (item.height - 1), 0); //위치설정
+            RectTransform savingItemObjectRectTransform = savingItemObject.GetComponent<RectTransform>(); // 위치조정할 RectTransform 불러오기
+            //위치설정
+            savingItemObjectRectTransform.anchoredPosition = new Vector3(
+                this.inventorySlotList[x, y].position.anchoredPosition.x + slotwidthRect * 0.5f * (item.width - 1),
+                this.inventorySlotList[x, y].position.anchoredPosition.y - slotheightRect * 0.5f * (item.height - 1),
+                -10);
+
+
             // 무언가 이상할떈 Pivot등을 확인
 
             if (draggingItemRectTransform)
             {
                 //dragging_item_isitem.rotation = dragging_item_RectTransform.eulerAngles.z;//회전반영
-                saving_item_object.GetComponent<RectTransform>().rotation = item.quaternion;
+                savingItemObject.GetComponent<RectTransform>().rotation = item.quaternion;
             }
 
 
-            saving_item_object.SetActive(true); //구현
+            savingItemObject.SetActive(true); //구현
+
+            // 저장위치 저장
+            isItem saving_item_object_isitem = savingItemObject.GetComponent<isItem>(); // isItem에 정보저장
+            saving_item_object_isitem.storageSlotX = x;
+            saving_item_object_isitem.storageSlotY = y;
 
             items.Add(item);
 
-            inventory_slot_list[x, y].item = item; //슬롯에 아이템 저장
-            Debug.Log(inventory_slot_list[x, y].item); //
+            inventorySlotList[x, y].item = item; //슬롯에 아이템 저장
+            Debug.Log(inventorySlotList[x, y].item); //
 
             return true; // 아이템 add성공
         }
-        else { Debug.Log("addItem 실패");  return false; } //아이템 add실패
+        else { Debug.Log("addItem 실패"); return false; } //아이템 add실패
     }
 
     public bool tryAddItem(int x, int y, Item item) // 넣을 수 있는지 체크
@@ -138,7 +168,7 @@ public class Inventory : MonoBehaviour
         {
             for (int widthcheck = x; widthcheck < x + item.width; widthcheck++)
             {
-                if (inventory_slot_list[widthcheck, heightcheck].occupied == true)
+                if (inventorySlotList[widthcheck, heightcheck].occupied == true)
                 {
                     Debug.Log("Occupied slots");
                     return false;
@@ -150,6 +180,100 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
+    private void DeleteItem(int slotX, int slotY, Slot[,] slotList) // 아이템 제거 및 초기화
+    {
+        Item item = slotList[slotX, slotY].item;
+
+        for (int y = slotY; y < slotY + item.height; y++)
+        {
+            for (int x = slotX; x < slotX + item.width; x++)
+            {
+                slotList[x, y].occupied = false;
+            }
+        }
+        slotList[slotX, slotY].item = null;
+        items.Remove(item);
+
+        if (tmpDraggingObj != null) // 현재 temp삭제
+        {
+            Destroy(tmpDraggingObj);
+        }
+    }
 
     #endregion
+
+
+    #region Dragging
+
+    public void DraggingOn(GameObject raycastObj)
+    {
+        Slot[,] tmpSlotList = null; // 일시 슬롯 저장장소
+        Debug.Log(raycastObj);
+        if (raycastObj.CompareTag("Item")) // 레이캐스트한 오브젝트가 아이템이라면
+        {
+            tmpSlotList = inventorySlotList;
+            tmpDraggingObj = raycastObj;
+        } else return;
+        // 아이템일때만 아래코드 실행
+        isItem draggingItemisItem = raycastObj.GetComponent<isItem>();
+
+        tmpDraggingStartSlot = tmpSlotList[draggingItemisItem.storageSlotX, draggingItemisItem.storageSlotY]; // 아이템이 저장된 슬롯 위치 확인. 기준점
+        tmpDraggingItem = Clone(inventorySlotList[draggingItemisItem.storageSlotX, draggingItemisItem.storageSlotY].item); // 복사하여 저장하기
+        //드래그중인 아이템의 크기만큼 슬롯을 순회하면서 occupied false 만들기
+        for (int sY = draggingItemisItem.storageSlotY; sY < draggingItemisItem.storageSlotY + draggingItemisItem.heightSize; sY++)
+        {
+            for (int sX = draggingItemisItem.storageSlotX; sX < draggingItemisItem.storageSlotX + draggingItemisItem.widthSize; sX++)
+            {
+                inventorySlotList[sX, sY].occupied = false; // 메인 인벤토리 슬롯 리스트 occupied 조정
+            }
+        }
+
+
+        Item Clone(Item item)
+        {
+            return item;
+        }
+    }
+
+
+    public void DraggingOff(GameObject raycasyObj, GameObject slotObj)
+    {
+        isItem draggingItemisItem = raycasyObj.GetComponent<isItem>();
+        Debug.Log($"{raycasyObj} : {slotObj}");
+        RectTransform rectTransformDraggingItem = raycasyObj.GetComponent<RectTransform>(); // 드래깅하던 아이템의 위치 저장
+
+        rectTransformDraggingItem.anchoredPosition =
+            new Vector2(
+            rectTransformDraggingItem.anchoredPosition.x - slotwidthRect * 0.5f * (tmpDraggingItem.width - 1),
+            rectTransformDraggingItem.anchoredPosition.y + slotheightRect * 0.5f * (tmpDraggingItem.height - 1)
+            );
+
+
+ 
+        GameObject tmpSlotObj = slotObj;
+
+        if (tmpSlotObj != null) // 슬롯이 존재한다면
+        {
+            Slot tmpSlotSlot = tmpSlotObj.GetComponent<Slot>(); // 슬롯 cs받기
+            if (!tryAddItem(tmpSlotSlot.slotPositionX, tmpSlotSlot.slotPositionY, tmpDraggingItem)) // 넣을 수 없으면
+            {
+                Debug.Log("Cant Add Item");
+                return;
+            }
+            else // 넣을 수 있으면
+            {
+                addItem(tmpSlotSlot.slotPositionX, tmpSlotSlot.slotPositionY, tmpDraggingItem);
+                Debug.Log("Add Item");
+            }
+        }
+        else
+        {
+            Debug.Log("RyCastSlot error");
+        }
+
+        // 종료 및 초기화
+        DeleteItem(draggingItemisItem.storageSlotX, draggingItemisItem.storageSlotY, inventorySlotList);
+
+    }
 }
+#endregion

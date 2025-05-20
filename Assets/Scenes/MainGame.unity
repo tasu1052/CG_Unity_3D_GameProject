@@ -395,6 +395,7 @@ MonoBehaviour:
   slotheightRect: 80
   slotwidthSize: 9
   slotheightSize: 7
+  canvas: {fileID: 265726223}
 --- !u!4 &396347113
 Transform:
   m_ObjectHideFlags: 0
@@ -684,7 +685,7 @@ GameObject:
   - component: {fileID: 1790917982}
   m_Layer: 5
   m_Name: slot
-  m_TagString: Untagged
+  m_TagString: InventorySlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

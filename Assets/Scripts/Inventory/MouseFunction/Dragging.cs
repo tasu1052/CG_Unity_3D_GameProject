@@ -24,6 +24,8 @@ public class Dragging : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragH
     {
         DraggingItemObject = gameObject; // 드래그 아이템 설정
         DraggingItemPosition = DraggingItemObject.GetComponent<RectTransform>();
+
+        Inventory._inventory.DraggingOn(gameObject);
     }
     public void OnDrag(PointerEventData eventData) //드래그중의 액션, 아이템 이동관련
     {
@@ -40,7 +42,12 @@ public class Dragging : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragH
     }
     public void OnEndDrag(PointerEventData eventData) //드래그 끝, 위치 찾기, add item등 
     {
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
 
+        GameObject slot = results.Count < 1 ? null : results[1].gameObject; // raycast 결과 2번째 ( 보통 슬롯 ) 받기
+
+        Inventory._inventory.DraggingOff(gameObject,slot);
     }
 
     #endregion
