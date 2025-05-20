@@ -20,6 +20,7 @@ public class Inventory : MonoBehaviour
 
     [Header("Connected Objects")]
     [SerializeField] private Canvas canvas;
+    [SerializeField] private RectTransform mousePointer;
     // --------------Item----------- //
     List<Item> items = new List<Item>();
 
@@ -28,7 +29,9 @@ public class Inventory : MonoBehaviour
     private Slot tmpDraggingStartSlot;
     private Item tmpDraggingItem;
     private GameObject tmpDraggingObj;
-
+    private List<Slot> hilightSlotList = new List<Slot>();
+    private isItem draggingItemisItem;
+   
 
     // --------------RayCast---------- //
     private List<RaycastResult> _rrList;
@@ -122,11 +125,15 @@ public class Inventory : MonoBehaviour
 
             RectTransform savingItemObjectRectTransform = savingItemObject.GetComponent<RectTransform>(); // 위치조정할 RectTransform 불러오기
             //위치설정
-            savingItemObjectRectTransform.anchoredPosition = new Vector3(
+            savingItemObjectRectTransform.anchoredPosition = new Vector2(
                 this.inventorySlotList[x, y].position.anchoredPosition.x + slotwidthRect * 0.5f * (item.width - 1),
-                this.inventorySlotList[x, y].position.anchoredPosition.y - slotheightRect * 0.5f * (item.height - 1),
-                -10);
+                this.inventorySlotList[x, y].position.anchoredPosition.y - slotheightRect * 0.5f * (item.height - 1)
+                );
 
+            // localPosition.z를 따로 설정해야 z가 제대로 적용됨
+            Vector3 fixedLocalPos = savingItemObjectRectTransform.localPosition;
+            fixedLocalPos.z = 0f; // 또는 원하는 값 (-10f로 해도 OK)
+            savingItemObjectRectTransform.localPosition = fixedLocalPos;
 
             // 무언가 이상할떈 Pivot등을 확인
 
@@ -200,6 +207,26 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    private void CantAddItem()                                                 //아이템을 넣지 못할때 드래그중인 아이템 파괴 후 원래상태로 복구
+    {
+        // temp delete
+        draggingItemRectTransform.rotation = draggingItemisItem.quaternion;
+        tmpDraggingItem.quaternion = draggingItemisItem.quaternion;
+        //dragging_item_RectTransform.rotation = Quaternion.Euler(0, 0, dragging_item_isitem.rotation); //회전 복구
+        tmpDraggingItem.width = draggingItemisItem.widthSize;
+        tmpDraggingItem.height = draggingItemisItem.heightSize;
+
+        if (tmpDraggingStartSlot.gameObject.CompareTag("InventorySlot"))
+        {//원래 저장되어있던 슬롯이 인벤토리였을경우
+            DeleteItem(draggingItemisItem.storageSlotX, draggingItemisItem.storageSlotY, inventorySlotList);
+            addItem(draggingItemisItem.storageSlotX, draggingItemisItem.storageSlotY, tmpDraggingItem);
+        }
+    
+
+        Debug.Log("Item delete code by can't tryAddItem");
+        tmpDraggingItem = null;
+    }
+
     #endregion
 
 
@@ -207,7 +234,7 @@ public class Inventory : MonoBehaviour
 
     public void DraggingOn(GameObject raycastObj)
     {
-        Slot[,] tmpSlotList = null; // 일시 슬롯 저장장소
+        Slot[,] tmpSlotList = inventorySlotList; // 일시 슬롯 저장장소
         Debug.Log(raycastObj);
         if (raycastObj.CompareTag("Item")) // 레이캐스트한 오브젝트가 아이템이라면
         {
@@ -228,6 +255,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
+        tmpDraggingStartSlot = tmpSlotList[draggingItemisItem.storageSlotX, draggingItemisItem.storageSlotY];
 
         Item Clone(Item item)
         {
@@ -236,32 +264,71 @@ public class Inventory : MonoBehaviour
     }
 
 
-    public void DraggingOff(GameObject raycasyObj, GameObject slotObj)
+    public void Dragging(GameObject slotObj)
     {
-        isItem draggingItemisItem = raycasyObj.GetComponent<isItem>();
-        Debug.Log($"{raycasyObj} : {slotObj}");
+
+
+        if (tmpDraggingObj != null)
+        {
+            draggingItemRectTransform = tmpDraggingObj.GetComponent<RectTransform>();
+           
+            for (int sX = 0; sX < tmpDraggingItem.width; sX++)
+            {
+                for (int sY = 0; sY < tmpDraggingItem.height; sY++)
+                {
+                    mousePointer.anchoredPosition = new Vector2(
+                      draggingItemRectTransform.anchoredPosition.x - slotwidthRect * (0.5f * (tmpDraggingItem.width - 1)) + slotwidthRect * sX,
+                      draggingItemRectTransform.anchoredPosition.y + slotheightRect * (0.5f * (tmpDraggingItem.height - 1)) - slotheightRect * sY);
+
+
+                    Vector2 screenPosition = RectTransformUtility.WorldToScreenPoint(Camera.main, mousePointer.position);
+                    GameObject tmpSlot = RaycastAndGetSecondSlot(screenPosition);
+
+                    if (tmpSlot != null)
+                    {
+                        Slot tmpslot = tmpSlot.GetComponent<Slot>();
+                        tmpslot.setHighLight();
+                        hilightSlotList.Add(tmpslot);
+                    }
+
+                }
+            }
+        }
+    }
+
+
+    public void DraggingOff(GameObject raycasyObj)
+    {
+        draggingItemisItem = raycasyObj.GetComponent<isItem>();
+
+        // ------------slotraycast ------------ //
         RectTransform rectTransformDraggingItem = raycasyObj.GetComponent<RectTransform>(); // 드래깅하던 아이템의 위치 저장
 
         rectTransformDraggingItem.anchoredPosition =
             new Vector2(
             rectTransformDraggingItem.anchoredPosition.x - slotwidthRect * 0.5f * (tmpDraggingItem.width - 1),
             rectTransformDraggingItem.anchoredPosition.y + slotheightRect * 0.5f * (tmpDraggingItem.height - 1)
-            );
+            ); // 아이템 기준 첫번째 칸
 
+        Vector2 screenPosition = RectTransformUtility.WorldToScreenPoint(Camera.main, rectTransformDraggingItem.position);
 
- 
-        GameObject tmpSlotObj = slotObj;
+        GameObject tmpSlotPrefab = RaycastAndGetSecondSlot(screenPosition); // 아이템의 위치에 있는 slot 확인
 
-        if (tmpSlotObj != null) // 슬롯이 존재한다면
+        // ------------------------------------//
+       
+
+        if (tmpSlotPrefab != null) // 슬롯이 존재한다면
         {
-            Slot tmpSlotSlot = tmpSlotObj.GetComponent<Slot>(); // 슬롯 cs받기
+
+            Slot tmpSlotSlot = tmpSlotPrefab.GetComponent<Slot>(); // 슬롯 cs받기
             if (!tryAddItem(tmpSlotSlot.slotPositionX, tmpSlotSlot.slotPositionY, tmpDraggingItem)) // 넣을 수 없으면
             {
-                Debug.Log("Cant Add Item");
+                CantAddItem();
                 return;
             }
             else // 넣을 수 있으면
             {
+                DeleteItem(draggingItemisItem.storageSlotX, draggingItemisItem.storageSlotY, inventorySlotList);
                 addItem(tmpSlotSlot.slotPositionX, tmpSlotSlot.slotPositionY, tmpDraggingItem);
                 Debug.Log("Add Item");
             }
@@ -271,9 +338,55 @@ public class Inventory : MonoBehaviour
             Debug.Log("RyCastSlot error");
         }
 
-        // 종료 및 초기화
-        DeleteItem(draggingItemisItem.storageSlotX, draggingItemisItem.storageSlotY, inventorySlotList);
 
+        // 종료 및 초기화
+
+        tmpDraggingItem = null;
+        draggingItemRectTransform = null;
+        tmpDraggingObj = null;
+        draggingItemisItem = null;
+
+        foreach (Slot s in hilightSlotList)
+            s.offHighLight();
+        hilightSlotList.Clear();
+
+        
     }
+    #endregion
+
+
+    #region Function
+    public GameObject RaycastAndGetSecondSlot(Vector2 screenposition)
+    {
+        _rrList.Clear();
+
+        _ped.position = screenposition;
+
+
+        _gr.Raycast(_ped, _rrList);
+        if (_rrList.Count <= 1)
+        {
+            return null;
+        }
+
+        if (_rrList[1].gameObject.CompareTag("InventorySlot") || _rrList[1].gameObject.CompareTag("StoreSlot"))
+            return _rrList[1].gameObject;
+        else
+            return null;
+    }
+
+    private void SlotHilightOff()                   //슬롯 hilight끄기
+    {
+        if (hilightSlotList != null)
+        {
+            for (int i = 0; i < hilightSlotList.Count; i++)
+            {
+                hilightSlotList[i].offHighLight();
+            }
+            hilightSlotList.Clear();
+        }
+    }
+
+
+    #endregion
 }
-#endregion

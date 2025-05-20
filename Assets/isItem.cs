@@ -12,7 +12,7 @@ public class isItem : MonoBehaviour
     // 저장되는 인벤토리내 아이템 위치
     public int storageSlotX;
     public int storageSlotY;
-
+    public Quaternion quaternion;
     private void Start()
     {
         setSize();
