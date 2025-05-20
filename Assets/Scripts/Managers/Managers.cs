@@ -14,7 +14,7 @@ public class Managers : MonoBehaviour
     InputManager _input = new InputManager();
     PoolManager _pool = new PoolManager();
     SceneManagerEx _scene = new SceneManagerEx();
-    DataManager _data = new DataManager(); //DataManager°¡ °ãÃÄ¼­ Ãß°¡
+    DataManager _data = new DataManager(); //DataManagerê°€ ê²¹ì³ì„œ ì¶”ê°€
     JsonManager _json = new JsonManager();
     InventoryManager _inventory = new InventoryManager();
 
@@ -35,15 +35,8 @@ public class Managers : MonoBehaviour
     void Start()
     {
         Init();
-        StartCoroutine(WaitForDataLoading());
     }
-    public IEnumerator WaitForDataLoading()
-    {
-        // _data.itemsData = _json.Load<Define.ItemsData>();
-        _data.Items = _json.Load<Define.Items>();
-        _data.Blesses = _json.Load<Define.Blesses>();
-        yield return null;
-    }
+
     // Update is called once per frame
     void Update()
     {

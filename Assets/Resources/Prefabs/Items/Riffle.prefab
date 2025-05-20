@@ -136,10 +136,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   widthSize: 2
-  heightSize: 2
+  heightSize: 4
   ability: 
   storageSlotX: 0
   storageSlotY: 0
+  quaternion: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &8183847311296076555
 MonoBehaviour:
   m_ObjectHideFlags: 0

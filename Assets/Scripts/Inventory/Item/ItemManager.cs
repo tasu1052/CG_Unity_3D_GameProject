@@ -29,8 +29,8 @@ public class ItemManager : MonoBehaviour
         item.index = id;
         load_item_prefab = Resources.Load<GameObject>(prefabPath);
         item.itemPrefab = load_item_prefab;
-        item.width = 2;
-        item.height = 2;
+        item.width = item.itemPrefab.GetComponent<isItem>().widthSize;
+        item.height = item.itemPrefab.GetComponent<isItem>().heightSize;
         Debug.Log(prefabPath);
         return item;
     }

@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
     public static Inventory _inventory { get; private set; }
 
     public Slot[,] inventorySlotList;
+    public List<Item> inventoryItemList;
 
     [Header("Prefab Objects")]
     [SerializeField] private GameObject _slotUIPrefab; // 복사할 슬롯 하나
@@ -22,7 +23,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Canvas canvas;
     [SerializeField] private RectTransform mousePointer;
     // --------------Item----------- //
-    List<Item> items = new List<Item>();
+    List<Item> items = new List<Item>(); // 인벤토리에 있는 아이템 목록
 
     // --------------Temp------------ //
     private RectTransform draggingItemRectTransform;
@@ -122,13 +123,25 @@ public class Inventory : MonoBehaviour
             }
 
             GameObject savingItemObject = Instantiate(item.itemPrefab, this.inventorySlotList[x, y].position.anchoredPosition, Quaternion.identity, GameObject.Find("InventorySlots").transform); // 캔버스에 구현, 이때 Find를 선택하는 것보다 그냥 캔버스에 바로 구현하는게 성능이 좋다. 시간나면 수정 요망. 
+            isItem savingItemisItem = savingItemObject.GetComponent<isItem>();
 
+            // 동기화
+            savingItemisItem.setSize(); // setSize먼저해야함.
+            savingItemisItem.heightSize = item.height;
+            savingItemisItem.widthSize = item.width;
+            savingItemisItem.quaternion = item.quaternion; // 회전값있으면 회전시키기
+          
             RectTransform savingItemObjectRectTransform = savingItemObject.GetComponent<RectTransform>(); // 위치조정할 RectTransform 불러오기
             //위치설정
-            savingItemObjectRectTransform.anchoredPosition = new Vector2(
+            savingItemObjectRectTransform.anchoredPosition = new Vector3(
                 this.inventorySlotList[x, y].position.anchoredPosition.x + slotwidthRect * 0.5f * (item.width - 1),
                 this.inventorySlotList[x, y].position.anchoredPosition.y - slotheightRect * 0.5f * (item.height - 1)
                 );
+
+            if (draggingItemRectTransform)
+            {
+                savingItemObject.GetComponent<RectTransform>().rotation = item.quaternion;
+            }
 
             // localPosition.z를 따로 설정해야 z가 제대로 적용됨
             Vector3 fixedLocalPos = savingItemObjectRectTransform.localPosition;
@@ -137,19 +150,12 @@ public class Inventory : MonoBehaviour
 
             // 무언가 이상할떈 Pivot등을 확인
 
-            if (draggingItemRectTransform)
-            {
-                //dragging_item_isitem.rotation = dragging_item_RectTransform.eulerAngles.z;//회전반영
-                savingItemObject.GetComponent<RectTransform>().rotation = item.quaternion;
-            }
-
-
             savingItemObject.SetActive(true); //구현
 
             // 저장위치 저장
-            isItem saving_item_object_isitem = savingItemObject.GetComponent<isItem>(); // isItem에 정보저장
-            saving_item_object_isitem.storageSlotX = x;
-            saving_item_object_isitem.storageSlotY = y;
+
+            savingItemisItem.storageSlotX = x;
+            savingItemisItem.storageSlotY = y;
 
             items.Add(item);
 
@@ -234,12 +240,15 @@ public class Inventory : MonoBehaviour
 
     public void DraggingOn(GameObject raycastObj)
     {
+        SlotHilightOff();
+
         Slot[,] tmpSlotList = inventorySlotList; // 일시 슬롯 저장장소
         Debug.Log(raycastObj);
         if (raycastObj.CompareTag("Item")) // 레이캐스트한 오브젝트가 아이템이라면
         {
             tmpSlotList = inventorySlotList;
             tmpDraggingObj = raycastObj;
+            draggingItemRectTransform = tmpDraggingObj.GetComponent<RectTransform>();
         } else return;
         // 아이템일때만 아래코드 실행
         isItem draggingItemisItem = raycastObj.GetComponent<isItem>();
@@ -264,13 +273,13 @@ public class Inventory : MonoBehaviour
     }
 
 
-    public void Dragging(GameObject slotObj)
+    public void Dragging()
     {
 
-
+        SlotHilightOff();
         if (tmpDraggingObj != null)
         {
-            draggingItemRectTransform = tmpDraggingObj.GetComponent<RectTransform>();
+
            
             for (int sX = 0; sX < tmpDraggingItem.width; sX++)
             {
@@ -293,6 +302,23 @@ public class Inventory : MonoBehaviour
 
                 }
             }
+
+
+            //R키 입력시 회전
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                //회전적용
+                draggingItemRectTransform.rotation *= Quaternion.Euler(0, 0, 90);
+                tmpDraggingItem.quaternion = draggingItemRectTransform.rotation;
+
+                //회전시 width, height변화 Item에 반영
+                int temp = tmpDraggingItem.width;
+                tmpDraggingItem.width = tmpDraggingItem.height;
+                tmpDraggingItem.height = temp;
+
+            }
+
+
         }
     }
 
@@ -342,7 +368,6 @@ public class Inventory : MonoBehaviour
         // 종료 및 초기화
 
         tmpDraggingItem = null;
-        draggingItemRectTransform = null;
         tmpDraggingObj = null;
         draggingItemisItem = null;
 

@@ -13,11 +13,8 @@ public class isItem : MonoBehaviour
     public int storageSlotX;
     public int storageSlotY;
     public Quaternion quaternion;
-    private void Start()
-    {
-        setSize();
-    }
-    private void setSize()
+
+    public void setSize()
     {
         int slotSize = Define.SlotData.slotSize;
         GetComponent<RectTransform>().sizeDelta = new Vector2(slotSize * widthSize, slotSize * heightSize);

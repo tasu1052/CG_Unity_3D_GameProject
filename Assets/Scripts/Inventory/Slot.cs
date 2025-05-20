@@ -19,7 +19,6 @@ public class Slot : MonoBehaviour
     }
     public void offHighLight()
     {
-        Debug.Log("offHighLight 테스트");
         image = GetComponent<Image>();
         image.color = new Color(56f / 255f, 56f / 255f, 56f / 255f, 100f / 255f);
     }

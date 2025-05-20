@@ -29,7 +29,6 @@ public class Dragging : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragH
     }
     public void OnDrag(PointerEventData eventData) //드래그중의 액션, 아이템 이동관련
     {
-        Inventory inventory = Inventory._inventory;
         // 드래깅중에 마우스 Action을 canvas로 바꿔야하기 때문에 이러한 함수를 사용한다.
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvas.transform as RectTransform,
@@ -38,25 +37,9 @@ public class Dragging : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragH
             out Vector2 position);
 
 
-        // Raycast 슬롯 감지
-        var results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
-
-        GameObject slot = null;
-        foreach (var result in results)
-        {
-            if (result.gameObject.CompareTag("InventorySlot"))
-            {
-                slot = result.gameObject;
-                Debug.Log(slot);
-                break;
-            }
-        }
-
         // 받아온 position으로 이동
         DraggingItemPosition.localPosition = position;
-
-        inventory.Dragging(slot);
+        Inventory._inventory.Dragging();
         
     }
     public void OnEndDrag(PointerEventData eventData) //드래그 끝, 위치 찾기, add item등 
