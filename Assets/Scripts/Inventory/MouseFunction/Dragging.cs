@@ -36,18 +36,15 @@ public class Dragging : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragH
             eventData.pressEventCamera,
             out Vector2 position);
 
+
         // 받아온 position으로 이동
         DraggingItemPosition.localPosition = position;
+        Inventory._inventory.Dragging();
         
     }
     public void OnEndDrag(PointerEventData eventData) //드래그 끝, 위치 찾기, add item등 
     {
-        var results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, results);
-
-        GameObject slot = results.Count < 1 ? null : results[1].gameObject; // raycast 결과 2번째 ( 보통 슬롯 ) 받기
-
-        Inventory._inventory.DraggingOff(gameObject,slot);
+        Inventory._inventory.DraggingOff(gameObject);
     }
 
     #endregion
