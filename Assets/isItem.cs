@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class isItem : MonoBehaviour
 {
+    // 실체 isItem
     private string itemName; // 이름
     public int widthSize; // 물건의 가로길이
     public int heightSize; // 물건의 세로 길이
@@ -13,6 +14,7 @@ public class isItem : MonoBehaviour
     public int storageSlotX;
     public int storageSlotY;
     public Quaternion quaternion;
+    public Item item;
 
     public void setSize()
     {

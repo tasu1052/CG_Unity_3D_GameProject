@@ -41,4 +41,15 @@ public class ItemManager : MonoBehaviour
         Inventory._inventory.addItem(0, 0, getItem(x));
         Debug.Log($"Items.getItem{x}");
     }
+    public void checkItemList()
+    {
+        List<Item> items = Inventory._inventory.items;
+
+        foreach (Item i in items)
+        {
+            Debug.Log(i);
+        }
+    
+       
+    }
 }

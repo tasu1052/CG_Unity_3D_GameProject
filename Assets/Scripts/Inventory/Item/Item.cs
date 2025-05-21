@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Item
 {
+    // 추상 Item 관리 
+
     [SerializeField] public GameObject itemPrefab;
     public int index; // 아이템의 인덱스
     public int x; // 들어갈 슬롯 칸
