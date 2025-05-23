@@ -2,20 +2,29 @@ using UnityEngine;
 
 public class MonsterTracking : MonoBehaviour
 {
-    public Transform player;//ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡
-    public float speed = 2f; //Àû ÀÌµ¿¼Óµµ
-    public float range = 100f;//°¨Áö ¹üÀ§
-
+    public Transform player;//í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜
+    public float speed = 2f; //ì  ì´ë™ì†ë„
+    public float range = 100f;//ê°ì§€ ë²”ìœ„
+    private Animator animator;
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     void Update()
     {
-        //Àû°ú ÇÃ·¹ÀÌ¾î »çÀÌÀÇ °Å¸® °è»êÇÏ´Â ÄÚµå
+        //ì ê³¼ í”Œë ˆì´ì–´ ì‚¬ì´ì˜ ê±°ë¦¬ ê³„ì‚°í•˜ëŠ” ì½”ë“œ
         float distance = Vector3.Distance(transform.position, player.position);
-        //°Å¸®°¡ °¨Áö ¹üÀ§ ÀÌ³»¶ó¸é ÇÃ·¡ÀÌ¾î¸¦ ÇâÇØ ÀÏÁ¤¼Óµµ·Î ÀÌµ¿ÇÕ´Ï´Ù.
+        //ê±°ë¦¬ê°€ ê°ì§€ ë²”ìœ„ ì´ë‚´ë¼ë©´ í”Œë˜ì´ì–´ë¥¼ í–¥í•´ ì¼ì •ì†ë„ë¡œ ì´ë™í•©ë‹ˆë‹¤.
         if (distance <= range)
         {
-            transform.LookAt(player); //ÀûÀÌ ÇÃ·¹ÀÌ¾î°¡ ÀÖ´Â ¹æÇâÀ» ¹Ù¶óº¸µµ·Ï ÇÏ´Â ÄÚµå
+            animator.SetBool("isMoving", true);
+            transform.LookAt(player); //ì ì´ í”Œë ˆì´ì–´ê°€ ìˆëŠ” ë°©í–¥ì„ ë°”ë¼ë³´ë„ë¡ í•˜ëŠ” ì½”ë“œ
             transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-        //ÇÃ·¹ÀÌ¾î¸¦ ÇâÇØ ÀÏÁ¤¼Óµµ·Î ÀÌµ¿
+            //í”Œë ˆì´ì–´ë¥¼ í–¥í•´ ì¼ì •ì†ë„ë¡œ ì´ë™
+        }
+        else
+        {
+            animator.SetBool("isMoving", false);
         }
     }
 }

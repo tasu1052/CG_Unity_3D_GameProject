@@ -3,12 +3,16 @@ using System.Collections;
 
 public class ZombieDamage : MonoBehaviour
 {
-    public float damage = 10f; // ÀûÀÌ ÇÃ·¹ÀÌ¾î¿¡°Ô ÀÔÈ÷´Â ÇÇÇØ·®
-    private bool isDamaging = false; // ÇöÀç µ¥¹ÌÁö¸¦ ÁÖ´Â ÁßÀÎÁö ¿©ºÎ È®ÀÎ
-
+    public float damage = 10f; // ì ì´ í”Œë ˆì´ì–´ì—ê²Œ ì…íˆëŠ” í”¼í•´ëŸ‰
+    private bool isDamaging = false; // í˜„ì¬ ë°ë¯¸ì§€ë¥¼ ì£¼ëŠ” ì¤‘ì¸ì§€ ì—¬ë¶€ í™•ì¸
+    private Animator animator;
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     private void OnCollisionStay(Collision collision)
     {
-        // Ãæµ¹ ´ë»óÀÌ ÇÃ·¹ÀÌ¾îÀÎ °æ¿ì
+        // ì¶©ëŒ ëŒ€ìƒì´ í”Œë ˆì´ì–´ì¸ ê²½ìš°
         if (collision.gameObject.CompareTag("Player"))
         {
             if (!isDamaging)
@@ -20,14 +24,14 @@ public class ZombieDamage : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        // ÇÃ·¹ÀÌ¾î¿ÍÀÇ Ãæµ¹ÀÌ ³¡³ª¸é µ¥¹ÌÁö Áß´Ü
+        // í”Œë ˆì´ì–´ì™€ì˜ ì¶©ëŒì´ ëë‚˜ë©´ ë°ë¯¸ì§€ ì¤‘ë‹¨
         if (collision.gameObject.CompareTag("Player"))
         {
             isDamaging = false;
         }
     }
 
-    // ÄÚ·çÆ¾À» ÅëÇØ 1ÃÊ °£°İÀ¸·Î µ¥¹ÌÁö¸¦ ÁÜ
+    // ì½”ë£¨í‹´ì„ í†µí•´ 1ì´ˆ ê°„ê²©ìœ¼ë¡œ ë°ë¯¸ì§€ë¥¼ ì¤Œ
     private IEnumerator DealDamageOverTime(GameObject player)
     {
         isDamaging = true;
@@ -35,8 +39,12 @@ public class ZombieDamage : MonoBehaviour
         PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
         while (isDamaging && playerHealth != null && playerHealth.Hp > 0)
         {
+            if (animator != null)
+            {
+                animator.SetTrigger("Attack");
+            }
             playerHealth.GetDamage((int)damage);
-            yield return new WaitForSeconds(1f); // 1ÃÊ ´ë±â
+            yield return new WaitForSeconds(1f); // 1ì´ˆ ëŒ€ê¸°
         }
 
         isDamaging = false;

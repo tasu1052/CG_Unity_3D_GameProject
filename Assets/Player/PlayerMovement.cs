@@ -4,37 +4,63 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;//ÇÃ·¹ÀÌ¾î ÀÌµ¿¼Óµµ
-    public float turnSpeed = 5f;//ÇÃ·¹ÀÌ¾î È¸Àü ¼Óµµ
+    public float moveSpeed = 5f;//í”Œë ˆì´ì–´ ì´ë™ì†ë„
+    public float turnSpeed = 5f;//í”Œë ˆì´ì–´ íšŒì „ ì†ë„
 
-    //Animator m_Animator;//¾Ö´Ï¸ŞÀÌ¼ÇÀ» »ç¿ëÇÒ °æ¿ì »ç¿ë
+    //Animator m_Animator;//ì• ë‹ˆë©”ì´ì…˜ì„ ì‚¬ìš©í•  ê²½ìš° ì‚¬ìš©
     Rigidbody m_Rigidbody;
-    Vector3 m_Movement;//ÀÌµ¿ ¹æÇâ º¤ÅÍ
+    Vector3 m_Movement;//ì´ë™ ë°©í–¥ ë²¡í„°
+    Transform closestEnemy;
 
     void Start()
     {
-       // m_Animator = GetComponent<Animator>();//¾Ö´Ï¸ŞÀÌÅÍ ¿¬°á
+       // m_Animator = GetComponent<Animator>();//ì• ë‹ˆë©”ì´í„° ì—°ê²°
         m_Rigidbody = GetComponent<Rigidbody>();
     }
     void Update()
     {
-        float horizontal = Input.GetAxis("Horizontal");//ÁÂ¿ì ¹æÇâ ÀÔ·Â¹ŞÀ½
-        float vertical = Input.GetAxis("Vertical");//»óÇÏ ¹æÇâ ÀÔ·Â¹ŞÀ½
+        float horizontal = Input.GetAxis("Horizontal");//ì¢Œìš° ë°©í–¥ ì…ë ¥ë°›ìŒ
+        float vertical = Input.GetAxis("Vertical");//ìƒí•˜ ë°©í–¥ ì…ë ¥ë°›ìŒ
 
         m_Movement = new Vector3(horizontal, 0, vertical).normalized;
-        //ÀÔ·Â ¹æÇâ¿¡ µû¶ó ÀÌµ¿¹æÇâ ¼³Á¤
+        //ì…ë ¥ ë°©í–¥ì— ë”°ë¼ ì´ë™ë°©í–¥ ì„¤ì •
 
-        // ¾Ö´Ï¸ŞÀÌ¼Ç  Ã³¸® -> ÇöÀç´Â ÁÖ¼®Ã³¸®
+        // ì• ë‹ˆë©”ì´ì…˜  ì²˜ë¦¬ -> í˜„ì¬ëŠ” ì£¼ì„ì²˜ë¦¬
        // m_Animator.SetBool("isRunning", m_Movement != Vector3.zero);
 
-        // ÀÌµ¿
+        // ì´ë™
         transform.position += m_Movement * moveSpeed * Time.deltaTime;
 
-        // È¸Àü
-        if (m_Movement != Vector3.zero)
+
+        // ê°€ì¥ ê°€ê¹Œìš´ ì ì„ ë°”ë¼ë³´ê²Œ íšŒì „
+        FindClosestEnemy();
+        if (closestEnemy != null)
         {
-            Quaternion toRotation = Quaternion.LookRotation(m_Movement, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, turnSpeed * Time.deltaTime);
+            Vector3 direction = (closestEnemy.position - transform.position).normalized;
+            direction.y = 0; // yì¶• íšŒì „ ë°©ì§€ (ìˆ˜í‰ íšŒì „ë§Œ)
+            if (direction != Vector3.zero)
+            {
+                Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
+                transform.rotation = Quaternion.Lerp(transform.rotation, toRotation, turnSpeed * Time.deltaTime);
+            }
         }
+    }
+    void FindClosestEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("enemy");
+        float closestDistance = Mathf.Infinity;
+        Transform nearest = null;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float dist = Vector3.Distance(transform.position, enemy.transform.position);
+            if (dist < closestDistance)
+            {
+                closestDistance = dist;
+                nearest = enemy.transform;
+            }
+        }
+
+        closestEnemy = nearest;
     }
 }
