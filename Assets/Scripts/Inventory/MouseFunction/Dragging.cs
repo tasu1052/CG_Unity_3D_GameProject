@@ -24,6 +24,8 @@ public class Dragging : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragH
     {
         DraggingItemObject = gameObject; // 드래그 아이템 설정
         DraggingItemPosition = DraggingItemObject.GetComponent<RectTransform>();
+
+        Inventory._inventory.DraggingOn(gameObject);
     }
     public void OnDrag(PointerEventData eventData) //드래그중의 액션, 아이템 이동관련
     {
@@ -34,13 +36,15 @@ public class Dragging : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragH
             eventData.pressEventCamera,
             out Vector2 position);
 
+
         // 받아온 position으로 이동
         DraggingItemPosition.localPosition = position;
+        Inventory._inventory.Dragging();
         
     }
     public void OnEndDrag(PointerEventData eventData) //드래그 끝, 위치 찾기, add item등 
     {
-
+        Inventory._inventory.DraggingOff(gameObject);
     }
 
     #endregion

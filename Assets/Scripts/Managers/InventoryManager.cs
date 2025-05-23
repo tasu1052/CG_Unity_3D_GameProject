@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class InventoryManager
 {
-    public void Init()
+    void Start()
     {
 
     }

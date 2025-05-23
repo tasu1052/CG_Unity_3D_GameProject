@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class isItem : MonoBehaviour
 {
+    // 실체 isItem
     private string itemName; // 이름
     public int widthSize; // 물건의 가로길이
     public int heightSize; // 물건의 세로 길이
@@ -12,12 +13,10 @@ public class isItem : MonoBehaviour
     // 저장되는 인벤토리내 아이템 위치
     public int storageSlotX;
     public int storageSlotY;
+    public Quaternion quaternion;
+    public Item item;
 
-    private void Start()
-    {
-        setSize();
-    }
-    private void setSize()
+    public void setSize()
     {
         int slotSize = Define.SlotData.slotSize;
         GetComponent<RectTransform>().sizeDelta = new Vector2(slotSize * widthSize, slotSize * heightSize);

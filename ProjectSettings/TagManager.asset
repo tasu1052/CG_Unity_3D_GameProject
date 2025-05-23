@@ -7,6 +7,9 @@ TagManager:
   - enemy
   - weapon
   - Ammo
+  - Item
+  - InventorySlot
+  - UpgradeSlot
   layers:
   - Default
   - TransparentFX
