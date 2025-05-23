@@ -4,22 +4,16 @@ public class FireShooter : MonoBehaviour
 {
     public GameObject firePrefab; // 불공 프리팹
     public Transform firePoint;   // 발사 위치
-    public float fireInterval = 3f; // 몇 초마다 발사할지 (기본 5초)
+    public float fireForce = 10f;
 
-    private float lastFireTime = 0f;
-
-    void Update()
+    public void ShootFire()
     {
-        if (Time.time - lastFireTime >= fireInterval)
-        {
-            ShootFire();
-            lastFireTime = Time.time;
-        }
-    }
-
-    void ShootFire()
-    {
+        Debug.Log("🔥 ShootFire 호출됨!");
         GameObject fireInstance = Instantiate(firePrefab, firePoint.position, firePoint.rotation);
         Rigidbody rb = fireInstance.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.AddForce(firePoint.forward * fireForce);  // 앞으로 힘 줌
+        }
     }
 }
