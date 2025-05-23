@@ -3,6 +3,7 @@ using UnityEngine;
 public class FireDamage : MonoBehaviour
 {
     public float damageAmount = 100.0f;
+    public float explosionRadius = 10f;     // ✅ 추가: 광역 공격 반경
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -11,16 +12,17 @@ public class FireDamage : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
             return;
 
-        if (collision.gameObject.CompareTag("enemy"))
+        // ✅ 광역 데미지 처리
+        Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius);
+        foreach (Collider hit in hits)
         {
-            Debug.Log("Enemy에 맞음! 데미지 적용!");
+            if (!hit.CompareTag("enemy")) continue;
 
-            // 자식에 맞았을 경우 부모에서 찾기
-            EnemyHealth enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+            Debug.Log($"Enemy에 맞음! 데미지 적용 대상: {hit.name}");
+
+            EnemyHealth enemyHealth = hit.GetComponent<EnemyHealth>();
             if (enemyHealth == null)
-            {
-                enemyHealth = collision.gameObject.GetComponentInParent<EnemyHealth>();
-            }
+                enemyHealth = hit.GetComponentInParent<EnemyHealth>();
 
             if (enemyHealth != null)
             {
