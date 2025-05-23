@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -569,7 +569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1813586848}
   enemyPrefabs:
-  - {fileID: 829138859}
+  - {fileID: 0}
   minSpawnDistance: 10
   maxSpawnDistance: 30
   spawnInterval: 2
@@ -729,15 +729,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1813586848}
-  flamethrowerPrefab: {fileID: 1697069150440805076, guid: e06d98652ac0ccd488dcb8d662a77277, type: 3}
+  flamethrowerPrefab: {fileID: 1191599615336914116, guid: 7d0bdc416584b5b41b60dd0390007cc7, type: 3}
   riflePrefab: {fileID: 7595383270745189795, guid: 97ae493afd04fce4ea2d9e089821e740, type: 3}
   grenadeLauncherPrefab: {fileID: 2133262847772417465, guid: d9490737b7d014948a68bf0dde15ccdb, type: 3}
   weaponDistanceFromPlayer: 1
---- !u!1 &829138859 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5600688544948371371, guid: ac7ef2528fc772b479bb98cb62043906, type: 3}
-  m_PrefabInstance: {fileID: 6546558430301811577}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &894860824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1299,6 +1294,8 @@ MonoBehaviour:
   - {fileID: 5157338376056009394, guid: 368f45e3a55886743973ac290d5e8684, type: 3}
   - {fileID: 5208743259017975002, guid: 5ad60c65e293ffc4dad83e1586d2030b, type: 3}
   - {fileID: 7839368031425036948, guid: 4ccde8083f224344591aab65d66c6493, type: 3}
+  healPackPrefab: {fileID: 0}
+  healPackChance: 1
 --- !u!4 &1568205784
 Transform:
   m_ObjectHideFlags: 0
@@ -1812,6 +1809,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9107788385254291894, guid: ac7ef2528fc772b479bb98cb62043906, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1813586848}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
