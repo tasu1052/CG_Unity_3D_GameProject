@@ -27,6 +27,7 @@ public class MapManager : MonoBehaviour
 
     void Start()
     {
+        PrewarmNaturePools();
         GenerateInitialTiles(WorldToCoord(player.position));
     }
 
@@ -35,6 +36,32 @@ public class MapManager : MonoBehaviour
         Vector2Int playerCoord = WorldToCoord(player.position);
         EnsureConnectedTiles(playerCoord);  // 플레이어 주변에 타일이 없으면 생성
         RemoveFarTiles(player.position);    // 멀어진 타일은 비활성화 및 풀에 반환
+    }
+
+
+    // 자연물 풀링 초기화
+    void PrewarmNaturePools()
+    {
+        PrewarmSet(grassObjects, 30);
+        PrewarmSet(blueGrassObjects, 30);
+        PrewarmSet(swampObjects, 30);
+    }
+
+    void PrewarmSet(GameObject[] objectSet, int count)
+    {
+        foreach (var prefab in objectSet)
+        {
+            string key = prefab.name;
+            if (!naturePools.ContainsKey(key))
+                naturePools[key] = new Queue<GameObject>();
+
+            for (int i = 0; i< count; i++)
+            {
+                GameObject obj = Instantiate(prefab);
+                obj.SetActive(false);
+                naturePools[key].Enqueue(obj);
+            }
+        }
     }
 
     // 초기 중심 좌표 기준으로 주변 타일 생성
@@ -88,20 +115,6 @@ public class MapManager : MonoBehaviour
 
         tile.transform.position = CoordToWorld(coord);
         tiles[coord] = tile;
-
-        SpawnNatureObjects(tile);   // 지형에 맞는 자연물 배치
-
-        if (Random.value < healPackChance && healPackPrefab != null)
-        {
-            Vector3 position = tile.transform.position + new Vector3(
-                Random.Range(-tileSize / 2 + 5, tileSize / 2 - 5),
-                1.0f,
-                Random.Range(-tileSize / 2 + 5, tileSize / 2 - 5)
-            );
-
-            GameObject healPack = Instantiate(healPackPrefab, position, Quaternion.identity);
-            healPack.transform.parent = tile.transform;
-        }
     }
 
 
@@ -120,7 +133,7 @@ public class MapManager : MonoBehaviour
             _ => null
         };
 
-        if (objectSet == null) return;
+        if (objectSet == null || objectSet.Length == 0) return;
 
         // 랜덤 개수만큼 자연물 배치
         int count = Random.Range(10, 20);
@@ -156,6 +169,7 @@ public class MapManager : MonoBehaviour
         }
         else
         {
+            Debug.LogWarning($"{key} pool 부족 - 새로 생성");
             return Instantiate(prefab);
         }
     }
@@ -191,9 +205,14 @@ public class MapManager : MonoBehaviour
                     continue;
                 }
                 child.gameObject.SetActive(false);
+
+                if (!naturePools.ContainsKey(key))
+                    naturePools[key] = new Queue<GameObject>();
+
                 naturePools[key].Enqueue(child.gameObject);
             }
 
+            tile.transform.DetachChildren();
             tile.SetActive(false);
             tilePool.Enqueue(tile);
             tiles.Remove(coord);
