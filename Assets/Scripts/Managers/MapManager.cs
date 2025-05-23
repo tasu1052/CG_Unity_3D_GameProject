@@ -137,7 +137,7 @@ public class MapManager : MonoBehaviour
 
         if (objectSet == null || objectSet.Length == 0) return;
 
-        // 랜덤 개수만큼 자연물 배치
+        // 자연물 개수 조정
         int count = Random.Range(30, 45);
         for (int i = 0; i < count; i++)
         {
@@ -156,6 +156,7 @@ public class MapManager : MonoBehaviour
             obj.transform.parent = tile.transform;
             obj.SetActive(true);
         }
+        //힐팩 개수 조정
         int healPackCount = Random.Range(3, 7);
         for (int i = 0; i < healPackCount; i++)
         {
