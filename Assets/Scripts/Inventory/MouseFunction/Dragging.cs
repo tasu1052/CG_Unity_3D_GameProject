@@ -39,7 +39,6 @@ public class Dragging : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragH
 
         // 받아온 position으로 이동
         DraggingItemPosition.localPosition = position;
-        Inventory._inventory.Dragging();
         
     }
     public void OnEndDrag(PointerEventData eventData) //드래그 끝, 위치 찾기, add item등 
