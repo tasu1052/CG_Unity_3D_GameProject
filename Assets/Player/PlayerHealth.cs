@@ -4,58 +4,64 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    // HpBar Slider¸¦ ¿¬µ¿ÇÏ±â À§ÇÑ Slider °´Ã¼
+    // HpBar Sliderï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ Slider ï¿½ï¿½Ã¼
     [SerializeField] private Slider _hpBar;
-    //°ÔÀÓ ¿À¹ö È­¸éÀ¸·Î »ç¿ëÇÒ UI ¿ÀºêÁ§Æ®
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     [SerializeField] private GameObject gameOverUI;
 
-    // ÇÃ·¹ÀÌ¾îÀÇ HP
+    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ HP
     private int _hp;
 
     public int Hp
     {
         get => _hp;
-        // Math.Clamp ÇÔ¼ö¸¦ »ç¿ëÇØ¼­ hp°¡ 0º¸´Ù ¾Æ·¡·Î ¶³¾îÁöÁö ¾Êµµ·Ï ÇÔ.
+        // Math.Clamp ï¿½Ô¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ hpï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½.
         private set => _hp = Math.Clamp(value, 0, _hp);
     }
     void Start()
     {
-        //°ÔÀÓ ½ÃÀÛÇÒ ¶§ GameOver UI´Â ºñÈ°¼ºÈ­
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ GameOver UIï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
         if (gameOverUI != null)
             gameOverUI.SetActive(false);
     }
     private void Awake()
     {
-        // ÇÃ·¹ÀÌ¾îÀÇ HP °ªÀ» 100À¸·Î ÃÊ±â ¼¼ÆÃ
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ HP ï¿½ï¿½ï¿½ï¿½ 100ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½
         _hp = 100;
-        // MaxValue¸¦ ¼¼ÆÃÇÏ´Â ÇÔ¼ö
+        // MaxValueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
         SetMaxHealth(_hp);
     }
 
-    public void SetMaxHealth(int health) //ÃÖ´ë Ã¼·Â ¹× ÇöÀç °ªÀ» ¼³Á¤ÇÏ´Â ÇÔ¼ö
+    public void SetMaxHealth(int health) //ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
     {
         _hpBar.maxValue = health;
         _hpBar.value = health;
     }
 
-    // ÇÃ·¹ÀÌ¾î°¡ µ¥¹ÌÁö¸¦ ¹ÞÀ¸¸é µ¥¹ÌÁö °ªÀ» Àü´Þ ¹Þ¾Æ HP¹Ù¿¡ ¹Ý¿µ
+    // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾ï¿½ HPï¿½Ù¿ï¿½ ï¿½Ý¿ï¿½
     public void GetDamage(int damage)
     {
         int getDamagedHp = Hp - damage;
         Hp = getDamagedHp;
         _hpBar.value = Hp;
-        //Ã¼·Â 0 ÀÌÇÏ¸é gameover ÇÔ¼ö È£Ãâ
+        //Ã¼ï¿½ï¿½ 0 ï¿½ï¿½ï¿½Ï¸ï¿½ gameover ï¿½Ô¼ï¿½ È£ï¿½ï¿½
         if (Hp <= 0)
             GameOver();
     }
-    private void GameOver()//°ÔÀÓ ¿À¹ö Ã³¸® ÇÔ¼ö
+    private void GameOver()//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½Ô¼ï¿½
     {
         Debug.Log("Game Over");
-        //°ÔÀÓ ¿À¹ö UI È°¼ºÈ­
+        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UI È°ï¿½ï¿½È­
         if (gameOverUI != null)
         {
             gameOverUI.SetActive(true);
         }
-        Time.timeScale = 0; // °ÔÀÓ ÀÏ½ÃÁ¤Áö
+        Time.timeScale = 0; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ï½ï¿½ï¿½ï¿½ï¿½ï¿½
     }
+    public void Heal(int amount)
+    {
+        Hp += amount;
+        _hpBar.value = Hp;
+    }
+
 }
