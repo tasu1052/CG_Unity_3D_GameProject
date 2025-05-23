@@ -66,6 +66,12 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPos = player.position + offset;
 
         GameObject prefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
-        Instantiate(prefab, spawnPos, Quaternion.identity);
+        GameObject enemy = Instantiate(prefab, spawnPos, Quaternion.identity);
+
+        MonsterTracking tracker = enemy.GetComponent<MonsterTracking>();
+        if (tracker != null)
+        {
+            tracker.player = player;
+        }
     }
 }
