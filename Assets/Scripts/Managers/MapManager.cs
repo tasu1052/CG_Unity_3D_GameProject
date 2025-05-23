@@ -21,6 +21,10 @@ public class MapManager : MonoBehaviour
     private Queue<GameObject> tilePool = new();                        // 타일 풀
     private Dictionary<string, Queue<GameObject>> naturePools = new(); // 자연물 풀
 
+    [Header("Heal Pack Settings")]
+    public GameObject healPackPrefab;
+    public float healPackChance = 1.0f;
+
     void Start()
     {
         GenerateInitialTiles(WorldToCoord(player.position));
@@ -86,6 +90,18 @@ public class MapManager : MonoBehaviour
         tiles[coord] = tile;
 
         SpawnNatureObjects(tile);   // 지형에 맞는 자연물 배치
+
+        if (Random.value < healPackChance && healPackPrefab != null)
+        {
+            Vector3 position = tile.transform.position + new Vector3(
+                Random.Range(-tileSize / 2 + 5, tileSize / 2 - 5),
+                1.0f,
+                Random.Range(-tileSize / 2 + 5, tileSize / 2 - 5)
+            );
+
+            GameObject healPack = Instantiate(healPackPrefab, position, Quaternion.identity);
+            healPack.transform.parent = tile.transform;
+        }
     }
 
 
@@ -116,7 +132,7 @@ public class MapManager : MonoBehaviour
             // 타일 내부에서 랜덤 위치 지정
             Vector3 position = tile.transform.position + new Vector3(
                 Random.Range(-tileSize / 2 + 5, tileSize / 2 - 5),
-                0,
+                1.0f,
                 Random.Range(-tileSize / 2 + 5, tileSize / 2 - 5)
             );
 
@@ -163,7 +179,17 @@ public class MapManager : MonoBehaviour
             // 자식 자연물 오브젝트들을 풀로 반환
             foreach (Transform child in tile.transform)
             {
+                if (child.CompareTag("HealPack"))
+                {
+                    Destroy(child.gameObject);
+                    continue;
+                }
                 string key = child.name.Replace("(Clone)", "").Trim();
+                if (!naturePools.ContainsKey(key))
+                {
+                    Destroy(child.gameObject);
+                    continue;
+                }
                 child.gameObject.SetActive(false);
                 naturePools[key].Enqueue(child.gameObject);
             }

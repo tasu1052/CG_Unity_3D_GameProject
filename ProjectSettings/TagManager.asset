@@ -10,6 +10,7 @@ TagManager:
   - Item
   - InventorySlot
   - UpgradeSlot
+  - HealPack
   layers:
   - Default
   - TransparentFX
