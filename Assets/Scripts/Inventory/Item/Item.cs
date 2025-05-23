@@ -12,6 +12,7 @@ public abstract class Item
     public int y; // 들어갈 슬롯 칸
     public int width, height;
     public Quaternion quaternion;
+    public int itemUpgradeNumber;
 
     public int getIndex()
     {

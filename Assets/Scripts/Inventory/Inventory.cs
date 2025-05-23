@@ -37,7 +37,6 @@ public class Inventory : MonoBehaviour
     private List<Slot> hilightSlotList = new List<Slot>();
     private isItem draggingItemisItem;
     private Item[] upgradeItems = new Item[3];
-   
 
     // --------------RayCast---------- //
     private List<RaycastResult> _rrList;
@@ -55,20 +54,14 @@ public class Inventory : MonoBehaviour
     {
         if(isDragging)
         {
+            Dragging();
             //R키 입력시 회전
             if (Input.GetKeyDown(KeyCode.R))
             {
-                //회전적용
-                draggingItemRectTransform.rotation *= Quaternion.Euler(0, 0, 90);
-                tmpDraggingItem.quaternion = draggingItemRectTransform.rotation;
-
-                //회전시 width, height변화 Item에 반영
-                int temp = tmpDraggingItem.width;
-                tmpDraggingItem.width = tmpDraggingItem.height;
-                tmpDraggingItem.height = temp;
-
+                rotateItemObj();
             }
         }
+        
     }
 
 
@@ -272,6 +265,18 @@ public class Inventory : MonoBehaviour
         tmpDraggingItem = null;
     }
 
+    void rotateItemObj()
+    {
+        //회전적용
+        draggingItemRectTransform.rotation *= Quaternion.Euler(0, 0, 90);
+        tmpDraggingItem.quaternion = draggingItemRectTransform.rotation;
+
+        //회전시 width, height변화 Item에 반영
+        int temp = tmpDraggingItem.width;
+        tmpDraggingItem.width = tmpDraggingItem.height;
+        tmpDraggingItem.height = temp;
+    }
+
     #endregion
 
 
@@ -318,7 +323,13 @@ public class Inventory : MonoBehaviour
         else // Item을 UpgradeSlot에서 선택할때
         {
             isDraggingFromInventory = false;
-            tmpDraggingItem = Clone(upgradeItems[0]);
+            int itemNumber = RaycastUpgreadeSlot(screenPosition);
+            if (itemNumber < 4)
+            {
+                tmpDraggingItem = Clone(upgradeItems[itemNumber]);
+                Debug.Log(itemNumber);
+            }
+            else Debug.Log("itemNumber 오류");
         }
 
         Item Clone(Item item)
@@ -468,6 +479,37 @@ public class Inventory : MonoBehaviour
             return null;
     }
 
+    private int RaycastUpgreadeSlot(Vector2 screenposition)
+    {
+        _rrList.Clear();
+
+        _ped.position = screenposition;
+
+
+        _gr.Raycast(_ped, _rrList);
+
+        if (_rrList.Count <= 1)
+        {
+            return 4;
+        }
+
+        GameObject hit = _rrList[1].gameObject;
+
+        if (hit.CompareTag("UpgradeSlot"))
+        {
+            string name = hit.name;
+            // 끝에서 1글자 추출
+            char lastChar = name[name.Length - 1];
+
+            // 숫자인지 확인 후 int로 변환
+            if (char.IsDigit(lastChar))
+                return lastChar - '0'; // char → int 변환
+
+        }
+
+        return 4;
+    }
+
     private void SlotHilightOff()                   //슬롯 hilight끄기
     {
         if (hilightSlotList != null)
@@ -486,38 +528,47 @@ public class Inventory : MonoBehaviour
     #region Upgrade
     private void test()
     {
-        Item item = ItemManager.getItem(0);
-        GameObject savingItemObject = Instantiate(item.itemPrefab, upgradeRects[0].anchoredPosition, Quaternion.identity, GameObject.Find("UpgradeSelect").transform); // 캔버스에 구현, 이때 Find를 선택하는 것보다 그냥 캔버스에 바로 구현하는게 성능이 좋다. 시간나면 수정 요망. 
-        upgradeItems[0] = item;
-        isItem savingItemisItem = savingItemObject.GetComponent<isItem>();
-
-        // 동기화
-        savingItemisItem.setSize(); // setSize먼저해야함.
-        savingItemisItem.heightSize = item.height;
-        savingItemisItem.widthSize = item.width;
-        savingItemisItem.quaternion = item.quaternion; // 회전값있으면 회전시키기
-
-
-        RectTransform savingItemObjectRectTransform = savingItemObject.GetComponent<RectTransform>(); // 위치조정할 RectTransform 불러오기
-                                                                                                      //위치설정
-        savingItemObjectRectTransform.anchoredPosition = upgradeRects[0].anchoredPosition;
-        
-        if (draggingItemRectTransform)
+        for(int i = 0; i<3;i++) // 업그레이드 아이템 3 개 생성
         {
-            savingItemObject.GetComponent<RectTransform>().rotation = item.quaternion;
-        }
-        // localPosition.z를 따로 설정해야 z가 제대로 적용됨
-        Vector3 fixedLocalPos = savingItemObjectRectTransform.localPosition;
-        fixedLocalPos.z = 0f; // 또는 원하는 값 (-10f로 해도 OK)
-        savingItemObjectRectTransform.localPosition = fixedLocalPos;
+            Item item = ItemManager.getItem(0); // 아이템 생성 코드
+            GameObject savingItemObject = Instantiate(item.itemPrefab, upgradeRects[0].anchoredPosition, Quaternion.identity, GameObject.Find("UpgradeSelect").transform); // 캔버스에 구현, 이때 Find를 선택하는 것보다 그냥 캔버스에 바로 구현하는게 성능이 좋다. 시간나면 수정 요망. 
+            upgradeItems[i] = item;
+            isItem savingItemisItem = savingItemObject.GetComponent<isItem>();
+            upgradeItems[i].itemUpgradeNumber = i;
 
-        // 무언가 이상할떈 Pivot등을 확인
-        savingItemObject.SetActive(true); //구현
+            // 동기화
+            savingItemisItem.setSize(); // setSize먼저해야함.
+            savingItemisItem.heightSize = item.height;
+            savingItemisItem.widthSize = item.width;
+            savingItemisItem.quaternion = item.quaternion; // 회전값있으면 회전시키기
+
+
+            RectTransform savingItemObjectRectTransform = savingItemObject.GetComponent<RectTransform>(); // 위치조정할 RectTransform 불러오기
+                                                                                                          //위치설정
+            savingItemObjectRectTransform.anchoredPosition = upgradeRects[i].anchoredPosition;
+
+            if (draggingItemRectTransform)
+            {
+                savingItemObject.GetComponent<RectTransform>().rotation = item.quaternion;
+            }
+            // localPosition.z를 따로 설정해야 z가 제대로 적용됨
+            Vector3 fixedLocalPos = savingItemObjectRectTransform.localPosition;
+            fixedLocalPos.z = 0f; // 또는 원하는 값 (-10f로 해도 OK)
+            savingItemObjectRectTransform.localPosition = fixedLocalPos;
+
+            // 무언가 이상할떈 Pivot등을 확인
+            savingItemObject.SetActive(true); //구현
+        }
+    
+        
+
+      
     }
 
     private void setRectUpgradeItem()
     {
-        tmpDraggingObj.GetComponent<RectTransform>().anchoredPosition = upgradeRects[0].anchoredPosition; // 자리 되돌려놓기
+        
+        tmpDraggingObj.GetComponent<RectTransform>().anchoredPosition = upgradeRects[tmpDraggingItem.itemUpgradeNumber].anchoredPosition; // 자리 되돌려놓기
     }
 
 
