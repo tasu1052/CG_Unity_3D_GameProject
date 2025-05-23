@@ -115,6 +115,8 @@ public class MapManager : MonoBehaviour
 
         tile.transform.position = CoordToWorld(coord);
         tiles[coord] = tile;
+
+        SpawnNatureObjects(tile);
     }
 
 
@@ -136,7 +138,7 @@ public class MapManager : MonoBehaviour
         if (objectSet == null || objectSet.Length == 0) return;
 
         // 랜덤 개수만큼 자연물 배치
-        int count = Random.Range(10, 20);
+        int count = Random.Range(30, 45);
         for (int i = 0; i < count; i++)
         {
             GameObject prefab = objectSet[Random.Range(0, objectSet.Length)];
@@ -153,6 +155,22 @@ public class MapManager : MonoBehaviour
             obj.transform.rotation = Quaternion.Euler(0, Random.Range(0f, 360f), 0);
             obj.transform.parent = tile.transform;
             obj.SetActive(true);
+        }
+        int healPackCount = Random.Range(3, 7);
+        for (int i = 0; i < healPackCount; i++)
+        {
+            if (Random.value < healPackChance) // 확률로 생성
+            {
+                Vector3 healPosition = tile.transform.position + new Vector3(
+                    Random.Range(-tileSize / 2 + 5, tileSize / 2 - 5),
+                    1.0f,
+                    Random.Range(-tileSize / 2 + 5, tileSize / 2 - 5)
+                );
+
+                GameObject healPack = Instantiate(healPackPrefab, healPosition, Quaternion.identity);
+                healPack.tag = "HealPack"; // 제거 시 구분용
+                healPack.transform.parent = tile.transform;
+            }
         }
     }
 

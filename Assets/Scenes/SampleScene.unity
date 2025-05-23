@@ -1294,8 +1294,8 @@ MonoBehaviour:
   - {fileID: 5157338376056009394, guid: 368f45e3a55886743973ac290d5e8684, type: 3}
   - {fileID: 5208743259017975002, guid: 5ad60c65e293ffc4dad83e1586d2030b, type: 3}
   - {fileID: 7839368031425036948, guid: 4ccde8083f224344591aab65d66c6493, type: 3}
-  healPackPrefab: {fileID: 0}
-  healPackChance: 1
+  healPackPrefab: {fileID: 1566866368747901091, guid: 0d9552fa4bc066946968969dde478628, type: 3}
+  healPackChance: 0.8
 --- !u!4 &1568205784
 Transform:
   m_ObjectHideFlags: 0
@@ -1520,6 +1520,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1886200407}
   m_CullTransparentMesh: 1
+--- !u!1 &2067829212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2067829213}
+  m_Layer: 0
+  m_Name: TimeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2067829213
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067829212}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3614733, y: 1.4266237, z: 0.12759417}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2142580678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1673,3 +1704,4 @@ SceneRoots:
   - {fileID: 1568205784}
   - {fileID: 235898503}
   - {fileID: 626364384}
+  - {fileID: 2067829213}
