@@ -65,7 +65,6 @@ public class Managers : MonoBehaviour
     {
         Input.Clear();
         UI.Clear();
-        Pool.Clear();
     }
 
 }

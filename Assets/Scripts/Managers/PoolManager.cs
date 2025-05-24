@@ -114,12 +114,5 @@ public class PoolManager
         return _pool[name].Original;
     }
 
-    public void Clear()
-    {
-        foreach (Transform child in _root)
-        {
-            GameObject.Destroy(child.gameObject);
-        }
-        _pool.Clear();
-    }
+
 }
