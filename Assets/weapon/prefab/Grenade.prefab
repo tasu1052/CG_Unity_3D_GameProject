@@ -139,3 +139,5 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
+  explosionSound: {fileID: 8300000, guid: 3350a9ee3819b7b4a9448517209bcae7, type: 3}
+  explosionEffectPrefab: {fileID: 100000, guid: 0315cb4a52ecd4a46a4fe8f3b3500557, type: 3}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6937734896211558475}
   - component: {fileID: 8321218527204241364}
   - component: {fileID: 8230528128363132013}
-  - component: {fileID: 5309054044377981571}
+  - component: {fileID: 612407231865607041}
   m_Layer: 6
   m_Name: bullet
   m_TagString: Ammo
@@ -248,7 +248,7 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 0
---- !u!114 &5309054044377981571
+--- !u!114 &612407231865607041
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

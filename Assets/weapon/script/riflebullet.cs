@@ -4,25 +4,43 @@ public class riflebullet : MonoBehaviour
 {
     public float speed = 20f;
     public float lifeTime = 2f;
-    public int damage = 10;
     public float rotateSpeed = 5f;
 
+    private int damage;
     private Rigidbody rb;
     private Transform target;
 
-    void Start()
+    public int Damage => damage;
+
+void Start()
+{
+    int baseDamage = Random.Range(20, 41); // 20~40
+
+    float elapsedTime = 0f;
+    if (TimeManager.Instance != null)
     {
-        rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
-        Destroy(gameObject, lifeTime);
-        FindClosestEnemy();
+        elapsedTime = TimeManager.Instance.GetElapsedTime();
     }
+    else
+    {
+        Debug.LogWarning("[riflebullet] TimeManager.Instance is null! Setting elapsedTime = 0");
+    }
+
+    float multiplier = elapsedTime / 50f;
+    damage = baseDamage;//Mathf.RoundToInt(baseDamage * multiplier);
+
+
+    rb = GetComponent<Rigidbody>();
+    rb.isKinematic = true;
+    Destroy(gameObject, lifeTime);
+    FindClosestEnemy();
+}
+
 
     void FixedUpdate()
     {
         if (target == null) return;
 
-        // 유도 방향 계산
         Vector3 direction = (target.position - transform.position).normalized;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, direction, rotateSpeed * Time.fixedDeltaTime, 0.0f);
 
