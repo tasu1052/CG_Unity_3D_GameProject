@@ -11,12 +11,17 @@ public class EnemySpawner : MonoBehaviour
     public float maxSpawnDistance = 30f;
 
     [Header("Spawn Timing")]
-    public float spawnInterval = 2f;     // 시작 시 생성 간격
-    public int baseEnemiesPerWave = 1;   // 초기 생성 수
-    public float levelUpInterval = 30f;  // 레벨업 주기 (초)
+    public float spawnInterval = 2f;
+    public int baseEnemiesPerWave = 1;
+    public float levelUpInterval = 30f;
 
     private float levelTimer;
     private int currentLevel = 1;
+
+    [Header("Boss Settings")]
+    public GameObject bossPrefab;
+    public float bossSpawnInterval = 60f;   // 보스 등장 간격 (예: 60초)
+    private float bossTimer = 0f;
 
     void Start()
     {
@@ -26,11 +31,18 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         levelTimer += Time.deltaTime;
+        bossTimer += Time.deltaTime;
 
         if (levelTimer >= levelUpInterval)
         {
             currentLevel++;
             levelTimer = 0;
+        }
+
+        if (bossTimer >= bossSpawnInterval)
+        {
+            SpawnBoss();
+            bossTimer = 0f; // 보스 타이머 초기화
         }
     }
 
@@ -55,16 +67,7 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        float distance = Random.Range(minSpawnDistance, maxSpawnDistance);
-        float angle = Random.Range(0f, 360f);
-        Vector3 offset = new Vector3(
-            Mathf.Cos(angle * Mathf.Deg2Rad),
-            0,
-            Mathf.Sin(angle * Mathf.Deg2Rad)
-        ) * distance;
-
-        Vector3 spawnPos = player.position + offset;
-
+        Vector3 spawnPos = GetRandomSpawnPosition();
         GameObject prefab = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
         GameObject enemy = Instantiate(prefab, spawnPos, Quaternion.identity);
 
@@ -73,5 +76,31 @@ public class EnemySpawner : MonoBehaviour
         {
             tracker.player = player;
         }
+    }
+
+    void SpawnBoss()
+    {
+        Vector3 spawnPos = GetRandomSpawnPosition();
+        GameObject boss = Instantiate(bossPrefab, spawnPos, Quaternion.identity);
+
+        MonsterTracking tracker = boss.GetComponent<MonsterTracking>();
+        if (tracker != null)
+        {
+            tracker.player = player;
+        }
+        Debug.Log("💀 보스 스폰됨!");
+    }
+
+    Vector3 GetRandomSpawnPosition()
+    {
+        float distance = Random.Range(minSpawnDistance, maxSpawnDistance);
+        float angle = Random.Range(0f, 360f);
+        Vector3 offset = new Vector3(
+            Mathf.Cos(angle * Mathf.Deg2Rad),
+            0,
+            Mathf.Sin(angle * Mathf.Deg2Rad)
+        ) * distance;
+
+        return player.position + offset;
     }
 }
