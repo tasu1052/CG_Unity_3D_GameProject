@@ -27,8 +27,9 @@ public class riflebullet : MonoBehaviour
             Debug.LogWarning("[riflebullet] TimeManager.Instance is null! Setting elapsedTime = 0");
         }
 
-        float multiplier = elapsedTime / 50f;
-        damage = baseDamage; // Mathf.RoundToInt(baseDamage * multiplier);
+        float multiplier = 1+ (elapsedTime / 50f);
+        damage = Mathf.RoundToInt(baseDamage * multiplier);
+        Debug.LogWarning("rifle damage : " + damage);
 
         // ✅ Rigidbody 초기화
         rb = GetComponent<Rigidbody>();
