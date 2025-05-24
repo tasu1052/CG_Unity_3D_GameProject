@@ -81,9 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 3
-  lifeTime: 1
-  minDamage: 5
-  maxDamage: 15
+  lifeTime: 0.3
   flameSound: {fileID: 8300000, guid: 43c9f1fcd965b324fadf0fcfad4b9286, type: 3}
 --- !u!54 &8628454066763604321
 Rigidbody:

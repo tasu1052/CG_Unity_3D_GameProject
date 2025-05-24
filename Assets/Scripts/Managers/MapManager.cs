@@ -147,7 +147,7 @@ public class MapManager : MonoBehaviour
             // 타일 내부에서 랜덤 위치 지정
             Vector3 position = tile.transform.position + new Vector3(
                 Random.Range(-tileSize / 2 + 5, tileSize / 2 - 5),
-                1.0f,
+                0.0f,
                 Random.Range(-tileSize / 2 + 5, tileSize / 2 - 5)
             );
 
