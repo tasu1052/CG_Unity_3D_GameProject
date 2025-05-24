@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 public class InventoryManager : MonoBehaviour
 {
+    public static InventoryManager Instance; // 싱글톤
     public RectTransform inventoryTransform;
     private void Start()
     {

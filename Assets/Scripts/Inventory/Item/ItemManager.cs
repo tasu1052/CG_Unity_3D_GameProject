@@ -16,6 +16,11 @@ public class ItemManager : MonoBehaviour
         {
             case 0:
                 return createItem<Riffle>(id, "Prefabs/Items/Riffle");
+            case 1:
+                return createItem<Grande>(id, "Prefabs/Items/Grande");
+            case 2:
+                return createItem<Launcher>(id, "Prefabs/Items/Launcher");
+               
             default:
                 Debug.LogError("Unknown id");
                 return null;
