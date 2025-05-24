@@ -15,7 +15,7 @@ public class riflebullet : MonoBehaviour
 
     void Start()
     {
-        Debug.LogWarning("rifle damage : " + damage);
+        //Debug.Log("rifle damage : " + damage);
 
         // ✅ Rigidbody 초기화
         rb = GetComponent<Rigidbody>();
