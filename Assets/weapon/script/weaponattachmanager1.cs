@@ -3,10 +3,12 @@ using UnityEngine;
 public class weaponattachmanager1 : MonoBehaviour
 {
     public Transform player;  // 플레이어
+    public SimpleCooldown cooldown;
 
     public GameObject flamethrowerPrefab;
     public GameObject riflePrefab;
     public GameObject grenadeLauncherPrefab;
+    public GameObject flameskillPrefab;
 
     public float weaponDistanceFromPlayer = 1.0f; // 플레이어로부터 무기 거리
 
@@ -20,6 +22,23 @@ public class weaponattachmanager1 : MonoBehaviour
             AttachWeapon(riflePrefab);
         if (Input.GetKeyDown(KeyCode.Alpha3))
             AttachWeapon(grenadeLauncherPrefab);
+if (Input.GetKeyDown(KeyCode.Q) && cooldown.IsReady())
+{
+    Debug.Log("Q 입력 감지됨");
+    AttachWeapon(flameskillPrefab);
+    cooldown.TriggerCooldown();
+
+    FireShooter shooter = currentWeapon.GetComponentInChildren<FireShooter>();
+    if (shooter != null)
+    {
+        Debug.Log("shooter 있음, ShootFire 호출 시도");
+        shooter.ShootFire();
+    }
+    else
+    {
+        Debug.LogWarning("FireShooter 컴포넌트를 찾지 못함!");
+    }
+}
 
         if (currentWeapon != null)
             UpdateWeaponPositionAndRotation();

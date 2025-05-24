@@ -7,11 +7,14 @@ public class WeaponAttachManager : MonoBehaviour
     public GameObject flamethrowerPrefab;   // 화염방사기 프리팹
     public GameObject riflePrefab;          // 소총 프리팹
     public GameObject grenadeLauncherPrefab;// 그레네이드 발사기 프리팹
+    public GameObject flameskillPrefab;
 
     // 각 무기의 부착 위치 오프셋 (플레이어 기준, 로컬좌표)
     public Vector3 flamethrowerOffset = new Vector3(0, 0, 1);  
     public Vector3 rifleOffset = new Vector3(0.5f, 0, 1);  
     public Vector3 grenadeLauncherOffset = new Vector3(-0.5f, 0, 1);
+    public Vector3 flameskillOffset = new Vector3(0, 0, -1);
+    public SimpleCooldown cooldown;
 
     void Update()
     {
@@ -26,6 +29,11 @@ public class WeaponAttachManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             AttachWeapon(grenadeLauncherPrefab, grenadeLauncherOffset);
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            AttachWeapon(flameskillPrefab, flameskillOffset);
+            cooldown.TriggerCooldown();
         }
     }
 
