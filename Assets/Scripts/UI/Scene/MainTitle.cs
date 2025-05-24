@@ -17,6 +17,7 @@ public class MainTitle : BaseScene
     private void Start()
     {
         Init();
+        SoundManager.Instance.AudioPlay("MainTitle");
     }
 
     public void GameStart()

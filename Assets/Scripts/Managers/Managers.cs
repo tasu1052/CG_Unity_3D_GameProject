@@ -30,8 +30,7 @@ public class Managers : MonoBehaviour
     public static SceneManagerEx Scene { get { return Instance._scene; } }
 
     public static InventoryManager Inventory { get { return Instance._inventory; } }
-
-
+ 
     void Start()
     {
         Init();
