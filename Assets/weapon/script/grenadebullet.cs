@@ -30,7 +30,7 @@ public class grenadebullet : MonoBehaviour
             Debug.LogWarning("[grenadebullet] TimeManager.Instance is null! Setting elapsedTime = 0");
         }
 
-        float multiplier = 1f + (elapsedTime / 50f);
+        float multiplier = 1f + (elapsedTime / 100f);
         Damage = baseDamage; // * multiplier;
 
         rb = GetComponent<Rigidbody>();
