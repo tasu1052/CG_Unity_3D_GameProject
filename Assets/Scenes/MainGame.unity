@@ -185,7 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1204256426}
   cooldown: {fileID: 850521410}
-  flamethrowerPrefab: {fileID: 1191599615336914116, guid: 7d0bdc416584b5b41b60dd0390007cc7, type: 3}
+  flamethrowerPrefab: {fileID: 776577190574680382, guid: df17c232e98f4ea469b182ffa0eead67, type: 3}
   riflePrefab: {fileID: 7595383270745189795, guid: 97ae493afd04fce4ea2d9e089821e740, type: 3}
   grenadeLauncherPrefab: {fileID: 2133262847772417465, guid: d9490737b7d014948a68bf0dde15ccdb, type: 3}
   weaponDistanceFromPlayer: 1
