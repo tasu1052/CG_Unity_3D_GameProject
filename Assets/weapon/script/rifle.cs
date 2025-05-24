@@ -8,12 +8,15 @@ public class rifle : MonoBehaviour
     private float fireRate;           // 랜덤 발사 속도
     private float nextFireTime = 0f;
 
+    private int baseDamage;           // ⬅ 총 데미지를 고정
+
     public float FireRate => fireRate; // 외부 참조용 프로퍼티
 
     void Start()
     {
         fireRate = Random.Range(0.3f, 0.6f); // 발사 속도 랜덤 설정
-        Debug.Log($"[riflebullet] firerate: {fireRate}");
+        baseDamage = Random.Range(20, 41);  // ⬅ 최초 1회만 데미지 설정
+        Debug.Log($"[rifle] firerate: {fireRate}, baseDamage: {baseDamage}");
     }
 
     void Update()
@@ -21,12 +24,18 @@ public class rifle : MonoBehaviour
         FireBullet();
     }
 
-    // 발사 트리거용 메소드
     public void FireBullet()
     {
         if (Time.time >= nextFireTime)
         {
-            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+            riflebullet bulletScript = bullet.GetComponent<riflebullet>();
+            if (bulletScript != null)
+            {
+                bulletScript.SetDamage(baseDamage);  // ⬅ 고정된 데미지를 전달
+            }
+
             nextFireTime = Time.time + fireRate;
         }
     }

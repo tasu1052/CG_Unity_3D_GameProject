@@ -15,20 +15,6 @@ public class riflebullet : MonoBehaviour
 
     void Start()
     {
-        int baseDamage = Random.Range(20, 41); // 20~40
-
-        float elapsedTime = 0f;
-        if (TimeManager.Instance != null)
-        {
-            elapsedTime = TimeManager.Instance.GetElapsedTime();
-        }
-        else
-        {
-            Debug.LogWarning("[riflebullet] TimeManager.Instance is null! Setting elapsedTime = 0");
-        }
-
-        float multiplier = 1+ (elapsedTime / 100f);
-        damage = Mathf.RoundToInt(baseDamage * multiplier);
         Debug.LogWarning("rifle damage : " + damage);
 
         // ✅ Rigidbody 초기화
@@ -45,6 +31,11 @@ public class riflebullet : MonoBehaviour
 
         Destroy(gameObject, lifeTime);
     }
+
+public void SetDamage(int dmg)
+{
+    damage = dmg;
+}
 
     void FixedUpdate()
     {

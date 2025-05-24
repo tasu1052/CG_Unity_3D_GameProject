@@ -3,7 +3,7 @@ using UnityEngine;
 public class FireDamage : MonoBehaviour
 {
     public float baseDamage = 100.0f;           // ✅ 기본 데미지
-    public float explosionRadius = 10f;         // 광역 공격 반경
+    public float explosionRadius = 7f;         // 광역 공격 반경
     private float damageAmount;                 // 실제 데미지
 
     private void Start()
@@ -18,7 +18,7 @@ public class FireDamage : MonoBehaviour
             Debug.LogWarning("[FireDamage] TimeManager.Instance is null! Setting elapsedTime = 0");
         }
 
-        float multiplier = 1f + (elapsedTime / 50f); // 경과 50초마다 데미지 2배
+        float multiplier = 1f + (elapsedTime / 100f); // 경과 50초마다 데미지 2배
         damageAmount = baseDamage * multiplier;
         Debug.Log("fire damage: " + damageAmount);
     }
