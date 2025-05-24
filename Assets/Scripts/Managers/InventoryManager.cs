@@ -13,11 +13,13 @@ public class InventoryManager : MonoBehaviour
     }
     public void CloseInventory()
     {
+        Time.timeScale = 1;
         inventoryTransform.anchoredPosition = new Vector2(0, 2000); // 화면에서 안보이게하기
     }
 
     public void OpenInventory()
     {
+        Time.timeScale = 0;
         inventoryTransform.anchoredPosition = new Vector2(0, 0); // 화면에서 보이게하기
     }
 }

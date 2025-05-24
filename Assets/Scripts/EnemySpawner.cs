@@ -88,7 +88,7 @@ public class EnemySpawner : MonoBehaviour
         {
             tracker.player = player;
         }
-        Debug.Log("💀 보스 스폰됨!");
+
     }
 
     Vector3 GetRandomSpawnPosition()
