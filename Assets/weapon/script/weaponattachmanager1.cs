@@ -8,7 +8,7 @@ public class weaponattachmanager1 : MonoBehaviour
     public GameObject flamethrowerPrefab;
     public GameObject riflePrefab;
     public GameObject grenadeLauncherPrefab;
-    public GameObject flameskillPrefab;
+    //public GameObject flameskillPrefab;
 
     public float weaponDistanceFromPlayer = 1.0f; // 플레이어로부터 무기 거리
 
@@ -22,7 +22,7 @@ public class weaponattachmanager1 : MonoBehaviour
             AttachWeapon(riflePrefab);
         if (Input.GetKeyDown(KeyCode.Alpha3))
             AttachWeapon(grenadeLauncherPrefab);
-if (Input.GetKeyDown(KeyCode.Q) && cooldown.IsReady())
+/*if (Input.GetKeyDown(KeyCode.Q) && cooldown.IsReady())
 {
     Debug.Log("Q 입력 감지됨");
     AttachWeapon(flameskillPrefab);
@@ -38,7 +38,7 @@ if (Input.GetKeyDown(KeyCode.Q) && cooldown.IsReady())
     {
         Debug.LogWarning("FireShooter 컴포넌트를 찾지 못함!");
     }
-}
+}*/
 
         if (currentWeapon != null)
             UpdateWeaponPositionAndRotation();

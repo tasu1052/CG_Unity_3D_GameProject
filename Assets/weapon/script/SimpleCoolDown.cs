@@ -5,7 +5,7 @@ public class SimpleCooldown : MonoBehaviour
 {
     public TextMeshProUGUI cooldownText;
     public float cooldownTime = 5f;
-    public FireShooter fireShooter; // 여기를 수정!
+    public PlayerSkill playerSkill; // ← 여기를 FireShooter 대신 PlayerSkill로
 
     private float currentCooldown = 0f;
 
@@ -21,6 +21,12 @@ public class SimpleCooldown : MonoBehaviour
                 cooldownText.text = "";
             }
         }
+
+        // Q 키 입력 처리 (중앙에서)
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            TriggerCooldown();
+        }
     }
 
     void UseSkill()
@@ -28,9 +34,9 @@ public class SimpleCooldown : MonoBehaviour
         currentCooldown = cooldownTime;
         cooldownText.text = cooldownTime.ToString();
 
-        if (fireShooter != null)
+        if (playerSkill != null)
         {
-            fireShooter.Invoke("ShootFire", 0f); // private 함수이므로 Invoke로 호출
+            playerSkill.CastSkill(); // PlayerSkill의 공개 메서드 호출
         }
     }
 
@@ -38,13 +44,14 @@ public class SimpleCooldown : MonoBehaviour
     {
         if (currentCooldown > 0)
         {
-            return; // 쿨타임 시작 + 스킬 발사
+            return; // 쿨타임 중이라면 무시
         }
+
         UseSkill();
     }
+
     public bool IsReady()
     {
         return currentCooldown <= 0f;
     }
-
 }

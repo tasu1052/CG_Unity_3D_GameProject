@@ -1,27 +1,26 @@
 using UnityEngine;
 
-public class SkillManager : MonoBehaviour
+
+public class PlayerSkill : MonoBehaviour
 {
-    public GameObject skillPrefab;       // 스킬 이펙트 프리팹 (ex. 불덩이)
-    public Transform skillSpawnPoint;    // 스킬 생성 위치
-    public float skillCooldown = 5f;
+    public GameObject skillPrefab;
+    public float skillSpeed = 10f;
+    public float spawnOffset = 1.5f;
+    public Transform playerTransform; // 플레이어 위치
 
-    private float cooldownTimer = 0f;
-
-    void Update()
+    public void CastSkill()
     {
-        if (cooldownTimer > 0f)
-            cooldownTimer -= Time.deltaTime;
+        Vector3 spawnPosition = playerTransform.position + playerTransform.forward * spawnOffset;
+        Quaternion rotation = Quaternion.LookRotation(playerTransform.forward);
 
-        if (Input.GetKeyDown(KeyCode.Q) && cooldownTimer <= 0f)
+        GameObject skill = Instantiate(skillPrefab, spawnPosition, rotation);
+
+        Rigidbody rb = skill.GetComponent<Rigidbody>();
+        if (rb != null)
         {
-            UseSkill();
+            rb.velocity = playerTransform.forward * skillSpeed;
         }
-    }
 
-    void UseSkill()
-    {
-        Instantiate(skillPrefab, skillSpawnPoint.position, skillSpawnPoint.rotation);
-        cooldownTimer = skillCooldown;
+        Destroy(skill, 5f);
     }
 }
