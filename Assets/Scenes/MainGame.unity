@@ -834,7 +834,7 @@ MonoBehaviour:
   slotheightRect: 80
   slotwidthSize: 9
   slotheightSize: 7
-  garbageRectTransform: {fileID: 0}
+  garbageRectTransform: {fileID: 1741317445}
   canvas: {fileID: 265726223}
   mousePointer: {fileID: 1032337601}
   upgradeRects:

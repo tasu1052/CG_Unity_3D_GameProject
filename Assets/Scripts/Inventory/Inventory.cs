@@ -11,6 +11,7 @@ public class Inventory : MonoBehaviour
     public List<Item> items = new List<Item>();
     public UI_Popup opendedItemInfoPopUp;
     public List<Item> getOutitems = new List<Item>();
+    public GameObject[] upgradeItemObject = new GameObject[3];
 
     [Header("Prefab Objects")]
     [SerializeField] private GameObject _slotUIPrefab;
@@ -44,7 +45,6 @@ public class Inventory : MonoBehaviour
     {
         Init();
         _inventory = this;
-        UpgradeItemsList();
     }
 
     private void Update()
@@ -282,7 +282,9 @@ public class Inventory : MonoBehaviour
         else
         {
             int index = GetUpgradeSlotUnderMouse();
+            upgradeItemObject[index] = null;
             if (index >= 0) tmpDraggingItem = Clone(upgradeItems[index]);
+
         }
         Item Clone(Item item) => item;
     }
@@ -363,6 +365,7 @@ public class Inventory : MonoBehaviour
                 {
                     addItem(s.slotPositionX, s.slotPositionY, tmpDraggingItem);
                     Destroy(tmpDraggingObj);
+            
                 }
             }
             else CantAddItem();
@@ -438,7 +441,7 @@ public class Inventory : MonoBehaviour
 
     #region Upgrade Test Items
 
-    private void UpgradeItemsList()
+    public void UpgradeItemsList()
     {
         for (int i = 0; i < 3; i++)
         {
@@ -458,9 +461,17 @@ public class Inventory : MonoBehaviour
             itemObj.SetActive(true);
             upgradeItems[i] = item;
             item.itemUpgradeNumber = i;
+            upgradeItemObject[i] = itemObj;
         }
     }
 
+    public void UpgradeItemsReset()
+    {
+        foreach(GameObject obj in upgradeItemObject)
+        {
+            Destroy(obj);
+        }
+    }
     private void SetRectUpgradeItem()
     {
         if (tmpDraggingObj != null && tmpDraggingItem != null)

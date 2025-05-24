@@ -55,6 +55,7 @@ public class weaponattachmanager1 : MonoBehaviour
         currentWeapon = Instantiate(flamethrowerPrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
+        currentWeapon.transform.localPosition = player.position;
         return currentWeapon;
     }
 
@@ -63,6 +64,7 @@ public class weaponattachmanager1 : MonoBehaviour
         currentWeapon = Instantiate(riflePrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
+        currentWeapon.transform.localPosition = player.position;
         return currentWeapon;
     }
 
@@ -71,6 +73,7 @@ public class weaponattachmanager1 : MonoBehaviour
         currentWeapon = Instantiate(grenadeLauncherPrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
+        currentWeapon.transform.localPosition = player.position;
         return currentWeapon;
     }
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 public class MainTitle : BaseScene
-//MainTitle Å¬·¡½º´Â ¸ŞÀÎ ¸Ş´º È­¸éÀ» ´ã´çÇÏ´Â Å¬·¡½º¶ó°í ÇÒ ¼ö ÀÖ½À´Ï´Ù. ¸¶¿ì½º Å¬¸¯ÀÌ³ª ÅÍÄ¡¸¦ °¨ÁöÇÏ¿© ÄÆ¾À UI¸¦ º¸¿©ÁÖ°Å³ª ÁÖ¼® Ã³¸®µÈ ºÎºĞÃ³·³ ´Ù¸¥ ¾ÀÀ¸·Î ÀüÈ¯ÇÏ´Â ¿ªÇÒÀ» ¼öÇàÇÒ ¼ö ÀÖ½À´Ï´Ù. 
+//MainTitle í´ë˜ìŠ¤ëŠ” ë©”ì¸ ë©”ë‰´ í™”ë©´ì„ ë‹´ë‹¹í•˜ëŠ” í´ë˜ìŠ¤ë¼ê³  í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤. ë§ˆìš°ìŠ¤ í´ë¦­ì´ë‚˜ í„°ì¹˜ë¥¼ ê°ì§€í•˜ì—¬ ì»·ì”¬ UIë¥¼ ë³´ì—¬ì£¼ê±°ë‚˜ ì£¼ì„ ì²˜ë¦¬ëœ ë¶€ë¶„ì²˜ëŸ¼ ë‹¤ë¥¸ ì”¬ìœ¼ë¡œ ì „í™˜í•˜ëŠ” ì—­í• ì„ ìˆ˜í–‰í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤. 
 
 {
     public override void Clear()
@@ -17,6 +17,15 @@ public class MainTitle : BaseScene
     private void Start()
     {
         Init();
+    }
+
+    public void GameStart()
+    {
+        Managers.Scene.LoadScene(Define.Scene.MainGame);
+    }
+    public void GameQuit()
+    {
+     
     }
 
 }
