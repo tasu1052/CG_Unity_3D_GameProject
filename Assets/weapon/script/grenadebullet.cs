@@ -16,7 +16,7 @@ public class grenadebullet : MonoBehaviour
     private Transform target;
     private bool hasExploded = false;
 
-    public float Damage { get; private set; } // ✅ 외부 참조용 프로퍼티
+    public float Damage { get; private set; } 
 
     void Start()
     {

@@ -185,7 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1204256426}
   cooldown: {fileID: 850521410}
-  flamethrowerPrefab: {fileID: 776577190574680382, guid: df17c232e98f4ea469b182ffa0eead67, type: 3}
+  flamethrowerPrefab: {fileID: 1191599615336914116, guid: 7d0bdc416584b5b41b60dd0390007cc7, type: 3}
   riflePrefab: {fileID: 7595383270745189795, guid: 97ae493afd04fce4ea2d9e089821e740, type: 3}
   grenadeLauncherPrefab: {fileID: 2133262847772417465, guid: d9490737b7d014948a68bf0dde15ccdb, type: 3}
   weaponDistanceFromPlayer: 1
@@ -535,7 +535,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1945511893}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -2307,7 +2307,6 @@ GameObject:
   - component: {fileID: 1454766598}
   - component: {fileID: 1454766597}
   - component: {fileID: 1454766596}
-  - component: {fileID: 1454766599}
   m_Layer: 0
   m_Name: EventSystemSample
   m_TagString: Untagged
@@ -2365,17 +2364,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-
-=======
 --- !u!1 &1505400338
 GameObject:
->>>>>>> 97fdc7dd31ec60ddbfdf794eac09a2a08e17b885
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-
-=======
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1505400340}
@@ -2414,7 +2408,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
->>>>>>> 97fdc7dd31ec60ddbfdf794eac09a2a08e17b885
 --- !u!1 &1636678741
 GameObject:
   m_ObjectHideFlags: 0
@@ -3089,7 +3082,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1945511894}
   - component: {fileID: 1945511893}
-  - component: {fileID: 1945511895}
+  - component: {fileID: 1945511892}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3097,6 +3090,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!81 &1945511892
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945511891}
+  m_Enabled: 1
 --- !u!20 &1945511893
 Camera:
   m_ObjectHideFlags: 0
@@ -3163,14 +3164,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &1945511895
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1945511891}
-  m_Enabled: 1
 --- !u!1 &1983470630
 GameObject:
   m_ObjectHideFlags: 0
@@ -3328,6 +3321,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2106303738}
   - component: {fileID: 2106303737}
+  - component: {fileID: 2106303736}
   - component: {fileID: 2106303735}
   m_Layer: 0
   m_Name: Main CameraSample
@@ -3350,6 +3344,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1204256426}
   offset: {x: 0, y: 10, z: 0}
+--- !u!81 &2106303736
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2106303734}
+  m_Enabled: 1
 --- !u!20 &2106303737
 Camera:
   m_ObjectHideFlags: 0
