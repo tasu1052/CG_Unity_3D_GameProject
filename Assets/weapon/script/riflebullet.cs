@@ -5,6 +5,9 @@ public class riflebullet : MonoBehaviour
     public float speed = 20f;
     public float lifeTime = 2f;
 
+    public AudioClip shootSound; // ✅ 발사 사운드 연결
+    private AudioSource audioSource;
+
     private int damage;
     private Rigidbody rb;
 
@@ -27,8 +30,18 @@ public class riflebullet : MonoBehaviour
         float multiplier = elapsedTime / 50f;
         damage = baseDamage; // Mathf.RoundToInt(baseDamage * multiplier);
 
+        // ✅ Rigidbody 초기화
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
+
+        // ✅ 사운드 재생
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = shootSound;
+        audioSource.playOnAwake = false;
+        audioSource.spatialBlend = 1f; // 3D 사운드
+        audioSource.volume = 0.8f;
+        audioSource.Play();
+
         Destroy(gameObject, lifeTime);
     }
 
