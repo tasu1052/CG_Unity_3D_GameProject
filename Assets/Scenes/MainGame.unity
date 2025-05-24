@@ -317,7 +317,7 @@ MonoBehaviour:
   baseEnemiesPerWave: 1
   levelUpInterval: 30
   bossPrefab: {fileID: 4174137606722923132, guid: 9c5e4cdf21ee74f49a4dc3f726d85f05, type: 3}
-  bossSpawnInterval: 45
+  bossSpawnInterval: 20
 --- !u!4 &205625265
 Transform:
   m_ObjectHideFlags: 0

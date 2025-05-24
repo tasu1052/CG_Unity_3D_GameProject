@@ -11,7 +11,7 @@ public class flamethrowerbullet : MonoBehaviour
 
     void Start()
     {
-        damage = Random.Range(5, 16); // ✅ 5~15 랜덤 데미지 지정
+        damage = Random.Range(3, 5); // ✅ 5~15 랜덤 데미지 지정
 
         // 🔊 AudioSource 설정
         audioSource = gameObject.AddComponent<AudioSource>();
