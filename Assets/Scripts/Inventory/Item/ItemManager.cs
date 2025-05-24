@@ -36,6 +36,15 @@ public class ItemManager : MonoBehaviour
         item.itemPrefab = load_item_prefab;
         item.width = item.itemPrefab.GetComponent<isItem>().widthSize;
         item.height = item.itemPrefab.GetComponent<isItem>().heightSize;
+        // 타입별로 itemType 할당
+         if (typeof(T) == typeof(Riffle))
+            item.itemType = Define.ItemType.Riffle;
+        else if (typeof(T) == typeof(Launcher))
+            item.itemType = Define.ItemType.Launcher;
+        else if (typeof(T) == typeof(Grande))
+            item.itemType = Define.ItemType.Grenade;
+        else
+            Debug.LogWarning("Unknown item type for generic class.");
         Debug.Log(prefabPath);
         return item;
     }

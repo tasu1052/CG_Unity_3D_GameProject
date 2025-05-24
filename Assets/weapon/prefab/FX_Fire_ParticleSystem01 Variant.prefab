@@ -80,9 +80,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dbd65eafb0b3cf4ba0a97f5b398055b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  range: 3
   lifeTime: 1
-  rotateSpeed: 10
+  minDamage: 5
+  maxDamage: 15
+  flameSound: {fileID: 8300000, guid: 43c9f1fcd965b324fadf0fcfad4b9286, type: 3}
 --- !u!54 &8628454066763604321
 Rigidbody:
   m_ObjectHideFlags: 0

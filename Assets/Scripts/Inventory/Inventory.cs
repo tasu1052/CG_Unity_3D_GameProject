@@ -110,7 +110,7 @@ public class Inventory : MonoBehaviour
         
         itemData.storageSlotX = x;
         itemData.storageSlotY = y;
-        
+        item.nowInInvenotry = true;
 
         Debug.Log($"[AddItem] item :  Quaternion: {item.quaternion.eulerAngles}");
         Debug.Log($"[AddItem] itemData :  Quaternion: {item.quaternion.eulerAngles}");
@@ -131,6 +131,24 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
+    public void addAndRealzieWeapon(Item item)
+    {
+        weaponattachmanager1 weapon = weaponattachmanager1.Instance; 
+         if(item.itemType==Define.ItemType.Grenade)
+        {
+            weapon.AttachFlame();
+        }
+         else if(item.itemType == Define.ItemType.Launcher)
+        {
+            weapon.AttachLauncher();
+        }
+         else if(item.itemType == Define.ItemType.Riffle)
+        {
+            Debug.Log(item);
+            Debug.Log(weapon);
+            weapon.AttachRiffle();
+        }
+    }
     public bool tryAddItem(int x, int y, Item item)
     {
         if (x + item.width > slotwidthSize || y + item.height > slotheightSize)

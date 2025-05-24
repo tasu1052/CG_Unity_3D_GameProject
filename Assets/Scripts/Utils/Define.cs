@@ -86,6 +86,12 @@ public class Define
     }
 
   
+    public enum ItemType
+    {
+        Riffle,
+        Grenade,
+        Launcher
+    }
     public enum Rarity
     {
         Normal,

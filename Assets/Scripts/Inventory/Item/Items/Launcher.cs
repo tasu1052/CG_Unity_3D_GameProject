@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class Launcher : Item
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Define.ItemType itemType = Define.ItemType.Launcher;
+    public int i;
 }
