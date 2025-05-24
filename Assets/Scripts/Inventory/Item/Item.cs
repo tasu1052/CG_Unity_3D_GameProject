@@ -16,6 +16,7 @@ public abstract class Item
     public Define.ItemType itemType;
     public bool nowInInvenotry;
 
+    public GameObject spawendObject;
     public int getIndex()
     {
         return index;

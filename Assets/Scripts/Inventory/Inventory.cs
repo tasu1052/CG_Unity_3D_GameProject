@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
     public Slot[,] inventorySlotList;
     public List<Item> items = new List<Item>();
     public UI_Popup opendedItemInfoPopUp;
+    public List<Item> getOutitems = new List<Item>();
 
     [Header("Prefab Objects")]
     [SerializeField] private GameObject _slotUIPrefab;
@@ -21,9 +22,11 @@ public class Inventory : MonoBehaviour
     [SerializeField] private int slotheightSize;
 
     [Header("Connected Objects")]
+    [SerializeField] private RectTransform garbageRectTransform;
     [SerializeField] private Canvas canvas;
     [SerializeField] private RectTransform mousePointer;
     [SerializeField] private RectTransform[] upgradeRects;
+    
 
     // Temp states
     public RectTransform draggingItemRectTransform;
@@ -137,18 +140,22 @@ public class Inventory : MonoBehaviour
         weaponattachmanager1 weapon = weaponattachmanager1.Instance; 
          if(item.itemType==Define.ItemType.Grenade)
         {
-            weapon.AttachFlame();
+            item.spawendObject = weapon.AttachFlame();
         }
          else if(item.itemType == Define.ItemType.Launcher)
         {
-            weapon.AttachLauncher();
+            item.spawendObject = weapon.AttachLauncher();
         }
          else if(item.itemType == Define.ItemType.Riffle)
         {
-            Debug.Log(item);
-            Debug.Log(weapon);
-            weapon.AttachRiffle();
+            item.spawendObject = weapon.AttachRiffle();
         }
+    }
+
+    public void outAndDeRealizeWeapon(Item item)
+    {
+        Debug.Log(item.spawendObject);
+        Destroy(item.spawendObject);
     }
     public bool tryAddItem(int x, int y, Item item)
     {
@@ -167,12 +174,19 @@ public class Inventory : MonoBehaviour
     {
         Item item = inventorySlotList[x, y].item;
 
-        for (int sY = y; sY < y + tmpDraggingItem.width; sY++)
-            for (int sX = x; sX < x + tmpDraggingItem.height; sX++)
-                inventorySlotList[sX, sY].occupied = false;
-
+        Debug.Log($"DeleteItem ({x},{y}) -> {tmpDraggingItem.width}:{tmpDraggingItem.height}");
         inventorySlotList[x, y].item = null;
         items.Remove(item);
+        if (tmpDraggingObj) Destroy(tmpDraggingObj);
+    }
+
+    private void DeleteOnly(int x,int y)
+    {
+        Item item = inventorySlotList[x, y].item;
+        inventorySlotList[x, y].item = null;
+        items.Remove(item);
+        getOutitems.Add(item);
+        Debug.Log(getOutitems);
         if (tmpDraggingObj) Destroy(tmpDraggingObj);
     }
 
@@ -338,7 +352,7 @@ public class Inventory : MonoBehaviour
         if (slot != null)
         {
             Slot s = slot.GetComponent<Slot>();
-            if (tryAddItem(s.slotPositionX, s.slotPositionY, tmpDraggingItem))
+            if (tryAddItem(s.slotPositionX, s.slotPositionY, tmpDraggingItem)) // 들어갈 수 있다면
             {
                 if (isDraggingFromInventory)
                 {
@@ -353,8 +367,16 @@ public class Inventory : MonoBehaviour
             }
             else CantAddItem();
         }
-        else CantAddItem();
+        else if(GetIsGarbageSlot()) // 만약 쓰레기통으로 드래그되었다면
+        {
+            DeleteOnly(tmpDraggingStartSlot.slotPositionX, tmpDraggingStartSlot.slotPositionY);
+            Destroy(tmpDraggingObj);
+        }
+        else
+        {
+            CantAddItem();
 
+        }
         tmpDraggingItem = null;
         tmpDraggingObj = null;
         draggingItemisItem = null;
@@ -378,6 +400,17 @@ public class Inventory : MonoBehaviour
         }
 
         return null;
+    }
+
+    private bool GetIsGarbageSlot()
+    {
+        Vector2 mousePos = Input.mousePosition;
+
+        if (RectTransformUtility.RectangleContainsScreenPoint(garbageRectTransform, mousePos, null))
+        {
+            return true;
+        }
+        else return false;
     }
 
 

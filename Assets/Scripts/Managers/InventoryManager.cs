@@ -17,6 +17,7 @@ public class InventoryManager : MonoBehaviour
         Time.timeScale = 1;
         inventoryTransform.anchoredPosition = new Vector2(0, 2000); // 화면에서 안보이게하기
         CheckAddedItem();
+        CheckOutedItem();
     }
 
     public void OpenInventory()
@@ -37,5 +38,14 @@ public class InventoryManager : MonoBehaviour
                 item.nowInInvenotry = false;
             }
         }
+    }
+    public void CheckOutedItem()
+    {
+        Inventory inven = Inventory._inventory;
+        foreach (Item item in inven.getOutitems)
+        {
+           inven.outAndDeRealizeWeapon(item);
+        }
+        inven.getOutitems.Clear();
     }
 }
