@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour
 
     public Slot[,] inventorySlotList;
     public List<Item> items = new List<Item>();
+    public UI_Popup opendedItemInfoPopUp;
 
     [Header("Prefab Objects")]
     [SerializeField] private GameObject _slotUIPrefab;
@@ -25,22 +26,22 @@ public class Inventory : MonoBehaviour
     [SerializeField] private RectTransform[] upgradeRects;
 
     // Temp states
-    private RectTransform draggingItemRectTransform;
+    public RectTransform draggingItemRectTransform;
     private Slot tmpDraggingStartSlot;
-    private Item tmpDraggingItem;
+    public Item tmpDraggingItem;
     private GameObject tmpDraggingObj;
-    private isItem draggingItemisItem;
+    public isItem draggingItemisItem;
     private List<Slot> hilightSlotList = new List<Slot>();
     private Item[] upgradeItems = new Item[3];
 
-    private bool isDragging = false;
+    public bool isDragging = false;
     private bool isDraggingFromInventory = false;
 
     private void Start()
     {
         Init();
         _inventory = this;
-        test();
+        UpgradeItemsList();
     }
 
     private void Update()
@@ -218,6 +219,7 @@ public class Inventory : MonoBehaviour
         tmpDraggingObj = target;
         draggingItemRectTransform = tmpDraggingObj.GetComponent<RectTransform>();
         draggingItemisItem = tmpDraggingObj.GetComponent<isItem>();
+  
 
         GameObject slotObj = GetSlotUnderScreenPosition(
             RectTransformUtility.WorldToScreenPoint(null, draggingItemRectTransform.position)
@@ -228,6 +230,7 @@ public class Inventory : MonoBehaviour
             isDraggingFromInventory = true;
             tmpDraggingStartSlot = inventorySlotList[draggingItemisItem.storageSlotX, draggingItemisItem.storageSlotY];
             tmpDraggingItem = Clone(tmpDraggingStartSlot.item);
+            draggingItemisItem.item = tmpDraggingItem;
 
             for (int y = draggingItemisItem.storageSlotY; y < draggingItemisItem.storageSlotY + draggingItemisItem.heightSize; y++)
                 for (int x = draggingItemisItem.storageSlotX; x < draggingItemisItem.storageSlotX + draggingItemisItem.widthSize; x++)
@@ -241,10 +244,34 @@ public class Inventory : MonoBehaviour
             else Debug.LogWarning("UpgradeSlot 감지 실패");
         }
 
+
+        draggingItemRectTransform.SetAsLastSibling();
         Item Clone(Item item) => item;
         isDragging = true;
     }
 
+    public void gettmpDraggingItem(GameObject target)
+    {
+        tmpDraggingObj = target;
+        draggingItemRectTransform = tmpDraggingObj.GetComponent<RectTransform>();
+        draggingItemisItem = tmpDraggingObj.GetComponent<isItem>();
+        GameObject slotObj = GetSlotUnderScreenPosition(
+            RectTransformUtility.WorldToScreenPoint(null, draggingItemRectTransform.position)
+        );
+
+
+        if (slotObj != null)
+        {
+            tmpDraggingStartSlot = inventorySlotList[draggingItemisItem.storageSlotX, draggingItemisItem.storageSlotY];
+            tmpDraggingItem = Clone(tmpDraggingStartSlot.item);
+        }
+        else
+        {
+            int index = GetUpgradeSlotUnderMouse();
+            if (index >= 0) tmpDraggingItem = Clone(upgradeItems[index]);
+        }
+        Item Clone(Item item) => item;
+    }
 
     public void Dragging()
     {
@@ -378,11 +405,12 @@ public class Inventory : MonoBehaviour
 
     #region Upgrade Test Items
 
-    private void test()
+    private void UpgradeItemsList()
     {
         for (int i = 0; i < 3; i++)
         {
-            Item item = ItemManager.getItem(0);
+            
+            Item item = ItemManager.getItem(Random.Range(0,3));
             GameObject itemObj = Instantiate(item.itemPrefab, upgradeRects[i].anchoredPosition, Quaternion.identity, GameObject.Find("UpgradeSelect").transform);
 
             itemObj.GetComponent<RectTransform>().anchoredPosition = upgradeRects[i].anchoredPosition;

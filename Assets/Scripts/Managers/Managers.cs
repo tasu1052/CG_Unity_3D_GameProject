@@ -14,7 +14,7 @@ public class Managers : MonoBehaviour
     InputManager _input = new InputManager();
     PoolManager _pool = new PoolManager();
     SceneManagerEx _scene = new SceneManagerEx();
-    DataManager _data = new DataManager(); //DataManager가 겹쳐서 추가
+    DataManager _data = new DataManager(); 
     JsonManager _json = new JsonManager();
     InventoryManager _inventory = new InventoryManager();
 
@@ -58,8 +58,6 @@ public class Managers : MonoBehaviour
 
             DontDestroyOnLoad(go);
             s_instance = go.GetComponent<Managers>();
-            s_instance._pool.Init();
-            s_instance._data.Init();
         }
     }
 

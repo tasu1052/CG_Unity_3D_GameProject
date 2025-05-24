@@ -5,34 +5,15 @@ using UnityEngine;
 
 public interface ILoader<Key, Value>
 {
-    Dictionary<Key, Value> MakeDict(); //MakeDict ÇÔ¼ö ±¸Çö °­Á¦ , Data °´Ã¼µéÀº Dictionary¿¡ ¸ğÀ½.
+    Dictionary<Key, Value> MakeDict(); //MakeDict í•¨ìˆ˜ êµ¬í˜„ ê°•ì œ , Data ê°ì²´ë“¤ì€ Dictionaryì— ëª¨ìŒ.
 }
 
 
 
 public class DataManager
  {
-    public Dictionary<int, Stat> StatDict { get; private set; } = new Dictionary<int, Stat>(); // ½ºÅÈ°ü·Ã µ¥ÀÌÅÍµéÀ» ´ãÀº Dictionary (key, value= ½ºÅÈ °´Ã¼)
-
-  /*  public Dictionary<int, int> currentLevel = new Dictionary<int, int>();
-        public Dictionary<int, float> currentStat = new Dictionary<int, float>();*/
-        public Define.WholeGameData gameData;
         public Define.Items Items;
-        public Define.VolumeData volumeData = new Define.VolumeData();
-        public Define.Blesses Blesses;
 
-    public void Init()
-    {
-        StatDict = LoadJson<StatData, int, Stat>("StatData").MakeDict(); // LoadJsonÇÔ¼ö·Î StatData.json µ¥ÀÌÅÍ°¡ ÀúÀåµÈ
-                                                                         // Stat °´Ã¼µéÀÌ ´ã±ä Dictionary¸¦ ¸¸µé¾î ÇÁ·ÎÆÛÆ¼¿¡ ¸®ÅÏ
-    }
-
-    Loader LoadJson<Loader, Key, Value>(string path) where Loader : ILoader<Key, Value>
-    {
-        TextAsset textAsset = Managers.Resource.Load<TextAsset>($"Data/{path}"); // text ÆÄÀÏÀÌ textAsset¿¡ ´ã±ä´Ù.
-                                                                                 // TextAsset Å¸ÀÔÀº ÅØ½ºÆ®ÆÄÀÏ ¿¡¼ÂÀÌ¶ó°í »ı°¢ÇÏ¸é µÊ!
-        return JsonUtility.FromJson<Loader>(textAsset.text); //JSON µ¥ÀÌÅÍ¸¦ ºÒ·¯¿Í¼­ ¸®ÅÏ
-    }
 
 }
 
@@ -40,7 +21,7 @@ public class DataManager
 #region Stat
 
 [Serializable]
-public class Stat // // MonoBehavior ¸¦ »ó¼ÓÇÏÁö ¾Ê¾Ò±â ¶§¹®¿¡ Á÷·ÄÈ­ÇØ¼­ insperctorÃ¢¿¡¼­ ÆíÁı
+public class Stat // // MonoBehavior ë¥¼ ìƒì†í•˜ì§€ ì•Šì•˜ê¸° ë•Œë¬¸ì— ì§ë ¬í™”í•´ì„œ insperctorì°½ì—ì„œ í¸ì§‘
 {
     public int LEVEL; // ID
     public int ATK;
@@ -53,13 +34,13 @@ public class Stat // // MonoBehavior ¸¦ »ó¼ÓÇÏÁö ¾Ê¾Ò±â ¶§¹®¿¡ Á÷·ÄÈ­ÇØ¼­ insper
 [Serializable]
 public class StatData : ILoader<int, Stat>
 {
-    public List<Stat> stats = new List<Stat>();  // json ÆÄÀÏ¿¡¼­ ¿©±â·Î ´ã±è
+    public List<Stat> stats = new List<Stat>();  // json íŒŒì¼ì—ì„œ ì—¬ê¸°ë¡œ ë‹´ê¹€
 
-    public Dictionary<int, Stat> MakeDict() // ¿À¹ö¶óÀÌµù
+    public Dictionary<int, Stat> MakeDict() // ì˜¤ë²„ë¼ì´ë”©
     {
         Dictionary<int, Stat> dict = new Dictionary<int, Stat>();
-        foreach (Stat stat in stats) // ¸®½ºÆ®¿¡¼­ Dictionary·Î ¿Å±â´Â ÀÛ¾÷
-            dict.Add(stat.LEVEL, stat); // levelÀ» ID(Key)·Î 
+        foreach (Stat stat in stats) // ë¦¬ìŠ¤íŠ¸ì—ì„œ Dictionaryë¡œ ì˜®ê¸°ëŠ” ì‘ì—…
+            dict.Add(stat.LEVEL, stat); // levelì„ ID(Key)ë¡œ 
         return dict;
     }
 }
