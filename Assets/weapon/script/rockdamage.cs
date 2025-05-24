@@ -2,36 +2,46 @@ using UnityEngine;
 
 public class FireDamage : MonoBehaviour
 {
-    public float damageAmount = 100.0f;
-    public float explosionRadius = 10f;     // ✅ 추가: 광역 공격 반경
+    public float baseDamage = 100.0f;           // ✅ 기본 데미지
+    public float explosionRadius = 10f;         // 광역 공격 반경
+    private float damageAmount;                 // 실제 데미지
+
+    private void Start()
+    {
+        float elapsedTime = 0f;
+        if (TimeManager.Instance != null)
+        {
+            elapsedTime = TimeManager.Instance.GetElapsedTime();
+        }
+        else
+        {
+            Debug.LogWarning("[FireDamage] TimeManager.Instance is null! Setting elapsedTime = 0");
+        }
+
+        float multiplier = 1f + (elapsedTime / 50f); // 경과 50초마다 데미지 2배
+        damageAmount = baseDamage * multiplier;
+        Debug.Log("fire damage: " + damageAmount);
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log($"충돌 감지됨: {collision.gameObject.name}, Tag: {collision.gameObject.tag}");
 
         if (collision.gameObject.CompareTag("Player"))
             return;
 
-        // ✅ 광역 데미지 처리
+        // 광역 데미지 처리
         Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius);
         foreach (Collider hit in hits)
         {
             if (!hit.CompareTag("enemy")) continue;
 
-            Debug.Log($"Enemy에 맞음! 데미지 적용 대상: {hit.name}");
 
-            EnemyHealth enemyHealth = hit.GetComponent<EnemyHealth>();
-            if (enemyHealth == null)
-                enemyHealth = hit.GetComponentInParent<EnemyHealth>();
+
+            EnemyHealth enemyHealth = hit.GetComponent<EnemyHealth>() ?? hit.GetComponentInParent<EnemyHealth>();
 
             if (enemyHealth != null)
             {
-                Debug.Log("TakeDamage 호출!");
                 enemyHealth.TakeDamage(damageAmount);
-            }
-            else
-            {
-                Debug.LogWarning("EnemyHealth 컴포넌트를 찾을 수 없음!");
             }
         }
 
