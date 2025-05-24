@@ -76,6 +76,9 @@ public class EnemySpawner : MonoBehaviour
         {
             tracker.player = player;
         }
+        EnemyHealth health = enemy.GetComponent<EnemyHealth>();
+        if (health != null)
+            health.Initialize(currentLevel);
     }
 
     void SpawnBoss()

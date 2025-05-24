@@ -3,10 +3,15 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public float health = 100f;
+    public float baseHealth = 100f;
     private Animator animator;
     void Start()
     {
         animator = GetComponent<Animator>();
+    }
+    public void Initialize(int level)
+    {
+        health = baseHealth + level * 20f; // 레벨당 체력 +20
     }
 
     public void TakeDamage(float amount)
