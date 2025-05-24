@@ -8,10 +8,10 @@ public class riflebullet : MonoBehaviour
     public AudioClip shootSound; // ✅ 발사 사운드 연결
     private AudioSource audioSource;
 
-    private int damage;
+    private float damage;
     private Rigidbody rb;
 
-    public int Damage => damage;
+    public float Damage => damage;
 
     void Start()
     {
@@ -32,7 +32,7 @@ public class riflebullet : MonoBehaviour
         Destroy(gameObject, lifeTime);
     }
 
-public void SetDamage(int dmg)
+    public void SetDamage(float dmg)
 {
     damage = dmg;
 }
@@ -43,13 +43,15 @@ public void SetDamage(int dmg)
     }
 
     void OnCollisionEnter(Collision collision)
+{
+    EnemyHealth enemy = collision.gameObject.GetComponent<EnemyHealth>();
+    if (enemy != null)
     {
-        EnemyHealth enemy = collision.gameObject.GetComponent<EnemyHealth>();
-        if (enemy != null)
-        {
-            enemy.TakeDamage(damage);
-        }
-
-        Destroy(gameObject);
+        enemy.TakeDamage(damage);
     }
+
+    Destroy(gameObject);
 }
+}
+
+
