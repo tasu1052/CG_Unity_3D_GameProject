@@ -26,4 +26,10 @@ public class GameManager
        
     }
 
+    public void Upgrade()
+    {
+        Time.timeScale = 0;
+
+    }
+
 }

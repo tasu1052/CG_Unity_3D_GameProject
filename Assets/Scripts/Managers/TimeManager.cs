@@ -27,7 +27,7 @@ public class TimeManager : MonoBehaviour
     void Update()
     {
         elapsedTime = Time.time - startTime;
-        Debug.Log($"경과 시간: {elapsedTime:F2}초");
+        //Debug.Log($"경과 시간: {elapsedTime:F2}초");
     }
 
     public float GetElapsedTime()

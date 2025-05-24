@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7127156497702724485}
   - component: {fileID: 8183847311296076555}
   m_Layer: 0
-  m_Name: Riffle
+  m_Name: Launcher
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 95add9562b3328b4fb0786f45ab55f56, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 846715f1528c86a46a3a37b72449ed00, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
