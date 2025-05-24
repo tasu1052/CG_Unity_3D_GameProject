@@ -96,31 +96,32 @@ public class Inventory : MonoBehaviour
                 inventorySlotList[x + sX, y + sY].occupied = true;
 
       
-
+        
         GameObject itemObj = Instantiate(item.itemPrefab, inventorySlotList[x, y].position.anchoredPosition, Quaternion.identity, GameObject.Find("InventorySlots").transform);
         RectTransform itemRect = itemObj.GetComponent<RectTransform>();
         isItem itemData = itemObj.GetComponent<isItem>();
-     
 
+        itemData.setSize();
+        itemRect.localRotation = item.quaternion;
+
+        itemData.quaternion = item.quaternion;
         itemData.heightSize = item.height;
         itemData.widthSize = item.width;
-       
-        itemData.setSize();
+        
         itemData.storageSlotX = x;
         itemData.storageSlotY = y;
-        itemData.quaternion = item.quaternion;
+        
 
-        Debug.Log($"item {item.width} : {item.height}");
+        Debug.Log($"[AddItem] item :  Quaternion: {item.quaternion.eulerAngles}");
+        Debug.Log($"[AddItem] itemData :  Quaternion: {item.quaternion.eulerAngles}");
+        Debug.Log($"item : {item.width} : {item.height}");
         itemRect.anchoredPosition = new Vector3(
             inventorySlotList[x, y].position.anchoredPosition.x + slotwidthRect * 0.5f * (item.width - 1),
             inventorySlotList[x, y].position.anchoredPosition.y - slotheightRect * 0.5f * (item.height - 1),
             0);
 
-        if (draggingItemRectTransform)
-        {
-            itemRect.rotation = item.quaternion;
-            Debug.Log(item.quaternion);
-        }
+       
+        
         // 동기화
 
 
@@ -159,6 +160,7 @@ public class Inventory : MonoBehaviour
     private void CantAddItem()
     {
         draggingItemRectTransform.rotation = draggingItemisItem.quaternion;
+        tmpDraggingItem.quaternion = draggingItemisItem.quaternion;
         tmpDraggingItem.width = draggingItemisItem.widthSize;
         tmpDraggingItem.height = draggingItemisItem.heightSize;
 
