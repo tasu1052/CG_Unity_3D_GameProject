@@ -50,25 +50,28 @@ public class weaponattachmanager1 : MonoBehaviour
             UpdateWeaponPositionAndRotation();
     }
 
-    public void AttachFlame()
+    public GameObject AttachFlame()
     {
         currentWeapon = Instantiate(flamethrowerPrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
+        return currentWeapon;
     }
 
-    public void AttachRiffle()
+    public GameObject AttachRiffle()
     {
         currentWeapon = Instantiate(riflePrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
+        return currentWeapon;
     }
 
-    public void AttachLauncher()
+    public GameObject AttachLauncher()
     {
         currentWeapon = Instantiate(grenadeLauncherPrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
+        return currentWeapon;
     }
 
     public void AttachWeapon(GameObject weaponPrefab)
