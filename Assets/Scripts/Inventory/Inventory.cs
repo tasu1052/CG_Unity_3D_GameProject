@@ -48,11 +48,6 @@ public class Inventory : MonoBehaviour
         if (isDragging)
         {
             Dragging();
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                RotateItemObj();
-                Dragging();
-            }
         }
         
     }
@@ -100,29 +95,38 @@ public class Inventory : MonoBehaviour
             for (int sX = 0; sX < item.width; sX++)
                 inventorySlotList[x + sX, y + sY].occupied = true;
 
-
+      
 
         GameObject itemObj = Instantiate(item.itemPrefab, inventorySlotList[x, y].position.anchoredPosition, Quaternion.identity, GameObject.Find("InventorySlots").transform);
         RectTransform itemRect = itemObj.GetComponent<RectTransform>();
-        itemRect.anchoredPosition = new Vector2(
-            inventorySlotList[x, y].position.anchoredPosition.x + slotwidthRect * 0.5f * (item.width - 1),
-            inventorySlotList[x, y].position.anchoredPosition.y - slotheightRect * 0.5f * (item.height - 1));
-        itemRect.localPosition = new Vector3(itemRect.localPosition.x, itemRect.localPosition.y, 0);
-        itemRect.rotation = item.quaternion;
-
-
-        // 동기화
         isItem itemData = itemObj.GetComponent<isItem>();
+     
+
         itemData.heightSize = item.height;
         itemData.widthSize = item.width;
-        itemData.quaternion = item.quaternion;
+       
         itemData.setSize();
         itemData.storageSlotX = x;
         itemData.storageSlotY = y;
+        itemData.quaternion = item.quaternion;
+
+        Debug.Log($"item {item.width} : {item.height}");
+        itemRect.anchoredPosition = new Vector3(
+            inventorySlotList[x, y].position.anchoredPosition.x + slotwidthRect * 0.5f * (item.width - 1),
+            inventorySlotList[x, y].position.anchoredPosition.y - slotheightRect * 0.5f * (item.height - 1),
+            0);
+
+        if (draggingItemRectTransform)
+        {
+            itemRect.rotation = item.quaternion;
+            Debug.Log(item.quaternion);
+        }
+        // 동기화
+
 
         items.Add(item);
         inventorySlotList[x, y].item = item;
-
+        itemObj.SetActive(true);
         return true;
     }
 
@@ -143,8 +147,8 @@ public class Inventory : MonoBehaviour
     {
         Item item = inventorySlotList[x, y].item;
 
-        for (int sY = y; sY < y + item.height; sY++)
-            for (int sX = x; sX < x + item.width; sX++)
+        for (int sY = y; sY < y + tmpDraggingItem.width; sY++)
+            for (int sX = x; sX < x + tmpDraggingItem.height; sX++)
                 inventorySlotList[sX, sY].occupied = false;
 
         inventorySlotList[x, y].item = null;
@@ -188,9 +192,9 @@ public class Inventory : MonoBehaviour
 
     public void DraggingOn(GameObject target)
     {
-        isDragging = true;
         SlotHilightOff();
 
+        Debug.Log(target);
         tmpDraggingObj = target;
         draggingItemRectTransform = tmpDraggingObj.GetComponent<RectTransform>();
         draggingItemisItem = tmpDraggingObj.GetComponent<isItem>();
@@ -218,6 +222,7 @@ public class Inventory : MonoBehaviour
         }
 
         Item Clone(Item item) => item;
+        isDragging = true;
     }
 
 
@@ -254,6 +259,11 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            RotateItemObj();
+        }
     }
 
 
@@ -276,6 +286,8 @@ public class Inventory : MonoBehaviour
 
         GameObject slot = GetSlotUnderScreenPosition(screenPos);
 
+        Debug.Log(slot);
+
         if (slot != null)
         {
             Slot s = slot.GetComponent<Slot>();
@@ -283,8 +295,8 @@ public class Inventory : MonoBehaviour
             {
                 if (isDraggingFromInventory)
                 {
+                    DeleteItem(tmpDraggingStartSlot.slotPositionX, tmpDraggingStartSlot.slotPositionY);
                     addItem(s.slotPositionX, s.slotPositionY, tmpDraggingItem);
-                    DeleteItem(draggingItemisItem.storageSlotX, draggingItemisItem.storageSlotY);
                 }
                 else
                 {
