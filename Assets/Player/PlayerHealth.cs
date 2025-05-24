@@ -11,12 +11,13 @@ public class PlayerHealth : MonoBehaviour
 
     // �÷��̾��� HP
     private int _hp;
+    private int _maxHp = 100;
 
     public int Hp
     {
         get => _hp;
         // Math.Clamp �Լ��� ����ؼ� hp�� 0���� �Ʒ��� �������� �ʵ��� ��.
-        private set => _hp = Math.Clamp(value, 0, _hp);
+        private set => _hp = Math.Clamp(value, 0, _maxHp);
     }
     void Start()
     {
@@ -34,6 +35,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void SetMaxHealth(int health) //�ִ� ü�� �� ���� ���� �����ϴ� �Լ�
     {
+        _maxHp = health;
         _hpBar.maxValue = health;
         _hpBar.value = health;
     }

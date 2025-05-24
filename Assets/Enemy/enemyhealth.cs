@@ -32,6 +32,6 @@ public class EnemyHealth : MonoBehaviour
         Debug.Log("[EnemyHealth] Destroy 호출됨");
         if (KillManager.Instance != null)
             KillManager.Instance.AddKill();
-        Destroy(gameObject, 5f);
+        Destroy(gameObject);
     }
 }
