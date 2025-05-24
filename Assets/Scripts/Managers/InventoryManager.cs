@@ -9,12 +9,14 @@ public class InventoryManager : MonoBehaviour
     public RectTransform inventoryTransform;
     private void Start()
     {
+        Instance = this;
         inventoryTransform.anchoredPosition = new Vector2(0, 2000); // 화면에서 안보이게하기
     }
     public void CloseInventory()
     {
         Time.timeScale = 1;
         inventoryTransform.anchoredPosition = new Vector2(0, 2000); // 화면에서 안보이게하기
+        CheckAddedItem();
     }
 
     public void OpenInventory()
@@ -31,7 +33,8 @@ public class InventoryManager : MonoBehaviour
         {
             if(item.nowInInvenotry)
             {
-               
+                inven.addAndRealzieWeapon(item);
+                item.nowInInvenotry = false;
             }
         }
     }

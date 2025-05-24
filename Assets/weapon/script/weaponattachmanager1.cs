@@ -16,6 +16,10 @@ public class weaponattachmanager1 : MonoBehaviour
 
     private GameObject currentWeapon;
 
+    private void Start()
+    {
+        Instance = this;
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -48,9 +52,6 @@ public class weaponattachmanager1 : MonoBehaviour
 
     public void AttachFlame()
     {
-        if (currentWeapon != null)
-            Destroy(currentWeapon);
-
         currentWeapon = Instantiate(flamethrowerPrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
@@ -58,9 +59,6 @@ public class weaponattachmanager1 : MonoBehaviour
 
     public void AttachRiffle()
     {
-        if (currentWeapon != null)
-            Destroy(currentWeapon);
-
         currentWeapon = Instantiate(riflePrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
@@ -68,9 +66,6 @@ public class weaponattachmanager1 : MonoBehaviour
 
     public void AttachLauncher()
     {
-        if (currentWeapon != null)
-            Destroy(currentWeapon);
-
         currentWeapon = Instantiate(grenadeLauncherPrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;

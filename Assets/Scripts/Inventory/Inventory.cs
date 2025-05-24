@@ -144,6 +144,8 @@ public class Inventory : MonoBehaviour
         }
          else if(item.itemType == Define.ItemType.Riffle)
         {
+            Debug.Log(item);
+            Debug.Log(weapon);
             weapon.AttachRiffle();
         }
     }
