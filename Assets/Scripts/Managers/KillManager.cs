@@ -20,7 +20,7 @@ public class KillManager : MonoBehaviour
         killCount++;
         if (killText != null)
             killText.text = "Kill Count: " + killCount;
-        Debug.Log("현재 Kill 수: " + killCount);
+        //Debug.Log("현재 Kill 수: " + killCount);
 
         if(killCount%20==0)
         {
