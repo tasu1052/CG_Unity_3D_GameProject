@@ -22,4 +22,17 @@ public class InventoryManager : MonoBehaviour
         Time.timeScale = 0;
         inventoryTransform.anchoredPosition = new Vector2(0, 0); // 화면에서 보이게하기
     }
+
+
+    public void CheckAddedItem()
+    {
+        Inventory inven = Inventory._inventory;
+        foreach(Item item in inven.items)
+        {
+            if(item.nowInInvenotry)
+            {
+               
+            }
+        }
+    }
 }

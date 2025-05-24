@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class weaponattachmanager1 : MonoBehaviour
 {
+    public static weaponattachmanager1 Instance;
+
     public Transform player;  // 플레이어
     public SimpleCooldown cooldown;
 
@@ -44,7 +46,37 @@ public class weaponattachmanager1 : MonoBehaviour
             UpdateWeaponPositionAndRotation();
     }
 
-    void AttachWeapon(GameObject weaponPrefab)
+    public void AttachFlame()
+    {
+        if (currentWeapon != null)
+            Destroy(currentWeapon);
+
+        currentWeapon = Instantiate(flamethrowerPrefab);
+        currentWeapon.transform.SetParent(player);
+        currentWeapon.transform.localRotation = Quaternion.identity;
+    }
+
+    public void AttachRiffle()
+    {
+        if (currentWeapon != null)
+            Destroy(currentWeapon);
+
+        currentWeapon = Instantiate(riflePrefab);
+        currentWeapon.transform.SetParent(player);
+        currentWeapon.transform.localRotation = Quaternion.identity;
+    }
+
+    public void AttachLauncher()
+    {
+        if (currentWeapon != null)
+            Destroy(currentWeapon);
+
+        currentWeapon = Instantiate(grenadeLauncherPrefab);
+        currentWeapon.transform.SetParent(player);
+        currentWeapon.transform.localRotation = Quaternion.identity;
+    }
+
+    public void AttachWeapon(GameObject weaponPrefab)
     {
         if (currentWeapon != null)
             Destroy(currentWeapon);

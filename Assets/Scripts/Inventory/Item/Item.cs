@@ -13,6 +13,8 @@ public abstract class Item
     public int width, height;
     public Quaternion quaternion;
     public int itemUpgradeNumber;
+    public Define.ItemType itemType;
+    public bool nowInInvenotry;
 
     public int getIndex()
     {
