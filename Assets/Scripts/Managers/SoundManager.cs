@@ -20,6 +20,7 @@ public class SoundManager : MonoBehaviour
         }
 
         Instance = this;
+        AudioPlay("InGame");
         DontDestroyOnLoad(gameObject);
     }
 
@@ -27,10 +28,18 @@ public class SoundManager : MonoBehaviour
     public void AudioPlay(string audioName)
     {
         audioSource.clip = clipList.Find(x => x.name == audioName);
+
+        if (audioSource.clip == null)
+        {
+            Debug.LogWarning($"BGM '{audioName}' not found in clipList!");
+            return;
+        }
+
+        audioSource.loop = true; // 🔁 반복 재생
         audioSource.Play();
     }
 
-    public void AudioStop()
+        public void AudioStop()
     {
         audioSource.Stop();
     }
