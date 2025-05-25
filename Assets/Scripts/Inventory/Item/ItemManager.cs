@@ -94,14 +94,14 @@ public class ItemManager : MonoBehaviour
             
             if (item.width == 3)
             {
-                item.fireRate = 0.055f;
+                item.fireRate = 0.05f;
             }
             else { item.fireRate = 0.1f; }
             if (item.height == 2)
             {
-                item.damage = 5 + inven.nowUpgradeNumber * 2;
+                item.damage = 2 + inven.nowUpgradeNumber * 2;
             }
-            else { item.damage = 7 + inven.nowUpgradeNumber * 2; }
+            else { item.damage = 4 + inven.nowUpgradeNumber * 2; }
         }
         else
             Debug.LogWarning("Unknown item type for generic class.");
