@@ -20,35 +20,6 @@ public class weaponattachmanager1 : MonoBehaviour
     {
         Instance = this;
     }
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            AttachWeapon(flamethrowerPrefab);
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-            AttachWeapon(riflePrefab);
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-            AttachWeapon(grenadeLauncherPrefab);
-/*if (Input.GetKeyDown(KeyCode.Q) && cooldown.IsReady())
-{
-    Debug.Log("Q 입력 감지됨");
-    AttachWeapon(flameskillPrefab);
-    cooldown.TriggerCooldown();
-
-    FireShooter shooter = currentWeapon.GetComponentInChildren<FireShooter>();
-    if (shooter != null)
-    {
-        Debug.Log("shooter 있음, ShootFire 호출 시도");
-        shooter.ShootFire();
-    }
-    else
-    {
-        Debug.LogWarning("FireShooter 컴포넌트를 찾지 못함!");
-    }
-}*/
-
-        if (currentWeapon != null)
-            UpdateWeaponPositionAndRotation();
-    }
 
     public GameObject AttachFlame(FireFlame fire)
     {
