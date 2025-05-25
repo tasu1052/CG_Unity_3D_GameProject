@@ -90,7 +90,8 @@ public class Define
     {
         Riffle,
         FireFlame,
-        Launcher
+        Launcher,
+        CartridgeBelt
     }
     public enum Rarity
     {

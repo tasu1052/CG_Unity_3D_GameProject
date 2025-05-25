@@ -20,7 +20,9 @@ public class ItemManager : MonoBehaviour
                 return createItem<FireFlame>(id, "Prefabs/Items/FireFlame");
             case 2:
                 return createItem<Launcher>(id, "Prefabs/Items/Launcher");
-               
+            case 3:
+                return createItem<CartridgeBelt>(id, "Prefabs/Items/CartrideBelt");
+
             default:
                 Debug.LogError("Unknown id");
                 return null;
@@ -102,6 +104,20 @@ public class ItemManager : MonoBehaviour
                 item.damage = 1 + inven.nowUpgradeNumber * 1.1f;
             }
             else { item.damage = 1.5f + inven.nowUpgradeNumber * 1.1f; }
+        }
+        else if(typeof(T) == typeof(CartridgeBelt))
+        {
+            item.itemType = Define.ItemType.CartridgeBelt;
+
+            CartridgeBelt belt = item as CartridgeBelt;
+
+            isItem isItem = item.itemPrefab.GetComponent<isItem>();
+            isItem.widthSize = 5;
+            isItem.heightSize = 1;
+            item.width = isItem.widthSize;
+            item.height = isItem.heightSize;
+
+            belt.damagePumping = 1 + (inven.nowUpgradeNumber / 5);
         }
         else
             Debug.LogWarning("Unknown item type for generic class.");

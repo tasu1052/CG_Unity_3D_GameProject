@@ -158,10 +158,19 @@ public class Inventory : MonoBehaviour
             Riffle riffle = item as Riffle;
             item.spawendObject = weapon.AttachRiffle(riffle);
         }
+        else if (item.itemType == Define.ItemType.CartridgeBelt)
+        {
+            CartridgeBelt belt = item as CartridgeBelt;
+            item.spawendObject = weapon.AttachBelt(belt);
+        }
     }
 
     public void outAndDeRealizeWeapon(Item item)
     {
+        if(item.itemType==Define.ItemType.CartridgeBelt)
+        {
+            Managers.Game.extraDamage = 1;
+        }
         Debug.Log(item.spawendObject);
         Destroy(item.spawendObject);
     }
@@ -490,7 +499,7 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
 
-            Item item = ItemManager.getItem(Random.Range(0, 3));
+            Item item = ItemManager.getItem(Random.Range(0, 4));
             GameObject itemObj = Instantiate(item.itemPrefab, upgradeRects[i].anchoredPosition, Quaternion.identity, GameObject.Find("UpgradeSelect").transform);
             isItem itemData = itemObj.GetComponent<isItem>();
 

@@ -36,7 +36,7 @@ public class rifle : MonoBehaviour
             riflebullet bulletScript = bullet.GetComponent<riflebullet>();
             if (bulletScript != null)
             {
-                bulletScript.SetDamage(baseDamage);  // ⬅ 고정된 데미지를 전달
+                bulletScript.SetDamage(baseDamage*Managers.Game.extraDamage);  // ⬅ 고정된 데미지를 전달
             }
 
             nextFireTime = Time.time + fireRate;

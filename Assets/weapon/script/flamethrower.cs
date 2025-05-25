@@ -31,7 +31,7 @@ public class Flamethrower : MonoBehaviour
             flamethrowerbullet flameScript = flame.GetComponent<flamethrowerbullet>();
             if (flameScript != null)
             {
-                flameScript.SetDamage(baseDamage);
+                flameScript.SetDamage(baseDamage*Managers.Game.extraDamage);
             }
 
             nextFireTime = Time.time + fireRate;

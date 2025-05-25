@@ -17,22 +17,34 @@ public class UI_ItemInfo : UI_Popup
     private void Awake()
     {
         ItemName.text = Inventory._inventory.tmpDraggingItem.itemType.ToString();
-        ItemDamage.text = $"공격력 : {Inventory._inventory.tmpDraggingItem.damage}";
-        ItemFireRate.text = $"공격속도 : {Inventory._inventory.tmpDraggingItem.fireRate}";
-        if (Inventory._inventory.tmpDraggingItem.itemType == Define.ItemType.FireFlame)
+        if (Inventory._inventory.tmpDraggingItem.itemType == Define.ItemType.CartridgeBelt)
         {
-            ItemAbility.text = $"능력 :  : " + "낮은 데미지를 가지지만 광역 공격이 가능하다. 크기가 크다." +
-                $"\n(가로:세로) : {Inventory._inventory.tmpDraggingItem.width} : {Inventory._inventory.tmpDraggingItem.height}";
+            CartridgeBelt belt = Inventory._inventory.tmpDraggingItem as CartridgeBelt;
+            ItemDamage.text = "";
+            ItemFireRate.text = "";
+            ItemAbility.text = $"능력 :  : " + $"가지고 있는 모든 아이템의 공격력을 {belt.damagePumping} 만큼 올린다.(중복 불가능) " +
+                   $"\n(가로:세로) : {Inventory._inventory.tmpDraggingItem.width} : {Inventory._inventory.tmpDraggingItem.height}";
         }
-        else if (Inventory._inventory.tmpDraggingItem.itemType == Define.ItemType.Riffle)
+        else
         {
-            ItemAbility.text = $"능력 :  : " + " 높은 공격력을 가졌지만 단일 타겟이다. 크기가 작다." +
-                $"\n(가로:세로) : {Inventory._inventory.tmpDraggingItem.width} : {Inventory._inventory.tmpDraggingItem.height}";
-        }
-        else if (Inventory._inventory.tmpDraggingItem.itemType == Define.ItemType.Launcher)
-        { 
-            ItemAbility.text = $"능력 :  :" + " 근접해 있는 적에게 강력한 데미지를 준다." +
-                $"\n (가로:세로) : {Inventory._inventory.tmpDraggingItem.width} : {Inventory._inventory.tmpDraggingItem.height}"; 
+          
+            ItemDamage.text = $"공격력 : {Inventory._inventory.tmpDraggingItem.damage}";
+            ItemFireRate.text = $"공격속도 : {Inventory._inventory.tmpDraggingItem.fireRate}";
+            if (Inventory._inventory.tmpDraggingItem.itemType == Define.ItemType.FireFlame)
+            {
+                ItemAbility.text = $"능력 :  : " + "낮은 데미지를 가지지만 광역 공격이 가능하다. 크기가 크다." +
+                    $"\n(가로:세로) : {Inventory._inventory.tmpDraggingItem.width} : {Inventory._inventory.tmpDraggingItem.height}";
+            }
+            else if (Inventory._inventory.tmpDraggingItem.itemType == Define.ItemType.Riffle)
+            {
+                ItemAbility.text = $"능력 :  : " + " 높은 공격력을 가졌지만 단일 타겟이다. 크기가 작다." +
+                    $"\n(가로:세로) : {Inventory._inventory.tmpDraggingItem.width} : {Inventory._inventory.tmpDraggingItem.height}";
+            }
+            else if (Inventory._inventory.tmpDraggingItem.itemType == Define.ItemType.Launcher)
+            {
+                ItemAbility.text = $"능력 :  :" + " 근접해 있는 적에게 강력한 데미지를 준다." +
+                    $"\n (가로:세로) : {Inventory._inventory.tmpDraggingItem.width} : {Inventory._inventory.tmpDraggingItem.height}";
+            }
         }
     }
 

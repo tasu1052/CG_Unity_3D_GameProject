@@ -33,7 +33,7 @@ public class grenade : MonoBehaviour
             grenadebullet bulletScript = bullet.GetComponent<grenadebullet>();
             if (bulletScript != null)
             {
-                bulletScript.SetDamage(baseDamage);
+                bulletScript.SetDamage(baseDamage*Managers.Game.extraDamage);
                 bulletScript.SetExplosionRadius(explosionRadius); // 🎯 radius 전달
             }
 

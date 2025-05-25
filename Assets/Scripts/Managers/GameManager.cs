@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GameManager
 {
+    public float extraDamage = 1;
+    public int beltCount = 0;
 
     //게임 상태를 나눠서 상태에 따라 스크립트들이 돌아가게 함
     public enum GameState

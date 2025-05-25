@@ -10,6 +10,7 @@ public class weaponattachmanager1 : MonoBehaviour
     public GameObject flamethrowerPrefab;
     public GameObject riflePrefab;
     public GameObject grenadeLauncherPrefab;
+    public GameObject cartridgeBeltPrefab;
     //public GameObject flameskillPrefab;
 
     public float weaponDistanceFromPlayer = 1.0f; // 플레이어로부터 무기 거리
@@ -72,6 +73,23 @@ public class weaponattachmanager1 : MonoBehaviour
         }
         return currentWeapon;
     }
+
+    public GameObject AttachBelt(CartridgeBelt belt)
+    {
+
+        currentWeapon = Instantiate(cartridgeBeltPrefab);
+        currentWeapon.transform.SetParent(player);
+        currentWeapon.transform.localRotation = Quaternion.identity;
+        currentWeapon.transform.localPosition = Vector3.zero;
+        CartridgeBeltAction beltScript = currentWeapon.GetComponent<CartridgeBeltAction>();
+        if (beltScript != null)
+        {
+            beltScript.SetAllDamage(belt.damagePumping);
+        }
+        return currentWeapon;
+    }
+
+
 
     public void AttachWeapon(GameObject weaponPrefab)
     {
