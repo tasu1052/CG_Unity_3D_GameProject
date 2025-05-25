@@ -481,20 +481,6 @@ public class Inventory : MonoBehaviour
     public void Reset()
     {
 
-        inventorySlotList = null;
-        items.Clear();
-        opendedItemInfoPopUp = null;
-        getOutitems.Clear();
-        upgradeItemObject = null;
-        draggingItemRectTransform = null;
-        tmpDraggingStartSlot = null;
-        tmpDraggingItem = null;
-        tmpDraggingObj = null;
-        hilightSlotList = null;
-        upgradeItems = null;
-        isDragging = false;
-        isDraggingFromInventory = false;
-
     }
 
     #region Upgrade Test Items

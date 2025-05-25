@@ -24,8 +24,9 @@ public class GameManager
     public void GameStart()
     {
         InventoryManager.Instance.nowUpgradeNumber = 0;
-        Inventory._inventory.Reset();
         KillManager.Instance.killCount = 0;
+
+        InventoryManager.Instance.OpenInventory();
     }
 
     public void Upgrade()

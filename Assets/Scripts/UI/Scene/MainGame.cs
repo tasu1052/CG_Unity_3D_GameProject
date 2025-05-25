@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class MainGame : BaseScene   // MainGame Å¬·¡½º´Â BaseScene Å¬·¡½ºÀÇ ±â´ÉÀ» ±â¹İÀ¸·Î °ÔÀÓ ½ÃÀÛ ½Ã ÇÊ¿äÇÑ ÃÊ±âÈ­ ÀÛ¾÷À» ¼öÇàÇÏ´Â Å¬·¡½º
+public class MainGame : BaseScene   // MainGame í´ë˜ìŠ¤ëŠ” BaseScene í´ë˜ìŠ¤ì˜ ê¸°ëŠ¥ì„ ê¸°ë°˜ìœ¼ë¡œ ê²Œì„ ì‹œì‘ ì‹œ í•„ìš”í•œ ì´ˆê¸°í™” ì‘ì—…ì„ ìˆ˜í–‰í•˜ëŠ” í´ë˜ìŠ¤
 { 
     public override void Clear()
     {
@@ -20,6 +20,6 @@ public class MainGame : BaseScene   // MainGame Å¬·¡½º´Â BaseScene Å¬·¡½ºÀÇ ±â´É
 
     private void Start()
     {
-
+        Managers.Game.GameStart();
     }
 }

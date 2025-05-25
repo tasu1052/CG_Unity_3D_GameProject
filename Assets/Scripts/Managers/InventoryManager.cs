@@ -30,6 +30,7 @@ public class InventoryManager : MonoBehaviour
     {
         Time.timeScale = 0;
         Inventory inven = Inventory._inventory;
+        Debug.Log("Open");
 
         inven.UpgradeItemsList();
         nowUpgradeNumber++;
