@@ -17,6 +17,9 @@ public abstract class Item
     public bool nowInInvenotry;
 
     public GameObject spawendObject;
+    public float fireRate;
+    public float damage;
+
     public int getIndex()
     {
         return index;

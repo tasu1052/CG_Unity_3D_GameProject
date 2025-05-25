@@ -48,4 +48,6 @@ public class rifle : MonoBehaviour
             nextFireTime = Time.time + fireRate;
         }
     }
+    public 
+    
 }
