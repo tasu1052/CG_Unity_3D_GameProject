@@ -404,14 +404,18 @@ public class Inventory : MonoBehaviour
         }
         else if (GetIsGarbageSlot()) // 만약 쓰레기통으로 드래그되었다면
         {
-            if (isUpgradeItemUsed) // 이미 하나가 사용되었으면 추가하지 않음
+            if (!isDraggingFromInventory) // Upgrade 아이템에서 왔다면
             {
-                SetRectUpgradeItem(); // 위치 복원
-                Debug.Log("이미 Upgrade 아이템이 추가되었습니다. 더 이상 추가할 수 없습니다.");
-                ResetDraggingState(); // 드래깅 상태 초기화
-                return;
+                int index = tmpDraggingItem.itemUpgradeNumber;
+                upgradeItems[index] = null;
+                upgradeItemObject[index] = null;
             }
-            DeleteOnly(tmpDraggingStartSlot.slotPositionX, tmpDraggingStartSlot.slotPositionY);
+
+            if (isDraggingFromInventory)
+            {
+                DeleteOnly(tmpDraggingStartSlot.slotPositionX, tmpDraggingStartSlot.slotPositionY);
+            }
+
             Destroy(tmpDraggingObj);
         }
         else
@@ -523,14 +527,19 @@ public class Inventory : MonoBehaviour
 
     public void UpgradeItemsReset()
     {
-        foreach(Item item in upgradeItems)
+        for (int i = 0; i < upgradeItems.Length; i++)
         {
-            if(item!=null)
+            if (upgradeItems[i] != null)
             {
-                Destroy(item.itemObj);
+                if (upgradeItems[i].itemObj != null)
+                {
+                    Destroy(upgradeItems[i].itemObj);
+                }
+                upgradeItems[i] = null;
+                upgradeItemObject[i] = null;
             }
         }
-    
+
     }
     private void SetRectUpgradeItem()
     {
