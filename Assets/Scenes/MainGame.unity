@@ -791,6 +791,7 @@ MonoBehaviour:
   - {fileID: 1837639241}
   draggingItemRectTransform: {fileID: 0}
   draggingItemisItem: {fileID: 0}
+  startDragging: 0
   isDragging: 0
 --- !u!4 &396347113
 Transform:
@@ -2521,6 +2522,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 2feaf359921ba754d86c9a9ba08146b4, type: 3}
   - {fileID: 8300000, guid: f218dffd99329b044a8a5b45d2fd00e0, type: 3}
   - {fileID: 8300000, guid: 5e0c03e096790d44eb3c3b15cccd8b10, type: 3}
+  - {fileID: 8300000, guid: 9bd7ee2726575f24585f21a8509ad91d, type: 3}
 --- !u!4 &1054908530
 Transform:
   m_ObjectHideFlags: 0
