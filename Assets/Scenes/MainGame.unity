@@ -188,6 +188,7 @@ MonoBehaviour:
   flamethrowerPrefab: {fileID: 776577190574680382, guid: df17c232e98f4ea469b182ffa0eead67, type: 3}
   riflePrefab: {fileID: 7595383270745189795, guid: 97ae493afd04fce4ea2d9e089821e740, type: 3}
   grenadeLauncherPrefab: {fileID: 2133262847772417465, guid: d9490737b7d014948a68bf0dde15ccdb, type: 3}
+  cartridgeBeltPrefab: {fileID: 8331986782695779700, guid: 3072fd49e9ffb4a47bc8bdac22aa8dfb, type: 3}
   weaponDistanceFromPlayer: 1
 --- !u!4 &40706073
 Transform:
@@ -3772,7 +3773,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1909434267
 RectTransform:
   m_ObjectHideFlags: 0
