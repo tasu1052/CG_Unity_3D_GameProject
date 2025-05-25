@@ -7,7 +7,7 @@ public class KillManager : MonoBehaviour
     public static KillManager Instance; // 싱글톤
     public int killCount = 0;
     public TextMeshProUGUI killText; // UI 텍스트
-
+    public bool canOpen = true;
     private void Awake()
     {
         // 싱글톤 초기화
@@ -24,7 +24,11 @@ public class KillManager : MonoBehaviour
         //10 30 60 100 200 300
         if (killCount == 10||killCount==30||killCount==60||killCount%100==0)
         {
-            InventoryManager.Instance.OpenInventory();
+            if (canOpen)
+            {
+                canOpen = false;
+                InventoryManager.Instance.OpenInventory();
+            }
         }
     }
 }

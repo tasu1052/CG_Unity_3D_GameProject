@@ -23,6 +23,7 @@ public class InventoryManager : MonoBehaviour
         CheckOutedItem();
         inven.UpgradeItemsReset();
         inven.isUpgradeItemUsed = false;
+        KillManager.Instance.canOpen = true;
     }
 
     public void OpenInventory()
