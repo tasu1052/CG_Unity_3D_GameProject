@@ -20,6 +20,7 @@ public class isItem : MonoBehaviour
     {
         int slotSize = Define.SlotData.slotSize;
         GetComponent<RectTransform>().sizeDelta = new Vector2(slotSize * widthSize, slotSize * heightSize);
+        Debug.Log($"widthSize : heightSize = {widthSize} : {heightSize}");
     }
 
 }

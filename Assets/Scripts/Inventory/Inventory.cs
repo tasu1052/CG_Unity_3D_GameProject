@@ -452,6 +452,8 @@ public class Inventory : MonoBehaviour
             Item item = ItemManager.getItem(Random.Range(0,3));
             GameObject itemObj = Instantiate(item.itemPrefab, upgradeRects[i].anchoredPosition, Quaternion.identity, GameObject.Find("UpgradeSelect").transform);
 
+            itemObj.GetComponent<isItem>().setSize();
+            
             itemObj.GetComponent<RectTransform>().anchoredPosition = upgradeRects[i].anchoredPosition;
             itemObj.GetComponent<RectTransform>().localPosition = new Vector3(itemObj.GetComponent<RectTransform>().localPosition.x, itemObj.GetComponent<RectTransform>().localPosition.y, 0);
 
@@ -459,7 +461,6 @@ public class Inventory : MonoBehaviour
             itemData.heightSize = item.height;
             itemData.widthSize = item.width;
             itemData.quaternion = item.quaternion;
-            itemData.setSize();
 
             itemObj.SetActive(true);
             upgradeItems[i] = item;

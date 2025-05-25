@@ -54,6 +54,7 @@ public class weaponattachmanager1 : MonoBehaviour
     {
         float k = fire.damage;
         float m = fire.fireRate;
+        Debug.Log($"AttachFlame 에서 값 확인 : {k} : {m}");
         currentWeapon = Instantiate(flamethrowerPrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;

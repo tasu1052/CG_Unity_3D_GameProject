@@ -35,8 +35,6 @@ public class ItemManager : MonoBehaviour
         item.index = id;
         load_item_prefab = Resources.Load<GameObject>(prefabPath);
         item.itemPrefab = load_item_prefab;
-        item.width = item.itemPrefab.GetComponent<isItem>().widthSize;
-        item.height = item.itemPrefab.GetComponent<isItem>().heightSize;
         // 타입별로 itemType 할당
         if (typeof(T) == typeof(Riffle))
         {
@@ -107,9 +105,11 @@ public class ItemManager : MonoBehaviour
         }
         else
             Debug.LogWarning("Unknown item type for generic class.");
-        
 
 
+        Debug.Log($"AttachFlame 에서 값 확인 : {item.damage} : {item.fireRate}");
+
+ 
 
         return item;
     }

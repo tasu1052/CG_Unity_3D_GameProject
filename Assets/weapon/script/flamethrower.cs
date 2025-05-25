@@ -19,7 +19,7 @@ public class Flamethrower : MonoBehaviour
 
     void Start()
     {
-        Debug.Log($"[Flamethrower] fireRate: {fireRate}, baseDamage: {baseDamage}");
+        Debug.Log($"[Flamethrower] fireRate: {fireRate}, baseDamage: {baseDamage}");    
     }
 
     void Update()
