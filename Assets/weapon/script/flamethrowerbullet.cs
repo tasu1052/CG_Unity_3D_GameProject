@@ -12,7 +12,6 @@ public class flamethrowerbullet : MonoBehaviour
     void Start()
     {
         // 🔊 사운드 재생: 여기서 재생하면 이 총알이 생성된 경우에만 실행됨
-        SoundManager.Instance.SFXPlay("FireThrowerSound");
 
         DealAreaDamage();
         Destroy(gameObject, lifeTime);
@@ -35,6 +34,7 @@ public class flamethrowerbullet : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeDamage(damage);
+                    SoundManager.Instance.SFXPlay("FireThrowerSound");
                 }
             }
         }
