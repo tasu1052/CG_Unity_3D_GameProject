@@ -19,10 +19,6 @@ public class grenade : MonoBehaviour
         this.baseDamage = damage;
     }
 
-    void Start()
-    {
-        Debug.Log($"[grenade] fireRate: {fireRate}, baseDamage: {baseDamage}, explosionRadius: {explosionRadius}");
-    }
 
     void Update()
     {
@@ -42,6 +38,7 @@ public class grenade : MonoBehaviour
             }
 
             nextFireTime = Time.time + fireRate;
+            SoundManager.Instance.SFXPlay("Grenade2");
         }
     }
 }

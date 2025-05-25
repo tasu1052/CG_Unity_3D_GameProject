@@ -40,6 +40,7 @@ public class rifle : MonoBehaviour
             }
 
             nextFireTime = Time.time + fireRate;
+            SoundManager.Instance.SFXPlay("Machine_gun");
         }
     }
 
