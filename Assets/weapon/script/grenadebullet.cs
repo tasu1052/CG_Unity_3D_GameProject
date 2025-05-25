@@ -6,7 +6,6 @@ public class grenadebullet : MonoBehaviour
     public float lifeTime = 2f;
     public LayerMask enemyLayer;
 
-    public AudioClip explosionSound;
     public GameObject explosionEffectPrefab;
 
     private Rigidbody rb;
@@ -45,12 +44,14 @@ public class grenadebullet : MonoBehaviour
 
     void Explode()
     {
+        // 폭발 이펙트
         if (explosionEffectPrefab != null)
         {
             GameObject effect = Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
             Destroy(effect, 0.5f);
         }
 
+        // 주변 적에게 피해
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius, enemyLayer);
         foreach (Collider hit in hitColliders)
         {
@@ -61,9 +62,7 @@ public class grenadebullet : MonoBehaviour
             }
         }
 
-        if (explosionSound != null)
-        {
-            AudioSource.PlayClipAtPoint(explosionSound, transform.position);
-        }
+        // ✅ 폭발 사운드 (SoundManager 이용)
+        SoundManager.Instance.SFXPlay("Grenade2"); // clipList에 "Explosion" 클립이 있어야 함
     }
 }

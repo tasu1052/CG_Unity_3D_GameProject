@@ -62,7 +62,7 @@ public class weaponattachmanager1 : MonoBehaviour
         Flamethrower flamethrowerScript = currentWeapon.GetComponent<Flamethrower>();
         if (flamethrowerScript != null)
         {
-            flamethrowerScript.SetStats(k, m);
+            flamethrowerScript.SetStats(m, k);
         }
         return currentWeapon;
     }
@@ -79,7 +79,7 @@ public class weaponattachmanager1 : MonoBehaviour
         rifle rifleScript = currentWeapon.GetComponent<rifle>();
         if (rifleScript != null)
         {
-            rifleScript.SetStats(k, m);
+            rifleScript.SetStats(m, k);
         }
         return currentWeapon;
     }
@@ -97,7 +97,7 @@ public class weaponattachmanager1 : MonoBehaviour
         grenade grenadeScript = currentWeapon.GetComponent<grenade>();
         if (grenadeScript != null)
         {
-            grenadeScript.SetStats(k, m);
+            grenadeScript.SetStats(m, k);
         }
         return currentWeapon;
     }

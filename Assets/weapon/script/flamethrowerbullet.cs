@@ -4,28 +4,23 @@ public class flamethrowerbullet : MonoBehaviour
 {
     public float range = 3f;
     public float lifeTime = 0.3f;
-    public AudioClip flameSound;
 
-    private AudioSource audioSource;
     private float damage;
+
+    public float Damage => damage;
+
+    void Start()
+    {
+        // 🔊 사운드 재생: 여기서 재생하면 이 총알이 생성된 경우에만 실행됨
+        SoundManager.Instance.SFXPlay("FireThrowerSound");
+
+        DealAreaDamage();
+        Destroy(gameObject, lifeTime);
+    }
 
     public void SetDamage(float dmg)
     {
         damage = dmg;
-    }
-
-    void Start()
-    {
-        // 🔊 사운드 설정
-        audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.clip = flameSound;
-        audioSource.playOnAwake = false;
-        audioSource.spatialBlend = 1f;
-        audioSource.volume = 0.7f;
-        audioSource.Play();
-
-        DealAreaDamage();
-        Destroy(gameObject, lifeTime);
     }
 
     void DealAreaDamage()

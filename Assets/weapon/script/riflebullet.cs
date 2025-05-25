@@ -42,7 +42,7 @@ public class riflebullet : MonoBehaviour
         }
 
         Destroy(gameObject);
-        SoundManager.Instance.SFXPlay("machine_gun");
+        SoundManager.Instance.SFXPlay("Machine_gun");
 }
 }
 
