@@ -8,6 +8,7 @@ public class FireShooter : MonoBehaviour
 
     public void ShootFire()
     {
+
         Debug.Log("🔥 ShootFire 호출됨!");
         GameObject fireInstance = Instantiate(firePrefab, firePoint.position, firePoint.rotation);
         Rigidbody rb = fireInstance.GetComponent<Rigidbody>();
@@ -15,5 +16,9 @@ public class FireShooter : MonoBehaviour
         {
             rb.AddForce(firePoint.forward * fireForce);  // 앞으로 힘 줌
         }
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.SFXPlay("meteor");
+        else
+            Debug.LogWarning("❗ SoundManager.Instance가 null입니다.");
     }
 }

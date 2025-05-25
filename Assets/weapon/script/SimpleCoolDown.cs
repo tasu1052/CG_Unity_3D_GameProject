@@ -26,6 +26,7 @@ public class SimpleCooldown : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             TriggerCooldown();
+            SoundManager.Instance.SFXPlay("meteor");
         }
     }
 
