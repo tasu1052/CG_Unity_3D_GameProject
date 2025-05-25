@@ -8,10 +8,10 @@ public class flamethrowerbullet : MonoBehaviour
     private float damage;
 
     public float Damage => damage;
+    private float flamesound;
 
     void Start()
     {
-        // 🔊 사운드 재생: 여기서 재생하면 이 총알이 생성된 경우에만 실행됨
 
         DealAreaDamage();
         Destroy(gameObject, lifeTime);
@@ -28,7 +28,7 @@ public class flamethrowerbullet : MonoBehaviour
         Vector3 center = transform.position + transform.forward * range * 0.5f;
         Collider[] hitColliders = Physics.OverlapSphere(center, range);
 
-        bool hasHitEnemy = false;
+        //bool hasHitEnemy = false;
 
         foreach (var hit in hitColliders)
         {
@@ -38,15 +38,19 @@ public class flamethrowerbullet : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeDamage(damage);
-                    hasHitEnemy = true;
+                    //hasHitEnemy = true;
                 }
             }
         }
-        if (hasHitEnemy && Time.time - lastSoundTime > soundCooldown)
+        flamesound = Random.Range(0, 8);
+        if (flamesound == 1)
+        { 
+            SoundManager.Instance.SFXPlay("FireThrowerSound");
+        }        /*if (hasHitEnemy && Time.time - lastSoundTime > soundCooldown)
         {
             SoundManager.Instance.SFXPlay("FireThrowerSound");
             lastSoundTime = Time.time;
-        }
+        }*/
     }
 
     void OnDrawGizmosSelected()
