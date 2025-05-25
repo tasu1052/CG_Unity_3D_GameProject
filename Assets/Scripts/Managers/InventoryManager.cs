@@ -22,6 +22,7 @@ public class InventoryManager : MonoBehaviour
         CheckAddedItem();
         CheckOutedItem();
         inven.UpgradeItemsReset();
+        inven.isUpgradeItemUsed = false;
     }
 
     public void OpenInventory()

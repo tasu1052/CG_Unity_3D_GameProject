@@ -21,8 +21,8 @@ public class KillManager : MonoBehaviour
         if (killText != null)
             killText.text = "Kill Count: " + killCount;
         //Debug.Log("현재 Kill 수: " + killCount);
-
-        if(killCount%20==0)
+        //10 30 60 100 200 300
+        if (killCount == 10||killCount==30||killCount==60||killCount%100==0)
         {
             InventoryManager.Instance.OpenInventory();
         }

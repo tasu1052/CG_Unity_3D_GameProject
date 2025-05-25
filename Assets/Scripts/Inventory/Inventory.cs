@@ -37,6 +37,7 @@ public class Inventory : MonoBehaviour
     public isItem draggingItemisItem;
     private List<Slot> hilightSlotList = new List<Slot>();
     private Item[] upgradeItems = new Item[3];
+    public bool isUpgradeItemUsed = false;
 
     public bool startDragging = false;
     public bool isDragging = false;
@@ -369,16 +370,31 @@ public class Inventory : MonoBehaviour
                 }
                 else
                 {
+                    if (isUpgradeItemUsed) // 이미 하나가 사용되었으면 추가하지 않음
+                    {
+                        SetRectUpgradeItem(); // 위치 복원
+                        Debug.Log("이미 Upgrade 아이템이 추가되었습니다. 더 이상 추가할 수 없습니다.");
+                        ResetDraggingState(); // 드래깅 상태 초기화
+                        return;
+                    }
+
+                    isUpgradeItemUsed = true; // 처음 추가되었으므로 사용 설정
                     upgradeItems[tmpDraggingItem.itemUpgradeNumber] = null;
                     addItem(s.slotPositionX, s.slotPositionY, tmpDraggingItem);
                     Destroy(tmpDraggingObj);
-
                 }
             }
             else CantAddItem();
         }
         else if (GetIsGarbageSlot()) // 만약 쓰레기통으로 드래그되었다면
         {
+            if (isUpgradeItemUsed) // 이미 하나가 사용되었으면 추가하지 않음
+            {
+                SetRectUpgradeItem(); // 위치 복원
+                Debug.Log("이미 Upgrade 아이템이 추가되었습니다. 더 이상 추가할 수 없습니다.");
+                ResetDraggingState(); // 드래깅 상태 초기화
+                return;
+            }
             DeleteOnly(tmpDraggingStartSlot.slotPositionX, tmpDraggingStartSlot.slotPositionY);
             Destroy(tmpDraggingObj);
         }
@@ -390,6 +406,15 @@ public class Inventory : MonoBehaviour
         tmpDraggingItem = null;
         tmpDraggingObj = null;
         draggingItemisItem = null;
+        startDragging = false;
+    }
+
+    private void ResetDraggingState()
+    {
+        tmpDraggingItem = null;
+        tmpDraggingObj = null;
+        draggingItemisItem = null;
+        isDragging = false;
         startDragging = false;
     }
 
