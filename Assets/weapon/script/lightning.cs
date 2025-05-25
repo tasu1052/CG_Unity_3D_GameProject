@@ -9,18 +9,20 @@ public class lightning : MonoBehaviour
 
     void Start()
     {
+        // ✅ EnemySpawner에서 현재 레벨을 가져옴
+        int currentLevel = 1; // 기본값
+        EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
+        if (spawner != null)
+        {
+            currentLevel = spawner.currentLevel;
+        }
+
+        float damageAmount = baseDamage + (10* currentLevel); 
         // ✅ 사운드 매니저를 통해 번개 사운드 재생
         SoundManager.Instance.SFXPlay("Lightning");  // 🔺 SoundManager에 "Lightning"라는 이름의 클립이 등록되어 있어야 함
 
         // ✅ 경과 시간 기반 데미지 계산
-        float elapsedTime = 0f;
-        if (TimeManager.Instance != null)
-        {
-            elapsedTime = TimeManager.Instance.GetElapsedTime();
-        }
 
-        float multiplier = 1f + (elapsedTime / 50f); // 50초 경과 시 2배 데미지
-        float damageAmount = baseDamage * multiplier;
         Debug.Log("lightning damage: " + damageAmount);
 
         DealFrontDamage(damageAmount);

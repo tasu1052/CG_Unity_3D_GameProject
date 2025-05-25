@@ -17,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
     public float levelUpInterval = 30f;
 
     private float levelTimer;
-    private int currentLevel = 1;
+    public int currentLevel = 1;
 
     [Header("Boss Settings")]
     public GameObject bossPrefab;

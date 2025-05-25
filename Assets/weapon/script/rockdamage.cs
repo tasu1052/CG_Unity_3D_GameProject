@@ -8,18 +8,14 @@ public class FireDamage : MonoBehaviour
 
     private void Start()
     {
-        float elapsedTime = 0f;
-        if (TimeManager.Instance != null)
+        int currentLevel = 1; // 기본값
+        EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
+        if (spawner != null)
         {
-            elapsedTime = TimeManager.Instance.GetElapsedTime();
-        }
-        else
-        {
-            Debug.LogWarning("[FireDamage] TimeManager.Instance is null! Setting elapsedTime = 0");
+            currentLevel = spawner.currentLevel;
         }
 
-        float multiplier = 1f + (elapsedTime / 100f); // 경과 50초마다 데미지 2배
-        damageAmount = baseDamage * multiplier;
+        damageAmount = baseDamage + (10*currentLevel);
         Debug.Log("fire damage: " + damageAmount);
     }
 
