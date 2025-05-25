@@ -21,7 +21,8 @@ public class flamethrowerbullet : MonoBehaviour
     {
         damage = dmg;
     }
-
+    private static float lastSoundTime = -999f;
+    private static float soundCooldown = 0.2f;
     void DealAreaDamage()
     {
         Vector3 center = transform.position + transform.forward * range * 0.5f;
@@ -41,9 +42,10 @@ public class flamethrowerbullet : MonoBehaviour
                 }
             }
         }
-        if (hasHitEnemy)
+        if (hasHitEnemy && Time.time - lastSoundTime > soundCooldown)
         {
             SoundManager.Instance.SFXPlay("FireThrowerSound");
+            lastSoundTime = Time.time;
         }
     }
 

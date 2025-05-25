@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flameParticlePrefab: {fileID: 1068460470151129478, guid: 23438c21f36d60c4f993e07d24cb486b, type: 3}
   firePoint: {fileID: 4397160118049806287}
+  fireRate: 0
+  baseDamage: 0
 --- !u!1 &6216919555001772682
 GameObject:
   m_ObjectHideFlags: 0
