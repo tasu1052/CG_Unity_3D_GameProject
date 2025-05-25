@@ -89,7 +89,7 @@ public class Define
     public enum ItemType
     {
         Riffle,
-        Grenade,
+        FireFlame,
         Launcher
     }
     public enum Rarity

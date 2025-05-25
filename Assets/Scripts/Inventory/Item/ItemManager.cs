@@ -17,7 +17,7 @@ public class ItemManager : MonoBehaviour
             case 0:
                 return createItem<Riffle>(id, "Prefabs/Items/Riffle");
             case 1:
-                return createItem<Grande>(id, "Prefabs/Items/Grande");
+                return createItem<FireFlame>(id, "Prefabs/Items/Grande");
             case 2:
                 return createItem<Launcher>(id, "Prefabs/Items/Launcher");
                
@@ -37,17 +37,35 @@ public class ItemManager : MonoBehaviour
         item.width = item.itemPrefab.GetComponent<isItem>().widthSize;
         item.height = item.itemPrefab.GetComponent<isItem>().heightSize;
         // 타입별로 itemType 할당
-         if (typeof(T) == typeof(Riffle))
+        if (typeof(T) == typeof(Riffle))
+        {
             item.itemType = Define.ItemType.Riffle;
+        }
         else if (typeof(T) == typeof(Launcher))
+        {
             item.itemType = Define.ItemType.Launcher;
-        else if (typeof(T) == typeof(Grande))
-            item.itemType = Define.ItemType.Grenade;
+
+            Launcher launcher = item as Launcher;
+            //launcher.range = 10;
+        }
+        else if (typeof(T) == typeof(FireFlame))
+        {
+            item.itemType = Define.ItemType.FireFlame;
+        }
         else
             Debug.LogWarning("Unknown item type for generic class.");
-        Debug.Log(prefabPath);
+        
+
+
+
         return item;
     }
+
+    void setLauncher(Launcher launcher)
+    {
+
+    }
+
 
     //index 아이템 생성
     public void addItemIndex(int x)

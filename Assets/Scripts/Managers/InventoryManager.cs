@@ -7,6 +7,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance; // 싱글톤
     public RectTransform inventoryTransform;
+    public int nowUpgradeNumber = 0;
     private void Start()
     {
         Instance = this;
@@ -28,6 +29,7 @@ public class InventoryManager : MonoBehaviour
         Time.timeScale = 0;
         Inventory inven = Inventory._inventory;
         inven.UpgradeItemsList();
+        nowUpgradeNumber++;
         inventoryTransform.anchoredPosition = new Vector2(0, 0); // 화면에서 보이게하기
     }
 

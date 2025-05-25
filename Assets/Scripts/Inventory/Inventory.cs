@@ -138,17 +138,20 @@ public class Inventory : MonoBehaviour
     public void addAndRealzieWeapon(Item item)
     {
         weaponattachmanager1 weapon = weaponattachmanager1.Instance; 
-         if(item.itemType==Define.ItemType.Grenade)
+         if(item.itemType==Define.ItemType.Launcher)
         {
-            item.spawendObject = weapon.AttachFlame();
+            Launcher launcher = item as Launcher;
+            item.spawendObject = weapon.AttachLauncher(launcher);
         }
-         else if(item.itemType == Define.ItemType.Launcher)
+         else if(item.itemType == Define.ItemType.FireFlame)
         {
-            item.spawendObject = weapon.AttachLauncher();
+            FireFlame fire = item as FireFlame;
+            item.spawendObject = weapon.AttachFlame(fire);
         }
          else if(item.itemType == Define.ItemType.Riffle)
         {
-            item.spawendObject = weapon.AttachRiffle();
+            Riffle riffle = item as Riffle;
+            item.spawendObject = weapon.AttachRiffle(riffle);
         }
     }
 
