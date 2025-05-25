@@ -4,7 +4,7 @@ using TMPro;
 public class lighteningcooldown : MonoBehaviour
 {
     public TextMeshProUGUI cooldownText;
-    public float cooldownTime = 8;
+    public float cooldownTime = 20f;
     public PlayerSkill playerSkill; // ← 여기를 FireShooter 대신 PlayerSkill로
 
     private float currentCooldown = 0f;
