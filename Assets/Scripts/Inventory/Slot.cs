@@ -20,6 +20,6 @@ public class Slot : MonoBehaviour
     public void offHighLight()
     {
         image = GetComponent<Image>();
-        image.color = new Color(56f / 255f, 56f / 255f, 56f / 255f, 100f / 255f);
+        image.color = new Color(255f / 255f, 255f / 255f, 255f / 255f, 100f / 255f);
     }
 }
