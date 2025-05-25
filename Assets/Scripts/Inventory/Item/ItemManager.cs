@@ -101,7 +101,7 @@ public class ItemManager : MonoBehaviour
             {
                 item.damage = 1 + inven.nowUpgradeNumber * 1.1f;
             }
-            else { item.damage = 2 + inven.nowUpgradeNumber * 1.1f; }
+            else { item.damage = 1.5f + inven.nowUpgradeNumber * 1.1f; }
         }
         else
             Debug.LogWarning("Unknown item type for generic class.");
