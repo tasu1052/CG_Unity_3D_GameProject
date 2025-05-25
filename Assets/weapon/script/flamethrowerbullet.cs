@@ -26,6 +26,9 @@ public class flamethrowerbullet : MonoBehaviour
     {
         Vector3 center = transform.position + transform.forward * range * 0.5f;
         Collider[] hitColliders = Physics.OverlapSphere(center, range);
+
+        bool hasHitEnemy = false;
+
         foreach (var hit in hitColliders)
         {
             if (hit.CompareTag("enemy"))
@@ -34,9 +37,13 @@ public class flamethrowerbullet : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeDamage(damage);
-                    SoundManager.Instance.SFXPlay("FireThrowerSound");
+                    hasHitEnemy = true;
                 }
             }
+        }
+        if (hasHitEnemy)
+        {
+            SoundManager.Instance.SFXPlay("FireThrowerSound");
         }
     }
 
