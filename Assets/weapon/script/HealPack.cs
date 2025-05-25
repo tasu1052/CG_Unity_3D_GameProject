@@ -16,7 +16,7 @@ public class HealPack : MonoBehaviour
                 playerHealth.Heal(healAmount);
 
                 // ✅ 사운드 재생
-                SoundManager.Instance.SFXPlay("heal");
+                SoundManager.Instance.SFXPlay("Heal");
             }
 
             // 힐팩은 사용 후 파괴
