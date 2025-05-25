@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FireDamage : MonoBehaviour
 {
-    public float baseDamage = 45.0f;           // ✅ 기본 데미지
+    public float baseDamage = 55.0f;           // ✅ 기본 데미지
     public float explosionRadius = 5f;         // 광역 공격 반경
     private float damageAmount;                 // 실제 데미지
 
