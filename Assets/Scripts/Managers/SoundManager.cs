@@ -52,7 +52,7 @@ public class SoundManager : MonoBehaviour
         {
             Debug.LogWarning($"SFX '{SFXName}' not found in clipList!");
             return;
-        }
+        }   
 
         float volume = 1.0f;
         if (SFXName == "heal")
