@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1204256426}
-  cooldown: {fileID: 850521410}
+  cooldown: {fileID: 0}
   flamethrowerPrefab: {fileID: 776577190574680382, guid: df17c232e98f4ea469b182ffa0eead67, type: 3}
   riflePrefab: {fileID: 7595383270745189795, guid: 97ae493afd04fce4ea2d9e089821e740, type: 3}
   grenadeLauncherPrefab: {fileID: 2133262847772417465, guid: d9490737b7d014948a68bf0dde15ccdb, type: 3}
@@ -1801,7 +1801,7 @@ GameObject:
   - component: {fileID: 850521411}
   - component: {fileID: 850521413}
   - component: {fileID: 850521412}
-  - component: {fileID: 850521410}
+  - component: {fileID: 850521414}
   m_Layer: 5
   m_Name: cooldown
   m_TagString: Untagged
@@ -1809,21 +1809,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &850521410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 850521409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f94f613331835bd4a9a79a29cee93584, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldownText: {fileID: 843970633}
-  cooldownTime: 5
-  playerSkill: {fileID: 1714067967}
 --- !u!224 &850521411
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1882,6 +1867,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 850521409}
   m_CullTransparentMesh: 1
+--- !u!114 &850521414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850521409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f94f613331835bd4a9a79a29cee93584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownText: {fileID: 843970633}
+  cooldownTime: 30
+  playerSkill: {fileID: 1714067967}
 --- !u!1 &898327086
 GameObject:
   m_ObjectHideFlags: 0
@@ -3565,7 +3565,7 @@ GameObject:
   - component: {fileID: 1780773941}
   - component: {fileID: 1780773944}
   - component: {fileID: 1780773943}
-  - component: {fileID: 1780773942}
+  - component: {fileID: 1780773945}
   m_Layer: 5
   m_Name: lightning
   m_TagString: Untagged
@@ -3593,21 +3593,6 @@ RectTransform:
   m_AnchoredPosition: {x: 100, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &1780773942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1780773940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1131de20df2358a42a14f75b38cad2d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cooldownText: {fileID: 578477402}
-  cooldownTime: 5
-  playerSkill: {fileID: 251150469}
 --- !u!114 &1780773943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3646,6 +3631,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1780773940}
   m_CullTransparentMesh: 1
+--- !u!114 &1780773945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1780773940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1131de20df2358a42a14f75b38cad2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownText: {fileID: 578477402}
+  cooldownTime: 20
+  playerSkill: {fileID: 251150469}
 --- !u!1 &1790917978
 GameObject:
   m_ObjectHideFlags: 0

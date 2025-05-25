@@ -4,7 +4,7 @@ using TMPro;
 public class SimpleCooldown : MonoBehaviour
 {
     public TextMeshProUGUI cooldownText;
-    public float cooldownTime = 5f;
+    public float cooldownTime = 30f;
     public PlayerSkill playerSkill; // ← 여기를 FireShooter 대신 PlayerSkill로
 
     private float currentCooldown = 0f;
@@ -26,7 +26,6 @@ public class SimpleCooldown : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             TriggerCooldown();
-            SoundManager.Instance.SFXPlay("meteor");
         }
     }
 
@@ -38,6 +37,7 @@ public class SimpleCooldown : MonoBehaviour
         if (playerSkill != null)
         {
             playerSkill.CastSkill(); // PlayerSkill의 공개 메서드 호출
+            SoundManager.Instance.SFXPlay("meteor");
         }
     }
 
