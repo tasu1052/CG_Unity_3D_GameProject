@@ -46,7 +46,22 @@ public class SoundManager : MonoBehaviour
 
     public void SFXPlay(string SFXName)
     {
-        SFXSource.PlayOneShot(clipList.Find(x => x.name == SFXName));
+            AudioClip clip = clipList.Find(x => x.name == SFXName);
+    if (clip == null)
+    {
+        Debug.LogWarning($"SFX '{SFXName}' not found in clipList!");
+        return;
+    }
+
+    float volume = 1.0f; // 기본 볼륨
+
+    if (SFXName == "heal")
+    {
+        volume = 3.0f; // 🔊 heal만 크게
+    }
+
+    SFXSource.PlayOneShot(clip, volume);
+        //SFXSource.PlayOneShot(clipList.Find(x => x.name == SFXName));
     }
 
 
