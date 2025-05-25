@@ -72,10 +72,10 @@ public class ItemManager : MonoBehaviour
           
             if (item.width == 2)
             {
-                item.damage = 70+inven.nowUpgradeNumber*30;
+                item.damage = 70+inven.nowUpgradeNumber*15;
                 item.fireRate = 1.5f;
             }
-            else { item.damage = 100+inven.nowUpgradeNumber*30; item.fireRate = 2.0f; }
+            else { item.damage = 100+inven.nowUpgradeNumber*15; item.fireRate = 2.0f; }
 
         }
         else if (typeof(T) == typeof(FireFlame))
@@ -91,7 +91,7 @@ public class ItemManager : MonoBehaviour
             item.height = isItem.heightSize;
 
             fire.range = 3;
-            
+  
             if (item.width == 3)
             {
                 item.fireRate = 0.05f;
@@ -99,9 +99,9 @@ public class ItemManager : MonoBehaviour
             else { item.fireRate = 0.1f; }
             if (item.height == 2)
             {
-                item.damage = 2 + inven.nowUpgradeNumber * 2;
+                item.damage = 1 + inven.nowUpgradeNumber * 1.1f;
             }
-            else { item.damage = 4 + inven.nowUpgradeNumber * 2; }
+            else { item.damage = 2 + inven.nowUpgradeNumber * 1.1f; }
         }
         else
             Debug.LogWarning("Unknown item type for generic class.");
