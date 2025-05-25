@@ -470,16 +470,17 @@ public class Inventory : MonoBehaviour
 
             Item item = ItemManager.getItem(Random.Range(0, 3));
             GameObject itemObj = Instantiate(item.itemPrefab, upgradeRects[i].anchoredPosition, Quaternion.identity, GameObject.Find("UpgradeSelect").transform);
+            isItem itemData = itemObj.GetComponent<isItem>();
 
-            itemObj.GetComponent<isItem>().setSize();
+            itemData.heightSize = item.height;
+            itemData.widthSize = item.width;
+           
+            itemData.setSize();
+            itemData.quaternion = item.quaternion;
 
             itemObj.GetComponent<RectTransform>().anchoredPosition = upgradeRects[i].anchoredPosition;
             itemObj.GetComponent<RectTransform>().localPosition = new Vector3(itemObj.GetComponent<RectTransform>().localPosition.x, itemObj.GetComponent<RectTransform>().localPosition.y, 0);
 
-            isItem itemData = itemObj.GetComponent<isItem>();
-            itemData.heightSize = item.height;
-            itemData.widthSize = item.width;
-            itemData.quaternion = item.quaternion;
 
             itemObj.SetActive(true);
             upgradeItems[i] = item;
@@ -490,10 +491,16 @@ public class Inventory : MonoBehaviour
 
     public void UpgradeItemsReset()
     {
-        foreach (GameObject obj in upgradeItemObject)
+        int num = 0;
+        for(int i =0; i<3;i++)
         {
-            Destroy(obj);
+            if (!(upgradeItemObject[i] == null))
+            {
+                num++;
+                Destroy(upgradeItemObject[i]);
+            }
         }
+        Debug.Log($"파괴한 UpgradeItem : {num}");
     }
     private void SetRectUpgradeItem()
     {

@@ -49,10 +49,16 @@ public class InventoryManager : MonoBehaviour
     public void CheckOutedItem()
     {
         Inventory inven = Inventory._inventory;
+        int num = 0;
         foreach (Item item in inven.getOutitems)
         {
-           inven.outAndDeRealizeWeapon(item);
+            if (item != null)
+            {
+                num++;
+                inven.outAndDeRealizeWeapon(item);
+            }
         }
+        Debug.Log(num);
         inven.getOutitems.Clear();
     }
 }
