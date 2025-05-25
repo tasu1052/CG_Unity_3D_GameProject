@@ -17,7 +17,7 @@ public class ItemManager : MonoBehaviour
             case 0:
                 return createItem<Riffle>(id, "Prefabs/Items/Riffle");
             case 1:
-                return createItem<FireFlame>(id, "Prefabs/Items/Grande");
+                return createItem<FireFlame>(id, "Prefabs/Items/FireFlame");
             case 2:
                 return createItem<Launcher>(id, "Prefabs/Items/Launcher");
                
