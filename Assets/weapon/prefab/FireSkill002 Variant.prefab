@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 852bec31fe22a0141b70d9ae14682030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDamage: 100
-  explosionRadius: 7
+  baseDamage: 45
+  explosionRadius: 5
 --- !u!54 &6483623351009611378
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -166,8 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 852bec31fe22a0141b70d9ae14682030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDamage: 100
-  explosionRadius: 7
+  baseDamage: 45
+  explosionRadius: 5
 --- !u!135 &7873187720210825318
 SphereCollider:
   m_ObjectHideFlags: 0

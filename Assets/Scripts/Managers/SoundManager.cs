@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
 
 
     public AudioSource audioSource;
+    public AudioSource onlyFireSource;
     public AudioSource SFXSource;
     public List<AudioClip> clipList;
 
@@ -20,7 +21,7 @@ public class SoundManager : MonoBehaviour
         }
 
         Instance = this;
-        AudioPlay("InGame");
+        
         DontDestroyOnLoad(gameObject);
     }
 
@@ -61,7 +62,7 @@ public class SoundManager : MonoBehaviour
     }
 
     SFXSource.PlayOneShot(clip, volume);
-        //SFXSource.PlayOneShot(clipList.Find(x => x.name == SFXName));
+      //  SFXSource.PlayOneShot(clipList.Find(x => x.name == SFXName));
     }
 
 

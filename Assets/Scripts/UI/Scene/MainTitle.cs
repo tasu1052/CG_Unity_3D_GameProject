@@ -23,6 +23,7 @@ public class MainTitle : BaseScene
     public void GameStart()
     {
         Managers.Scene.LoadScene(Define.Scene.MainGame);
+        SoundManager.Instance.AudioPlay("InGame");
     }
     public void GameQuit()
     {
