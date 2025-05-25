@@ -27,7 +27,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Canvas canvas;
     [SerializeField] private RectTransform mousePointer;
     [SerializeField] private RectTransform[] upgradeRects;
-    
+
 
     // Temp states
     public RectTransform draggingItemRectTransform;
@@ -53,7 +53,7 @@ public class Inventory : MonoBehaviour
         {
             Dragging();
         }
-        
+
     }
 
     private void Init()
@@ -99,33 +99,34 @@ public class Inventory : MonoBehaviour
             for (int sX = 0; sX < item.width; sX++)
                 inventorySlotList[x + sX, y + sY].occupied = true;
 
-      
-        
+
+
         GameObject itemObj = Instantiate(item.itemPrefab, inventorySlotList[x, y].position.anchoredPosition, Quaternion.identity, GameObject.Find("InventorySlots").transform);
         RectTransform itemRect = itemObj.GetComponent<RectTransform>();
         isItem itemData = itemObj.GetComponent<isItem>();
 
+        itemData.heightSize = item.height;
+        itemData.widthSize = item.width;
         itemData.setSize();
+
         itemRect.localRotation = item.quaternion;
 
         itemData.quaternion = item.quaternion;
-        itemData.heightSize = item.height;
-        itemData.widthSize = item.width;
-        
+
+
         itemData.storageSlotX = x;
         itemData.storageSlotY = y;
         item.nowInInvenotry = true;
 
-        Debug.Log($"[AddItem] item :  Quaternion: {item.quaternion.eulerAngles}");
-        Debug.Log($"[AddItem] itemData :  Quaternion: {item.quaternion.eulerAngles}");
-        Debug.Log($"item : {item.width} : {item.height}");
+
+
         itemRect.anchoredPosition = new Vector3(
             inventorySlotList[x, y].position.anchoredPosition.x + slotwidthRect * 0.5f * (item.width - 1),
             inventorySlotList[x, y].position.anchoredPosition.y - slotheightRect * 0.5f * (item.height - 1),
             0);
 
-       
-        
+
+
         // 동기화
 
 
@@ -137,18 +138,18 @@ public class Inventory : MonoBehaviour
 
     public void addAndRealzieWeapon(Item item)
     {
-        weaponattachmanager1 weapon = weaponattachmanager1.Instance; 
-         if(item.itemType==Define.ItemType.Launcher)
+        weaponattachmanager1 weapon = weaponattachmanager1.Instance;
+        if (item.itemType == Define.ItemType.Launcher)
         {
             Launcher launcher = item as Launcher;
             item.spawendObject = weapon.AttachLauncher(launcher);
         }
-         else if(item.itemType == Define.ItemType.FireFlame)
+        else if (item.itemType == Define.ItemType.FireFlame)
         {
             FireFlame fire = item as FireFlame;
             item.spawendObject = weapon.AttachFlame(fire);
         }
-         else if(item.itemType == Define.ItemType.Riffle)
+        else if (item.itemType == Define.ItemType.Riffle)
         {
             Riffle riffle = item as Riffle;
             item.spawendObject = weapon.AttachRiffle(riffle);
@@ -183,7 +184,7 @@ public class Inventory : MonoBehaviour
         if (tmpDraggingObj) Destroy(tmpDraggingObj);
     }
 
-    private void DeleteOnly(int x,int y)
+    private void DeleteOnly(int x, int y)
     {
         Item item = inventorySlotList[x, y].item;
         inventorySlotList[x, y].item = null;
@@ -236,7 +237,7 @@ public class Inventory : MonoBehaviour
         tmpDraggingObj = target;
         draggingItemRectTransform = tmpDraggingObj.GetComponent<RectTransform>();
         draggingItemisItem = tmpDraggingObj.GetComponent<isItem>();
-  
+
 
         GameObject slotObj = GetSlotUnderScreenPosition(
             RectTransformUtility.WorldToScreenPoint(null, draggingItemRectTransform.position)
@@ -368,12 +369,12 @@ public class Inventory : MonoBehaviour
                 {
                     addItem(s.slotPositionX, s.slotPositionY, tmpDraggingItem);
                     Destroy(tmpDraggingObj);
-            
+
                 }
             }
             else CantAddItem();
         }
-        else if(GetIsGarbageSlot()) // 만약 쓰레기통으로 드래그되었다면
+        else if (GetIsGarbageSlot()) // 만약 쓰레기통으로 드래그되었다면
         {
             DeleteOnly(tmpDraggingStartSlot.slotPositionX, tmpDraggingStartSlot.slotPositionY);
             Destroy(tmpDraggingObj);
@@ -396,7 +397,7 @@ public class Inventory : MonoBehaviour
 
     private GameObject GetSlotUnderScreenPosition(Vector2 mousePos)
     {
-  
+
 
         foreach (Slot s in inventorySlotList)
         {
@@ -441,6 +442,24 @@ public class Inventory : MonoBehaviour
     }
 
     #endregion
+    public void Reset()
+    {
+
+        inventorySlotList = null;
+        items.Clear();
+        opendedItemInfoPopUp = null;
+        getOutitems.Clear();
+        upgradeItemObject = null;
+        draggingItemRectTransform = null;
+        tmpDraggingStartSlot = null;
+        tmpDraggingItem = null;
+        tmpDraggingObj = null;
+        hilightSlotList = null;
+        upgradeItems = null;
+        isDragging = false;
+        isDraggingFromInventory = false;
+
+    }
 
     #region Upgrade Test Items
 
@@ -448,12 +467,12 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            
-            Item item = ItemManager.getItem(Random.Range(0,3));
+
+            Item item = ItemManager.getItem(Random.Range(0, 3));
             GameObject itemObj = Instantiate(item.itemPrefab, upgradeRects[i].anchoredPosition, Quaternion.identity, GameObject.Find("UpgradeSelect").transform);
 
             itemObj.GetComponent<isItem>().setSize();
-            
+
             itemObj.GetComponent<RectTransform>().anchoredPosition = upgradeRects[i].anchoredPosition;
             itemObj.GetComponent<RectTransform>().localPosition = new Vector3(itemObj.GetComponent<RectTransform>().localPosition.x, itemObj.GetComponent<RectTransform>().localPosition.y, 0);
 
@@ -471,7 +490,7 @@ public class Inventory : MonoBehaviour
 
     public void UpgradeItemsReset()
     {
-        foreach(GameObject obj in upgradeItemObject)
+        foreach (GameObject obj in upgradeItemObject)
         {
             Destroy(obj);
         }
@@ -483,4 +502,7 @@ public class Inventory : MonoBehaviour
     }
 
     #endregion
-}
+
+    
+}  
+

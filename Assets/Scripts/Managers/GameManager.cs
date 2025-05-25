@@ -23,7 +23,9 @@ public class GameManager
     //인게임 데이터 초기화 
     public void GameStart()
     {
-       
+        InventoryManager.Instance.nowUpgradeNumber = 0;
+        Inventory._inventory.Reset();
+        KillManager.Instance.killCount = 0;
     }
 
     public void Upgrade()

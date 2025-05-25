@@ -14,6 +14,7 @@ public class grenade : MonoBehaviour
     public float FireRate => fireRate;
     public void SetStats(float fireRate, float damage)
     {
+        Debug.Log($"{fireRate}:{damage}");
         this.fireRate = fireRate;
         this.baseDamage = damage;
     }

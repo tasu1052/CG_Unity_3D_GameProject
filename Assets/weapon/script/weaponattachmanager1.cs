@@ -54,7 +54,7 @@ public class weaponattachmanager1 : MonoBehaviour
     {
         float k = fire.damage;
         float m = fire.fireRate;
-        Debug.Log($"AttachFlame 에서 값 확인 : {k} : {m}");
+        Debug.Log($"AttachFlame : {k} : {m}");
         currentWeapon = Instantiate(flamethrowerPrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
@@ -71,6 +71,7 @@ public class weaponattachmanager1 : MonoBehaviour
     {
         float k = riffle.damage;
         float m = riffle.fireRate;
+        Debug.Log($"AttachFlame : {k} : {m}");
         currentWeapon = Instantiate(riflePrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
@@ -85,8 +86,10 @@ public class weaponattachmanager1 : MonoBehaviour
 
     public GameObject AttachLauncher(Launcher launcher)
     {
+
         float k = launcher.damage;
         float m = launcher.fireRate;
+        Debug.Log($"AttachFlame : {k} : {m}");
         currentWeapon = Instantiate(grenadeLauncherPrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
