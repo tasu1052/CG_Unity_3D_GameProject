@@ -13,6 +13,7 @@ public class grenade : MonoBehaviour
 
     public float FireRate => fireRate;
     public int fireRatenum;
+    public int fireDamagenum;
 
     void Start()
     {
@@ -22,7 +23,11 @@ public class grenade : MonoBehaviour
         else
             fireRate = 2.0f;
         baseDamage = Random.Range(50f, 101f);
-
+        fireDamagenum = Random.Range(0, 2);
+        if (fireDamagenum == 0)
+            baseDamage = 70f;
+        else
+            baseDamage = 100f;
         float elapsedTime = 0f;
         if (TimeManager.Instance != null)
         {
