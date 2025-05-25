@@ -6,10 +6,9 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance { get; private set; }
 
-
-    public AudioSource audioSource;
-    public AudioSource onlyFireSource;
-    public AudioSource SFXSource;
+    public AudioSource audioSource;       // BGM용
+    public AudioSource onlyFireSource;    // 루프 사운드 (예: 화염방사기)
+    public AudioSource SFXSource;         // 일반 효과음용
     public List<AudioClip> clipList;
 
     public void Awake()
@@ -21,11 +20,10 @@ public class SoundManager : MonoBehaviour
         }
 
         Instance = this;
-        
         DontDestroyOnLoad(gameObject);
     }
 
-
+    // 🎵 배경음악 재생
     public void AudioPlay(string audioName)
     {
         audioSource.clip = clipList.Find(x => x.name == audioName);
@@ -36,39 +34,74 @@ public class SoundManager : MonoBehaviour
             return;
         }
 
-        audioSource.loop = true; // 🔁 반복 재생
+        audioSource.loop = true;
         audioSource.Play();
     }
 
-        public void AudioStop()
+    // ⏹️ 배경음악 정지
+    public void AudioStop()
     {
         audioSource.Stop();
     }
 
+    // 🔊 일반 효과음 재생
     public void SFXPlay(string SFXName)
     {
-            AudioClip clip = clipList.Find(x => x.name == SFXName);
-    if (clip == null)
+        AudioClip clip = clipList.Find(x => x.name == SFXName);
+        if (clip == null)
+        {
+            Debug.LogWarning($"SFX '{SFXName}' not found in clipList!");
+            return;
+        }
+
+        float volume = 1.0f;
+        if (SFXName == "heal")
+        {
+            volume = 3.0f;
+        }
+
+        SFXSource.PlayOneShot(clip, volume);
+    }
+
+    // 🔁 루프 효과음 재생
+    public void SFXPlay(string SFXName, bool loop)
     {
-        Debug.LogWarning($"SFX '{SFXName}' not found in clipList!");
-        return;
+        if (!loop)
+        {
+            SFXPlay(SFXName);
+            return;
+        }
+
+        AudioClip clip = clipList.Find(x => x.name == SFXName);
+        if (clip == null)
+        {
+            Debug.LogWarning($"Looping SFX '{SFXName}' not found in clipList!");
+            return;
+        }
+
+        if (onlyFireSource.isPlaying && onlyFireSource.clip == clip)
+            return; // 이미 재생 중이면 중복 방지
+
+        onlyFireSource.clip = clip;
+        onlyFireSource.loop = true;
+        onlyFireSource.Play();
     }
 
-    float volume = 1.0f; // 기본 볼륨
-
-    if (SFXName == "heal")
+    // 🔇 루프 사운드 중단
+    public void SFXStop(string SFXName)
     {
-        volume = 3.0f; // 🔊 heal만 크게
+        if (onlyFireSource.isPlaying && onlyFireSource.clip != null && onlyFireSource.clip.name == SFXName)
+        {
+            onlyFireSource.Stop();
+            onlyFireSource.clip = null;
+        }
     }
 
-    SFXSource.PlayOneShot(clip, volume);
-      //  SFXSource.PlayOneShot(clipList.Find(x => x.name == SFXName));
-    }
-
-
+    // 🔊 볼륨 조절
     public void ChangeVolume(float value)
     {
         audioSource.volume = value;
         SFXSource.volume = value;
+        onlyFireSource.volume = value;
     }
 }
