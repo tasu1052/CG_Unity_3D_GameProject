@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class EnemySpawner : MonoBehaviour
 {
+    public TextMeshProUGUI levelText;
     [Header("Spawn Settings")]
     public Transform player;
     public GameObject[] enemyPrefabs;
@@ -43,6 +44,11 @@ public class EnemySpawner : MonoBehaviour
         {
             SpawnBoss();
             bossTimer = 0f; // 보스 타이머 초기화
+        }
+
+        if(levelText != null)
+        {
+            levelText.text = "Level: " + currentLevel;
         }
     }
 
