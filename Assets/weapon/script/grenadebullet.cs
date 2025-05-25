@@ -4,7 +4,6 @@ public class grenadebullet : MonoBehaviour
 {
     public float speed = 20f;
     public float lifeTime = 2f;
-    public float explosionRadius = 3f;
     public LayerMask enemyLayer;
 
     public AudioClip explosionSound;
@@ -13,26 +12,26 @@ public class grenadebullet : MonoBehaviour
     private Rigidbody rb;
     private bool hasExploded = false;
 
-    public float Damage { get; private set; }
+    private float damage;
+    private float explosionRadius;
+
+    public float Damage => damage;
 
     void Start()
     {
-        // ✅ 1. 데미지 설정
-        float baseDamage = Random.Range(50f, 101f);
-
-        float elapsedTime = 0f;
-        if (TimeManager.Instance != null)
-        {
-            elapsedTime = TimeManager.Instance.GetElapsedTime();
-        }
-
-        float multiplier = 1f + (elapsedTime / 100f);
-        Damage = baseDamage; // * multiplier;
-
         rb = GetComponent<Rigidbody>();
         rb.velocity = transform.forward * speed;
-
         Destroy(gameObject, lifeTime);
+    }
+
+    public void SetDamage(float dmg)
+    {
+        damage = dmg;
+    }
+
+    public void SetExplosionRadius(float radius)
+    {
+        explosionRadius = radius;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -58,7 +57,7 @@ public class grenadebullet : MonoBehaviour
             EnemyHealth enemy = hit.GetComponent<EnemyHealth>();
             if (enemy != null)
             {
-                enemy.TakeDamage(Damage);
+                enemy.TakeDamage(damage);
             }
         }
 

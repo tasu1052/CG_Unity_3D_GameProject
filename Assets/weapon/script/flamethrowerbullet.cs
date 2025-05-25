@@ -4,33 +4,34 @@ public class flamethrowerbullet : MonoBehaviour
 {
     public float range = 3f;
     public float lifeTime = 0.3f;
-    public AudioClip flameSound; // 🔊 화염 사운드
+    public AudioClip flameSound;
 
     private AudioSource audioSource;
-    private int damage; // ✅ 한 번만 랜덤 지정해서 참조
+    private float damage;
+
+    public void SetDamage(float dmg)
+    {
+        damage = dmg;
+    }
 
     void Start()
     {
-        damage = Random.Range(3, 5); // ✅ 5~15 랜덤 데미지 지정
-
-        // 🔊 AudioSource 설정
+        // 🔊 사운드 설정
         audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.clip = flameSound;
         audioSource.playOnAwake = false;
-        audioSource.spatialBlend = 1f; // 3D 사운드
+        audioSource.spatialBlend = 1f;
         audioSource.volume = 0.7f;
         audioSource.Play();
 
-        DealAreaDamage(); // ✅ damage 변수 참조
+        DealAreaDamage();
         Destroy(gameObject, lifeTime);
     }
 
     void DealAreaDamage()
     {
         Vector3 center = transform.position + transform.forward * range * 0.5f;
-        float radius = range;
-
-        Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+        Collider[] hitColliders = Physics.OverlapSphere(center, range);
         foreach (var hit in hitColliders)
         {
             if (hit.CompareTag("enemy"))
@@ -38,7 +39,7 @@ public class flamethrowerbullet : MonoBehaviour
                 EnemyHealth enemy = hit.GetComponent<EnemyHealth>();
                 if (enemy != null)
                 {
-                    enemy.TakeDamage(damage); // ✅ 지정된 damage 사용
+                    enemy.TakeDamage(damage);
                 }
             }
         }

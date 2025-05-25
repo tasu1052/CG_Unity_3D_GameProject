@@ -4,28 +4,54 @@ public class grenade : MonoBehaviour
 {
     public GameObject bulletPrefab;   // 발사할 총알 프리팹
     public Transform firePoint;       // 총구 위치
-    private float fireRate;    // 발사 속도 (초 단위)
+
+    private float fireRate;
     private float nextFireTime = 0f;
 
-    public float FireRate => fireRate; 
+    private float baseDamage;
+    private float explosionRadius = 3.0f;
 
+    public float FireRate => fireRate;
+    public int fireRatenum;
 
     void Start()
     {
-        fireRate = Random.Range(1.5f, 3.0f); // 발사 속도 랜덤 설정
-        Debug.Log($"[riflebullet] firerate: {fireRate}");
+        fireRatenum = Random.Range(0, 2);
+        if (fireRatenum == 0)
+            fireRate = 1.5f;
+        else
+            fireRate = 2.0f;
+        baseDamage = Random.Range(50f, 101f);
+
+        float elapsedTime = 0f;
+        if (TimeManager.Instance != null)
+        {
+            elapsedTime = TimeManager.Instance.GetElapsedTime();
+        }
+
+        float multiplier = 1f + (elapsedTime / 150f);
+        baseDamage = baseDamage * multiplier;
+
+        Debug.Log($"[grenade] fireRate: {fireRate}, baseDamage: {baseDamage}, explosionRadius: {explosionRadius}");
     }
+
     void Update()
     {
         FireBullet();
     }
 
-    // 발사 트리거용 메소드 (플레이어가 발사할 때 호출)
     public void FireBullet()
     {
         if (Time.time >= nextFireTime)
         {
-            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            grenadebullet bulletScript = bullet.GetComponent<grenadebullet>();
+            if (bulletScript != null)
+            {
+                bulletScript.SetDamage(baseDamage);
+                bulletScript.SetExplosionRadius(explosionRadius); // 🎯 radius 전달
+            }
+
             nextFireTime = Time.time + fireRate;
         }
     }

@@ -20,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
 
     [Header("Boss Settings")]
     public GameObject bossPrefab;
-    public float bossSpawnInterval = 60f;   // 보스 등장 간격 (예: 60초)
+    public float bossSpawnInterval = 20f;   // 보스 등장 간격 (예: 60초)
     private float bossTimer = 0f;
 
     void Start()

@@ -5,28 +5,51 @@ public class Flamethrower : MonoBehaviour
     public GameObject flameParticlePrefab;  // 불꽃 파티클 프리팹
     public Transform firePoint;             // 발사 위치
 
-    private float fireRate;                 // 랜덤 발사 속도
+    private float fireRate;
     private float nextFireTime = 0f;
+    private float baseDamage;
 
-    public float FireRate => fireRate;      // 외부 접근용
+    public float FireRate => fireRate;
+    public int fireRatenum;
 
     void Start()
     {
-        fireRate = Random.Range(0.05f, 0.1f); // 빠른 연사 (짧은 간격)
-        Debug.Log($"[flamethrower] firerate: {fireRate}");
+        fireRatenum = Random.Range(0, 2);
+        if (fireRatenum == 0)
+            fireRate = 0.05f;
+        else
+            fireRate = 0.1f;
+        baseDamage = Random.Range(5f, 7f);  // 초기 데미지 설정
+
+        float elapsedTime = 0f;
+        if (TimeManager.Instance != null)
+        {
+            elapsedTime = TimeManager.Instance.GetElapsedTime();
+        }
+
+        float multiplier = 1f + (elapsedTime / 150f);
+        baseDamage = baseDamage * multiplier;
+
+        Debug.Log($"[Flamethrower] fireRate: {fireRate}, baseDamage: {baseDamage}");
     }
 
     void Update()
     {
         FireFlame();
+        Debug.Log($"[Flamethrower] fireRate: {fireRate}, baseDamage: {baseDamage}");
     }
 
-    // 불꽃 발사
     public void FireFlame()
     {
         if (Time.time >= nextFireTime)
         {
-            Instantiate(flameParticlePrefab, firePoint.position, firePoint.rotation);
+            GameObject flame = Instantiate(flameParticlePrefab, firePoint.position, firePoint.rotation);
+            flamethrowerbullet flameScript = flame.GetComponent<flamethrowerbullet>();
+            if (flameScript != null)
+            {
+                flameScript.SetDamage(baseDamage);
+            }
+
             nextFireTime = Time.time + fireRate;
         }
     }
