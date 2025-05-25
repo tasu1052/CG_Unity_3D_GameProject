@@ -4,9 +4,12 @@ public class riflebullet : MonoBehaviour
 {
     public float speed = 20f;
     public float lifeTime = 2f;
+<<<<<<< Updated upstream
 
     public AudioClip shootSound; // ✅ 발사 사운드 연결
 
+=======
+>>>>>>> Stashed changes
     private float damage;
     private Rigidbody rb;
 
@@ -14,19 +17,24 @@ public class riflebullet : MonoBehaviour
 
     void Start()
     {
-        //Debug.Log("rifle damage : " + damage);
-
-        // ✅ Rigidbody 초기화
+        // Rigidbody 설정
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
 
+<<<<<<< Updated upstream
+=======
+        // ✅ 발사 사운드 재생 (SoundManager 사용)
+        SoundManager.Instance.SFXPlay("Machine_gun");
+
+        // 총알 수명 설정
+>>>>>>> Stashed changes
         Destroy(gameObject, lifeTime);
     }
 
     public void SetDamage(float dmg)
-{
-    damage = dmg;
-}
+    {
+        damage = dmg;
+    }
 
     void FixedUpdate()
     {
@@ -42,8 +50,9 @@ public class riflebullet : MonoBehaviour
         }
 
         Destroy(gameObject);
+<<<<<<< Updated upstream
         SoundManager.Instance.SFXPlay("machine_gun");
+=======
+    }
+>>>>>>> Stashed changes
 }
-}
-
-
