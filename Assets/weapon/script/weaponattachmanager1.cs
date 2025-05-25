@@ -52,29 +52,49 @@ public class weaponattachmanager1 : MonoBehaviour
 
     public GameObject AttachFlame(FireFlame fire)
     {
+        float k = fire.damage;
+        float m = fire.fireRate;
         currentWeapon = Instantiate(flamethrowerPrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
         currentWeapon.transform.localPosition = player.position;
+        Flamethrower flamethrowerScript = currentWeapon.GetComponent<Flamethrower>();
+        if (flamethrowerScript != null)
+        {
+            flamethrowerScript.SetStats(k, m);
+        }
         return currentWeapon;
     }
 
     public GameObject AttachRiffle(Riffle riffle)
     {
-
+        float k = riffle.damage;
+        float m = riffle.fireRate;
         currentWeapon = Instantiate(riflePrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
         currentWeapon.transform.localPosition = player.position;
+        rifle rifleScript = currentWeapon.GetComponent<rifle>();
+        if (rifleScript != null)
+        {
+            rifleScript.SetStats(k, m);
+        }
         return currentWeapon;
     }
 
     public GameObject AttachLauncher(Launcher launcher)
     {
+        float k = launcher.damage;
+        float m = launcher.fireRate;
         currentWeapon = Instantiate(grenadeLauncherPrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
         currentWeapon.transform.localPosition = player.position;
+        grenade grenadeScript = currentWeapon.GetComponent<grenade>();
+        if (grenadeScript != null)
+        {
+            grenadeScript.SetStats(k, m);
+        }
         return currentWeapon;
     }
 

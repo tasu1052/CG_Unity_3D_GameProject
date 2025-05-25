@@ -133,7 +133,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   lifeTime: 2
-  explosionRadius: 3
   enemyLayer:
     serializedVersion: 2
     m_Bits: 8
