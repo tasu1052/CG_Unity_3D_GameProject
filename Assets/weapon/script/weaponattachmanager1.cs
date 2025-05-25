@@ -29,7 +29,7 @@ public class weaponattachmanager1 : MonoBehaviour
         currentWeapon = Instantiate(flamethrowerPrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
-        currentWeapon.transform.localPosition = player.position;
+        currentWeapon.transform.localPosition = Vector3.zero;
         Flamethrower flamethrowerScript = currentWeapon.GetComponent<Flamethrower>();
         if (flamethrowerScript != null)
         {
@@ -46,7 +46,7 @@ public class weaponattachmanager1 : MonoBehaviour
         currentWeapon = Instantiate(riflePrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
-        currentWeapon.transform.localPosition = player.position;
+        currentWeapon.transform.localPosition = Vector3.zero;
         rifle rifleScript = currentWeapon.GetComponent<rifle>();
         if (rifleScript != null)
         {
@@ -64,7 +64,7 @@ public class weaponattachmanager1 : MonoBehaviour
         currentWeapon = Instantiate(grenadeLauncherPrefab);
         currentWeapon.transform.SetParent(player);
         currentWeapon.transform.localRotation = Quaternion.identity;
-        currentWeapon.transform.localPosition = player.position;
+        currentWeapon.transform.localPosition = Vector3.zero;
         grenade grenadeScript = currentWeapon.GetComponent<grenade>();
         if (grenadeScript != null)
         {
