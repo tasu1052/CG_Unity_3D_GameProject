@@ -19,8 +19,27 @@ public class isItem : MonoBehaviour
     public void setSize()
     {
         int slotSize = Define.SlotData.slotSize;
-        GetComponent<RectTransform>().sizeDelta = new Vector2(slotSize * widthSize, slotSize * heightSize);
-        Debug.Log($"widthSize : heightSize = {widthSize} : {heightSize}");
+
+        // 회전 각도 확인
+        float angleZ = quaternion.eulerAngles.z % 360;
+
+        int w = widthSize;
+        int h = heightSize;
+
+ 
+
+        // 회전이 90도 또는 270도일 경우 width/height 바꿔서 적용
+        if (Mathf.Approximately(angleZ,90f)|| Mathf.Approximately(angleZ,270f))
+        {
+            Debug.Log("확인");
+            int temp = w;
+            w = h;
+            h = temp;
+        }
+
+        GetComponent<RectTransform>().sizeDelta = new Vector2(slotSize * w, slotSize * h);
+
+        Debug.Log($"[setSize] angleZ: {angleZ} | sizeDelta: ({w}, {h})");
     }
 
 }

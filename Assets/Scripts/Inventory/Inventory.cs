@@ -106,14 +106,16 @@ public class Inventory : MonoBehaviour
         GameObject itemObj = Instantiate(item.itemPrefab, inventorySlotList[x, y].position.anchoredPosition, Quaternion.identity, GameObject.Find("InventorySlots").transform);
         RectTransform itemRect = itemObj.GetComponent<RectTransform>();
         isItem itemData = itemObj.GetComponent<isItem>();
+        itemData.quaternion = item.quaternion;
 
         itemData.heightSize = item.height;
         itemData.widthSize = item.width;
-        itemData.setSize();
-
+        
         itemRect.localRotation = item.quaternion;
 
-        itemData.quaternion = item.quaternion;
+        itemData.setSize();
+
+       
 
 
         itemData.storageSlotX = x;
@@ -221,9 +223,14 @@ public class Inventory : MonoBehaviour
         draggingItemRectTransform.rotation *= Quaternion.Euler(0, 0, 90);
         tmpDraggingItem.quaternion = draggingItemRectTransform.rotation;
 
+
         int temp = tmpDraggingItem.width;
         tmpDraggingItem.width = tmpDraggingItem.height;
         tmpDraggingItem.height = temp;
+
+        draggingItemisItem.widthSize = tmpDraggingItem.width;
+        draggingItemisItem.heightSize = tmpDraggingItem.height;
+
         Debug.Log($"(width,height) : ({tmpDraggingItem.width},{tmpDraggingItem.height})");
     }
 
