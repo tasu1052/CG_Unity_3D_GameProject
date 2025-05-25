@@ -12,6 +12,7 @@ public class EnemyHealth : MonoBehaviour
     public void Initialize(int level)
     {
         health = baseHealth + level * 20f; // 레벨당 체력 +20
+        Debug.Log(health);
     }
 
     public void TakeDamage(float amount)

@@ -99,7 +99,9 @@ public class EnemySpawner : MonoBehaviour
         }
         EnemyHealth health = boss.GetComponent<EnemyHealth>();
         if (health != null)
-            health.Initialize(currentLevel);
+        {
+            health.Initialize(currentLevel * InventoryManager.Instance.nowUpgradeNumber);
+        }
     }
 
     Vector3 GetRandomSpawnPosition()
