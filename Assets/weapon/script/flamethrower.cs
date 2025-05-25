@@ -10,11 +10,16 @@ public class Flamethrower : MonoBehaviour
     private float baseDamage;
 
     public float FireRate => fireRate;
+    public int fireRatenum;
 
     void Start()
     {
-        fireRate = Random.Range(0.05f, 0.1f);
-        baseDamage = Random.Range(5f, 15f);  // 초기 데미지 설정
+        fireRatenum = Random.Range(0, 2);
+        if (fireRatenum == 0)
+            fireRate = 0.05f;
+        else
+            fireRate = 0.1f;
+        baseDamage = Random.Range(5f, 7f);  // 초기 데미지 설정
 
         float elapsedTime = 0f;
         if (TimeManager.Instance != null)
@@ -22,8 +27,7 @@ public class Flamethrower : MonoBehaviour
             elapsedTime = TimeManager.Instance.GetElapsedTime();
         }
 
-        float multiplier = 1f + (elapsedTime / 100f);
-        fireRate = fireRate / multiplier;
+        float multiplier = 1f + (elapsedTime / 150f);
         baseDamage = baseDamage * multiplier;
 
         Debug.Log($"[Flamethrower] fireRate: {fireRate}, baseDamage: {baseDamage}");
