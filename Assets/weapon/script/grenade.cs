@@ -12,31 +12,14 @@ public class grenade : MonoBehaviour
     private float explosionRadius = 3.0f;
 
     public float FireRate => fireRate;
-    public int fireRatenum;
-    public int fireDamagenum;
+    public void SetStats(float fireRate, float damage)
+    {
+        this.fireRate = fireRate;
+        this.baseDamage = damage;
+    }
 
     void Start()
     {
-        fireRatenum = Random.Range(0, 2);
-        if (fireRatenum == 0)
-            fireRate = 1.5f;
-        else
-            fireRate = 2.0f;
-        baseDamage = Random.Range(50f, 101f);
-        fireDamagenum = Random.Range(0, 2);
-        if (fireDamagenum == 0)
-            baseDamage = 70f;
-        else
-            baseDamage = 100f;
-        float elapsedTime = 0f;
-        if (TimeManager.Instance != null)
-        {
-            elapsedTime = TimeManager.Instance.GetElapsedTime();
-        }
-
-        float multiplier = 1f + (elapsedTime / 150f);
-        baseDamage = baseDamage * multiplier;
-
         Debug.Log($"[grenade] fireRate: {fireRate}, baseDamage: {baseDamage}, explosionRadius: {explosionRadius}");
     }
 

@@ -11,30 +11,14 @@ public class rifle : MonoBehaviour
     private float baseDamage;           // ⬅ 총 데미지를 고정
 
     public float FireRate => fireRate; // 외부 참조용 프로퍼티
-    public int fireRatenum;
-    public int fireDamagenum;
+    public void SetStats(float fireRate, float damage)
+    {
+        this.fireRate = fireRate;
+        this.baseDamage = damage;
+    }
 
     void Start()
     {
-        fireRatenum = Random.Range(0, 2);
-        if (fireRatenum == 0)
-            fireRate = 0.3f;
-        else
-            fireRate = 0.5f;
-        baseDamage = Random.Range(20, 41);  // ⬅ 최초 1회만 데미지 설정
-        fireDamagenum = Random.Range(0, 2);
-        if (fireDamagenum == 0)
-            baseDamage = 25f;
-        else
-            baseDamage = 35f;
-        float elapsedTime = 0f;
-        if (TimeManager.Instance != null)
-        {
-            elapsedTime = TimeManager.Instance.GetElapsedTime();
-        }
-
-        float multiplier = 1f + (elapsedTime / 150f);
-        baseDamage = baseDamage* multiplier;
         Debug.Log($"[rifle] firerate: {fireRate}, baseDamage: {baseDamage}");
     }
 
