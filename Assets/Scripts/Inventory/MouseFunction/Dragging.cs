@@ -41,7 +41,7 @@ public class Dragging : MonoBehaviour, IBeginDragHandler,IDragHandler, IEndDragH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (!Inventory._inventory.isDragging)
+        if (!Inventory._inventory.isDragging&&(!Inventory._inventory.startDragging))
         {
             DraggingItemObject = gameObject;
             Inventory._inventory.gettmpDraggingItem(gameObject);

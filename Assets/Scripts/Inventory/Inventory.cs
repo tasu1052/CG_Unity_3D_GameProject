@@ -38,6 +38,7 @@ public class Inventory : MonoBehaviour
     private List<Slot> hilightSlotList = new List<Slot>();
     private Item[] upgradeItems = new Item[3];
 
+    public bool startDragging = false;
     public bool isDragging = false;
     private bool isDraggingFromInventory = false;
 
@@ -231,6 +232,7 @@ public class Inventory : MonoBehaviour
 
     public void DraggingOn(GameObject target)
     {
+        startDragging = true;
         SlotHilightOff();
 
         Debug.Log(target);
@@ -367,6 +369,7 @@ public class Inventory : MonoBehaviour
                 }
                 else
                 {
+                    upgradeItems[tmpDraggingItem.itemUpgradeNumber] = null;
                     addItem(s.slotPositionX, s.slotPositionY, tmpDraggingItem);
                     Destroy(tmpDraggingObj);
 
@@ -387,6 +390,7 @@ public class Inventory : MonoBehaviour
         tmpDraggingItem = null;
         tmpDraggingObj = null;
         draggingItemisItem = null;
+        startDragging = false;
     }
 
 
@@ -472,6 +476,8 @@ public class Inventory : MonoBehaviour
             GameObject itemObj = Instantiate(item.itemPrefab, upgradeRects[i].anchoredPosition, Quaternion.identity, GameObject.Find("UpgradeSelect").transform);
             isItem itemData = itemObj.GetComponent<isItem>();
 
+            item.itemObj = itemObj;
+
             itemData.heightSize = item.height;
             itemData.widthSize = item.width;
            
@@ -485,22 +491,19 @@ public class Inventory : MonoBehaviour
             itemObj.SetActive(true);
             upgradeItems[i] = item;
             item.itemUpgradeNumber = i;
-            upgradeItemObject[i] = itemObj;
         }
     }
 
     public void UpgradeItemsReset()
     {
-        int num = 0;
-        for(int i =0; i<3;i++)
+        foreach(Item item in upgradeItems)
         {
-            if (!(upgradeItemObject[i] == null))
+            if(item!=null)
             {
-                num++;
-                Destroy(upgradeItemObject[i]);
+                Destroy(item.itemObj);
             }
         }
-        Debug.Log($"파괴한 UpgradeItem : {num}");
+    
     }
     private void SetRectUpgradeItem()
     {

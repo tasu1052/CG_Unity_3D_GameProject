@@ -28,6 +28,7 @@ public class InventoryManager : MonoBehaviour
     {
         Time.timeScale = 0;
         Inventory inven = Inventory._inventory;
+
         inven.UpgradeItemsList();
         nowUpgradeNumber++;
         inventoryTransform.anchoredPosition = new Vector2(0, 0); // 화면에서 보이게하기
